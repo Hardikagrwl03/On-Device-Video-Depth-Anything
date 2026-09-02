@@ -1,0 +1,1521 @@
+INFO: STARTING!
+INFO: Log parameter values verbosely: [1]
+INFO: Min num runs: [10]
+INFO: Min runs duration (seconds): [1]
+INFO: Max runs duration (seconds): [150]
+INFO: Inter-run delay (seconds): [-1]
+INFO: Number of prorated runs per second: [-1]
+INFO: Num threads: [-1]
+INFO: Use caching: [0]
+INFO: Benchmark name: []
+INFO: Output prefix: []
+INFO: Min warmup runs: [1]
+INFO: Min warmup runs duration (seconds): [0.5]
+INFO: Run w/o invoking kernels: [0]
+INFO: Report the peak memory footprint: [0]
+INFO: Memory footprint check interval (ms): [50]
+INFO: Graph: [/data/local/tmp/vda_benchmark/vda_vits_720x1280_input518_infer8_init.tflite]
+INFO: Signature to run: []
+INFO: Input layers: []
+INFO: Input shapes: []
+INFO: Input value ranges: []
+INFO: Input value files: []
+INFO: Allow fp16: [0]
+INFO: Require full delegation: [0]
+INFO: Enable op profiling: [1]
+INFO: Op profiling output mode.: [stdout]
+INFO: Op profiling output file.: []
+INFO: Max initial profiling buffer entries: [1024]
+INFO: Allow dynamic increase on profiling buffer entries: [0]
+INFO: CSV File to export profiling data to: []
+INFO: Enable Model Runtime Info Export: [0]
+INFO: Proto File to export model runtime info to: []
+INFO: Print pre-invoke interpreter state: [0]
+INFO: Print post-invoke interpreter state: [0]
+INFO: Release dynamic tensor memory: [0]
+INFO: Optimize memory usage for large tensors: [0]
+INFO: Disable delegate clustering: [0]
+INFO: Constant CAST output cache: [0]
+INFO: File path to export outputs layer to: []
+INFO: File path to export outputs layer as tf example to: []
+INFO: Tensor name display length: [25]
+INFO: Tensor type display length: [15]
+INFO: Tensor allocation type display length: [18]
+INFO: print out all supported flags: [0]
+INFO: #threads used for CPU inference: [-1]
+INFO: Max number of delegated partitions: [0]
+INFO: Min nodes per partition: [0]
+INFO: Index of the first node that could be delegated: [0]
+INFO: Index of the last node that could be delegated: [2147483647]
+INFO: Number of GPU delegate invoke loop iterations: [1]
+INFO: Directory for delegate serialization: []
+INFO: Model-specific token/key for delegate serialization.: []
+INFO: External delegate path: []
+INFO: External delegate options: []
+INFO: Use gpu: [0]
+INFO: Allow lower precision in gpu: [1]
+INFO: Enable running quant models in gpu: [1]
+INFO: Prefer maximizing the throughput in gpu: [0]
+INFO: GPU backend: []
+INFO: Use Hexagon: [0]
+INFO: Hexagon lib path: [/data/local/tmp]
+INFO: Hexagon profiling: [0]
+INFO: Use NNAPI: [0]
+INFO: Use xnnpack: [0]
+INFO: xnnpack_force_fp16: [0]
+INFO: xnnpack_weight_cache_file_path: []
+INFO: Use Slinky: [0]
+INFO: Loaded model /data/local/tmp/vda_benchmark/vda_vits_720x1280_input518_infer8_init.tflite
+INFO: Initialized TensorFlow Lite runtime.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+VERBOSE: Replacing 1214 out of 1338 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 33 partitions for subgraph 0.
+VERBOSE: Replacing 25 out of 27 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 3 partitions for subgraph 1.
+VERBOSE: Replacing 25 out of 27 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 3 partitions for subgraph 2.
+VERBOSE: Replacing 25 out of 27 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 3 partitions for subgraph 3.
+VERBOSE: Replacing 25 out of 27 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 3 partitions for subgraph 4.
+INFO: The input model file size (MB): 116.397
+INFO: Initialized session in 391.247ms.
+INFO: Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+INFO: count=1 curr=7130724 p5=7130724 median=7130724 p95=7130724
+
+INFO: Running benchmark for at least 10 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+INFO: count=10 first=6517122 curr=6671377 min=6517122 max=6682726 avg=6.59845e+06 std=59906 p5=6517122 median=6602684 p95=6682726
+
+INFO: Inference timings in us: Init: 391247, First inference: 7130724, Warmup (avg): 7.13072e+06, Inference (avg): 6.59845e+06
+INFO: Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+INFO: Memory footprint delta from the start of the tool (MB): init=539.465 overall=729.23
+INFO: Profiling Info for Benchmark Initialization:
+Primary graph (name: main) profile:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                         AllocateTensors	  225.898	  225.898	 59.940%	 59.940%	317568.000	        1	AllocateTensors/0
+	                 ModifyGraphWithDelegate	  150.976	  150.976	 40.060%	100.000%	225404.000	        1	ModifyGraphWithDelegate/0
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                         AllocateTensors	  225.898	  225.898	 59.940%	 59.940%	317568.000	        1	AllocateTensors/0
+	                 ModifyGraphWithDelegate	  150.976	  150.976	 40.060%	100.000%	225404.000	        1	ModifyGraphWithDelegate/0
+
+Number of nodes executed: 2
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	                         AllocateTensors	        1	   225.898	    59.940%	    59.940%	317568.000	        1
+	                 ModifyGraphWithDelegate	        1	   150.976	    40.060%	   100.000%	225404.000	        1
+
+Timings (microseconds): count=1 curr=376874
+Memory (bytes): count=0
+2 nodes observed
+
+Subgraph (index: 1, name: odml.group_norm.impl) profile:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                         AllocateTensors	    0.228	    0.228	 29.045%	 29.045%	     0.000	        1	AllocateTensors/1
+	                 ModifyGraphWithDelegate	    0.557	    0.557	 70.955%	100.000%	     0.000	        1	ModifyGraphWithDelegate/1
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	    0.557	    0.557	 70.955%	 70.955%	     0.000	        1	ModifyGraphWithDelegate/1
+	                         AllocateTensors	    0.228	    0.228	 29.045%	100.000%	     0.000	        1	AllocateTensors/1
+
+Number of nodes executed: 2
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	                 ModifyGraphWithDelegate	        1	     0.557	    70.955%	    70.955%	     0.000	        1
+	                         AllocateTensors	        1	     0.228	    29.045%	   100.000%	     0.000	        1
+
+Subgraph (index: 1, name: odml.group_norm.impl) Timings (microseconds): count=1 curr=785
+Memory (bytes): count=0
+2 nodes observed
+
+Subgraph (index: 2, name: odml.group_norm.impl_0) profile:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                         AllocateTensors	    0.074	    0.074	 15.778%	 15.778%	     0.000	        1	AllocateTensors/2
+	                 ModifyGraphWithDelegate	    0.395	    0.395	 84.222%	100.000%	   248.000	        1	ModifyGraphWithDelegate/2
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	    0.395	    0.395	 84.222%	 84.222%	   248.000	        1	ModifyGraphWithDelegate/2
+	                         AllocateTensors	    0.074	    0.074	 15.778%	100.000%	     0.000	        1	AllocateTensors/2
+
+Number of nodes executed: 2
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	                 ModifyGraphWithDelegate	        1	     0.395	    84.222%	    84.222%	   248.000	        1
+	                         AllocateTensors	        1	     0.074	    15.778%	   100.000%	     0.000	        1
+
+Subgraph (index: 2, name: odml.group_norm.impl_0) Timings (microseconds): count=1 curr=469
+Memory (bytes): count=0
+2 nodes observed
+
+Subgraph (index: 3, name: odml.group_norm.impl_1) profile:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                         AllocateTensors	    0.123	    0.123	 28.472%	 28.472%	     0.000	        1	AllocateTensors/3
+	                 ModifyGraphWithDelegate	    0.309	    0.309	 71.528%	100.000%	     0.000	        1	ModifyGraphWithDelegate/3
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	    0.309	    0.309	 71.528%	 71.528%	     0.000	        1	ModifyGraphWithDelegate/3
+	                         AllocateTensors	    0.123	    0.123	 28.472%	100.000%	     0.000	        1	AllocateTensors/3
+
+Number of nodes executed: 2
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	                 ModifyGraphWithDelegate	        1	     0.309	    71.528%	    71.528%	     0.000	        1
+	                         AllocateTensors	        1	     0.123	    28.472%	   100.000%	     0.000	        1
+
+Subgraph (index: 3, name: odml.group_norm.impl_1) Timings (microseconds): count=1 curr=432
+Memory (bytes): count=0
+2 nodes observed
+
+Subgraph (index: 4, name: odml.group_norm.impl_2) profile:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                         AllocateTensors	    0.115	    0.115	 28.325%	 28.325%	     0.000	        1	AllocateTensors/4
+	                 ModifyGraphWithDelegate	    0.291	    0.291	 71.675%	100.000%	   260.000	        1	ModifyGraphWithDelegate/4
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	    0.291	    0.291	 71.675%	 71.675%	   260.000	        1	ModifyGraphWithDelegate/4
+	                         AllocateTensors	    0.115	    0.115	 28.325%	100.000%	     0.000	        1	AllocateTensors/4
+
+Number of nodes executed: 2
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	                 ModifyGraphWithDelegate	        1	     0.291	    71.675%	    71.675%	   260.000	        1
+	                         AllocateTensors	        1	     0.115	    28.325%	   100.000%	     0.000	        1
+
+Subgraph (index: 4, name: odml.group_norm.impl_2) Timings (microseconds): count=1 curr=406
+Memory (bytes): count=0
+2 nodes observed
+
+
+
+INFO: Operator-wise Profiling Info for Regular Benchmark Runs:
+Primary graph (name: main) profile:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 Binary Elementwise (ND)	    0.758	    0.070	  0.014%	  0.014%	     0.000	       13	Delegate/Binary Elementwise (ND):0
+	                          Copy (NC, X32)	    0.743	    0.110	  0.012%	  0.026%	     0.000	        7	Delegate/Copy (NC, X32):1
+	                            BROADCAST_TO	    1.198	    1.236	  0.019%	  0.044%	     0.000	        1	[wrapper.VDAInitWrapper;36]:1
+	                            BROADCAST_TO	    0.078	    0.083	  0.001%	  0.046%	     0.000	        1	[wrapper.VDAInitWrapper;37]:2
+	                                 RESHAPE	    0.001	    0.001	  0.000%	  0.046%	     0.000	        1	[wrapper.VDAInitWrapper;38]:3
+	                                 RESHAPE	    0.001	    0.000	  0.000%	  0.046%	     0.000	        1	[wrapper.VDAInitWrapper;39]:4
+	                           CONCATENATION	    3.600	    3.662	  0.056%	  0.101%	     0.000	        1	[wrapper.VDAInitWrapper;40]:5
+	                               GATHER_ND	    4.128	    4.226	  0.064%	  0.165%	     0.000	        1	[wrapper.VDAInitWrapper;41]:7
+	                            BROADCAST_TO	    0.081	    0.084	  0.001%	  0.166%	     0.000	        1	[wrapper.VDAInitWrapper;43]:9
+	                                 RESHAPE	    0.001	    0.001	  0.000%	  0.166%	     0.000	        1	[wrapper.VDAInitWrapper;44]:10
+	                           CONCATENATION	    3.586	    3.649	  0.055%	  0.222%	     0.000	        1	[wrapper.VDAInitWrapper;45]:11
+	                               GATHER_ND	    4.123	    4.210	  0.064%	  0.286%	     0.000	        1	[wrapper.VDAInitWrapper;46]:12
+	                            BROADCAST_TO	    0.078	    0.085	  0.001%	  0.287%	     0.000	        1	[wrapper.VDAInitWrapper;48]:14
+	                                 RESHAPE	    0.000	    0.001	  0.000%	  0.287%	     0.000	        1	[wrapper.VDAInitWrapper;49]:15
+	                           CONCATENATION	    3.584	    3.646	  0.055%	  0.342%	     0.000	        1	[wrapper.VDAInitWrapper;50]:16
+	                               GATHER_ND	    4.184	    4.221	  0.064%	  0.406%	     0.000	        1	[wrapper.VDAInitWrapper;51]:17
+	                            BROADCAST_TO	    0.080	    0.083	  0.001%	  0.407%	     0.000	        1	[wrapper.VDAInitWrapper;53]:19
+	                                 RESHAPE	    0.000	    0.001	  0.000%	  0.407%	     0.000	        1	[wrapper.VDAInitWrapper;54]:20
+	                           CONCATENATION	    3.588	    3.631	  0.055%	  0.462%	     0.000	        1	[wrapper.VDAInitWrapper;55]:21
+	                               GATHER_ND	    4.121	    4.140	  0.063%	  0.525%	     0.000	        1	[wrapper.VDAInitWrapper;56]:22
+	                            BROADCAST_TO	    1.214	    1.204	  0.018%	  0.543%	     0.000	        1	[wrapper.VDAInitWrapper;65]:31
+	                                 RESHAPE	    0.000	    0.000	  0.000%	  0.543%	     0.000	        1	[wrapper.VDAInitWrapper;66]:32
+	                           CONCATENATION	    3.567	    3.568	  0.054%	  0.597%	     0.000	        1	[wrapper.VDAInitWrapper;67]:33
+	                               GATHER_ND	    4.104	    4.140	  0.063%	  0.660%	     0.000	        1	[wrapper.VDAInitWrapper;68]:34
+	                           CONCATENATION	    3.596	    3.572	  0.054%	  0.714%	     0.000	        1	[wrapper.VDAInitWrapper;70]:36
+	                               GATHER_ND	    4.119	    4.141	  0.063%	  0.777%	     0.000	        1	[wrapper.VDAInitWrapper;71]:37
+	                           CONCATENATION	    3.586	    3.571	  0.054%	  0.831%	     0.000	        1	[wrapper.VDAInitWrapper;73]:39
+	                               GATHER_ND	    4.118	    4.143	  0.063%	  0.894%	     0.000	        1	[wrapper.VDAInitWrapper;74]:40
+	                           CONCATENATION	    3.594	    3.568	  0.054%	  0.948%	     0.000	        1	[wrapper.VDAInitWrapper;76]:42
+	                               GATHER_ND	    4.115	    4.131	  0.063%	  1.011%	     0.000	        1	[wrapper.VDAInitWrapper;77]:43
+	                            BROADCAST_TO	    1.216	    1.204	  0.018%	  1.029%	     0.000	        1	[wrapper.VDAInitWrapper;86]:52
+	                                 RESHAPE	    0.001	    0.001	  0.000%	  1.029%	     0.000	        1	[wrapper.VDAInitWrapper;87]:53
+	                           CONCATENATION	    3.566	    3.575	  0.054%	  1.083%	     0.000	        1	[wrapper.VDAInitWrapper;88]:54
+	                               GATHER_ND	    4.193	    4.157	  0.063%	  1.146%	     0.000	        1	[wrapper.VDAInitWrapper;89]:55
+	                           CONCATENATION	    3.566	    3.572	  0.054%	  1.200%	     0.000	        1	[wrapper.VDAInitWrapper;91]:57
+	                               GATHER_ND	    4.137	    4.132	  0.063%	  1.263%	     0.000	        1	[wrapper.VDAInitWrapper;92]:58
+	                           CONCATENATION	    3.582	    3.572	  0.054%	  1.317%	     0.000	        1	[wrapper.VDAInitWrapper;94]:60
+	                               GATHER_ND	    4.096	    4.146	  0.063%	  1.380%	     0.000	        1	[wrapper.VDAInitWrapper;95]:61
+	                           CONCATENATION	    3.587	    3.629	  0.055%	  1.435%	     0.000	        1	[wrapper.VDAInitWrapper;97]:63
+	                               GATHER_ND	    4.102	    4.191	  0.064%	  1.499%	     0.000	        1	[wrapper.VDAInitWrapper;98]:64
+	                            BROADCAST_TO	    1.215	    1.226	  0.019%	  1.517%	     0.000	        1	[wrapper.VDAInitWrapper;107]:73
+	                                 RESHAPE	    0.001	    0.001	  0.000%	  1.517%	     0.000	        1	[wrapper.VDAInitWrapper;108]:74
+	                           CONCATENATION	    3.570	    3.634	  0.055%	  1.572%	     0.000	        1	[wrapper.VDAInitWrapper;109]:75
+	                               GATHER_ND	    4.164	    4.222	  0.064%	  1.636%	     0.000	        1	[wrapper.VDAInitWrapper;110]:76
+	                           CONCATENATION	    3.567	    3.693	  0.056%	  1.692%	     0.000	        1	[wrapper.VDAInitWrapper;112]:78
+	                               GATHER_ND	    4.138	    4.200	  0.064%	  1.756%	     0.000	        1	[wrapper.VDAInitWrapper;113]:79
+	                           CONCATENATION	    3.589	    3.633	  0.055%	  1.811%	     0.000	        1	[wrapper.VDAInitWrapper;115]:81
+	                               GATHER_ND	    4.131	    4.192	  0.064%	  1.874%	     0.000	        1	[wrapper.VDAInitWrapper;116]:82
+	                           CONCATENATION	    3.591	    3.636	  0.055%	  1.930%	     0.000	        1	[wrapper.VDAInitWrapper;118]:84
+	             Resize Bilinear (NHWC, F32)	    2.939	    3.038	  0.046%	  1.976%	     0.000	        1	Delegate/Resize Bilinear (NHWC, F32):47
+	                  Unary Elementwise (NC)	    0.120	    0.114	  0.002%	  1.977%	     0.000	        1	Delegate/Unary Elementwise (NC):46
+	             Resize Bilinear (NHWC, F32)	    1.459	    1.590	  0.024%	  2.001%	     0.000	        1	Delegate/Resize Bilinear (NHWC, F32):45
+	           Convolution (NHWC, F32) IGEMM	  167.093	  169.447	  2.568%	  4.570%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:43
+	             Resize Bilinear (NHWC, F32)	    6.163	    6.151	  0.093%	  4.663%	     0.000	        1	Delegate/Resize Bilinear (NHWC, F32):42
+	           Convolution (NHWC, F32) IGEMM	  112.309	  112.554	  1.706%	  6.369%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:41
+	          Fully Connected (NC, F32) GEMM	   26.888	   27.385	  0.415%	  6.784%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:40
+	             Resize Bilinear (NHWC, F32)	    3.800	    3.831	  0.058%	  6.842%	     0.000	        1	Delegate/Resize Bilinear (NHWC, F32):39
+	           Convolution (NHWC, F32) IGEMM	   55.114	   55.685	  0.844%	  7.686%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:37
+	           Convolution (NHWC, F32) IGEMM	   55.142	   55.622	  0.843%	  8.530%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:36
+	                  Unary Elementwise (NC)	    0.718	    0.718	  0.011%	  8.540%	     0.000	        1	Delegate/Unary Elementwise (NC):35
+	                                     EXP	    0.284	    0.298	  0.005%	  8.545%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_3/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_1;8]:1265
+	                           CONCATENATION	    0.779	    0.822	  0.012%	  8.557%	     0.000	        1	[wrapper.VDAInitWrapper;253]:1328
+	                              REDUCE_MAX	    0.018	    0.018	  0.000%	  8.558%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_3/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_1;5]:1261
+	                                     EXP	    0.286	    0.286	  0.004%	  8.562%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_3/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_0;10]:1230
+	                           CONCATENATION	    0.774	    0.814	  0.012%	  8.574%	     0.000	        1	[wrapper.VDAInitWrapper;252]:1327
+	                              REDUCE_MAX	    0.017	    0.019	  0.000%	  8.575%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_3/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_0;6]:1226
+	                     STABLEHLO_COMPOSITE	    2.580	    2.597	  0.039%	  8.614%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_3/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/torch.nn.modules.normalization.GroupNorm_norm;]:1198
+	             Resize Bilinear (NHWC, F32)	    0.226	    0.582	  0.018%	  8.632%	     0.000	        2	Delegate/Resize Bilinear (NHWC, F32):32
+	           Convolution (NHWC, F32) IGEMM	    3.429	    8.675	  0.263%	  8.895%	     0.000	        2	Delegate/Convolution (NHWC, F32) IGEMM:30
+	           Convolution (NHWC, F32) IGEMM	    3.420	    8.812	  0.267%	  9.162%	     0.000	        2	Delegate/Convolution (NHWC, F32) IGEMM:29
+	                  Unary Elementwise (NC)	    0.028	    0.095	  0.003%	  9.165%	     0.000	        2	Delegate/Unary Elementwise (NC):28
+	                                     EXP	    0.072	    0.071	  0.001%	  9.166%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_2/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_1;8]:1159
+	                           CONCATENATION	    0.191	    0.193	  0.003%	  9.169%	     0.000	        1	[wrapper.VDAInitWrapper;251]:1326
+	                              REDUCE_MAX	    0.009	    0.008	  0.000%	  9.169%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_2/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_1;5]:1155
+	                                     EXP	    0.073	    0.073	  0.001%	  9.170%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_2/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_0;9]:1124
+	                           CONCATENATION	    0.202	    0.199	  0.003%	  9.173%	     0.000	        1	[wrapper.VDAInitWrapper;250]:1325
+	                              REDUCE_MAX	    0.008	    0.008	  0.000%	  9.173%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_2/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_0;6]:1120
+	                     STABLEHLO_COMPOSITE	    0.649	    0.650	  0.010%	  9.183%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_2/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/torch.nn.modules.normalization.GroupNorm_norm;]:1092
+	           Convolution (NHWC, F32) IGEMM	    3.387	    3.394	  0.051%	  9.234%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:64
+	           Convolution (NHWC, F32) IGEMM	    3.410	    3.456	  0.052%	  9.287%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:63
+	                  Unary Elementwise (NC)	    0.046	    0.045	  0.001%	  9.287%	     0.000	        1	Delegate/Unary Elementwise (NC):62
+	          Fully Connected (NC, F32) GEMM	    0.398	    0.403	  0.006%	  9.294%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:61
+	             Resize Bilinear (NHWC, F32)	    0.058	    0.060	  0.001%	  9.294%	     0.000	        1	Delegate/Resize Bilinear (NHWC, F32):60
+	           Convolution (NHWC, F32) IGEMM	    0.873	    0.905	  0.014%	  9.308%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:58
+	           Convolution (NHWC, F32) IGEMM	    0.870	    0.892	  0.014%	  9.322%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:57
+	                  Unary Elementwise (NC)	    0.011	    0.009	  0.000%	  9.322%	     0.000	        1	Delegate/Unary Elementwise (NC):56
+	           Convolution (NHWC, F32) IGEMM	    5.504	    5.550	  0.084%	  9.406%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:55
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	  9.406%	     0.000	        1	Delegate/Copy (NC, X32):52
+	          Fully Connected (NC, F32) GEMM	    3.643	    3.642	  0.055%	  9.461%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:51
+	          Fully Connected (NC, F32) GEMM	   15.064	   14.816	  0.225%	  9.686%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:49
+	                  Unary Elementwise (NC)	    1.544	    1.355	  0.021%	  9.706%	     0.000	        1	Delegate/Unary Elementwise (NC):47
+	                               GATHER_ND	    4.105	    4.187	  0.063%	  9.770%	     0.000	        1	[wrapper.VDAInitWrapper;119]:85
+	                            BROADCAST_TO	    0.010	    0.010	  0.000%	  9.770%	     0.000	        1	[wrapper.VDAInitWrapper;138]:109
+	                            BROADCAST_TO	    0.002	    0.002	  0.000%	  9.770%	     0.000	        1	[wrapper.VDAInitWrapper;139]:110
+	                                 RESHAPE	    0.000	    0.001	  0.000%	  9.770%	     0.000	        1	[wrapper.VDAInitWrapper;140]:111
+	                                 RESHAPE	    0.000	    0.000	  0.000%	  9.770%	     0.000	        1	[wrapper.VDAInitWrapper;141]:112
+	                           CONCATENATION	    0.020	    0.021	  0.000%	  9.770%	     0.000	        1	[wrapper.VDAInitWrapper;142]:113
+	                               GATHER_ND	    0.182	    0.194	  0.003%	  9.773%	     0.000	        1	[wrapper.VDAInitWrapper;143]:114
+	                            BROADCAST_TO	    0.001	    0.002	  0.000%	  9.773%	     0.000	        1	[wrapper.VDAInitWrapper;145]:116
+	                                 RESHAPE	    0.000	    0.001	  0.000%	  9.773%	     0.000	        1	[wrapper.VDAInitWrapper;146]:117
+	                           CONCATENATION	    0.020	    0.020	  0.000%	  9.774%	     0.000	        1	[wrapper.VDAInitWrapper;147]:118
+	                               GATHER_ND	    0.178	    0.181	  0.003%	  9.776%	     0.000	        1	[wrapper.VDAInitWrapper;148]:119
+	                            BROADCAST_TO	    0.002	    0.002	  0.000%	  9.776%	     0.000	        1	[wrapper.VDAInitWrapper;150]:121
+	                                 RESHAPE	    0.000	    0.000	  0.000%	  9.776%	     0.000	        1	[wrapper.VDAInitWrapper;151]:122
+	                           CONCATENATION	    0.019	    0.019	  0.000%	  9.777%	     0.000	        1	[wrapper.VDAInitWrapper;152]:123
+	                               GATHER_ND	    0.177	    0.181	  0.003%	  9.779%	     0.000	        1	[wrapper.VDAInitWrapper;153]:124
+	                            BROADCAST_TO	    0.002	    0.002	  0.000%	  9.779%	     0.000	        1	[wrapper.VDAInitWrapper;155]:126
+	                                 RESHAPE	    0.000	    0.000	  0.000%	  9.779%	     0.000	        1	[wrapper.VDAInitWrapper;156]:127
+	                           CONCATENATION	    0.019	    0.019	  0.000%	  9.780%	     0.000	        1	[wrapper.VDAInitWrapper;157]:128
+	                               GATHER_ND	    0.215	    0.197	  0.003%	  9.783%	     0.000	        1	[wrapper.VDAInitWrapper;158]:129
+	                            BROADCAST_TO	    0.008	    0.008	  0.000%	  9.783%	     0.000	        1	[wrapper.VDAInitWrapper;167]:138
+	                                 RESHAPE	    0.000	    0.000	  0.000%	  9.783%	     0.000	        1	[wrapper.VDAInitWrapper;168]:139
+	                           CONCATENATION	    0.021	    0.020	  0.000%	  9.783%	     0.000	        1	[wrapper.VDAInitWrapper;169]:140
+	                               GATHER_ND	    0.187	    0.196	  0.003%	  9.786%	     0.000	        1	[wrapper.VDAInitWrapper;170]:141
+	                           CONCATENATION	    0.019	    0.020	  0.000%	  9.786%	     0.000	        1	[wrapper.VDAInitWrapper;172]:143
+	                               GATHER_ND	    0.174	    0.183	  0.003%	  9.789%	     0.000	        1	[wrapper.VDAInitWrapper;173]:144
+	                           CONCATENATION	    0.019	    0.019	  0.000%	  9.789%	     0.000	        1	[wrapper.VDAInitWrapper;175]:146
+	                               GATHER_ND	    0.176	    0.183	  0.003%	  9.792%	     0.000	        1	[wrapper.VDAInitWrapper;176]:147
+	                           CONCATENATION	    0.019	    0.019	  0.000%	  9.792%	     0.000	        1	[wrapper.VDAInitWrapper;178]:149
+	                               GATHER_ND	    0.182	    0.188	  0.003%	  9.795%	     0.000	        1	[wrapper.VDAInitWrapper;179]:150
+	                            BROADCAST_TO	    0.008	    0.008	  0.000%	  9.795%	     0.000	        1	[wrapper.VDAInitWrapper;188]:159
+	                                 RESHAPE	    0.001	    0.000	  0.000%	  9.795%	     0.000	        1	[wrapper.VDAInitWrapper;189]:160
+	                           CONCATENATION	    0.019	    0.019	  0.000%	  9.796%	     0.000	        1	[wrapper.VDAInitWrapper;190]:161
+	                               GATHER_ND	    0.177	    0.186	  0.003%	  9.799%	     0.000	        1	[wrapper.VDAInitWrapper;191]:162
+	                           CONCATENATION	    0.019	    0.024	  0.000%	  9.799%	     0.000	        1	[wrapper.VDAInitWrapper;193]:164
+	                               GATHER_ND	    0.176	    0.190	  0.003%	  9.802%	     0.000	        1	[wrapper.VDAInitWrapper;194]:165
+	                           CONCATENATION	    0.020	    0.020	  0.000%	  9.802%	     0.000	        1	[wrapper.VDAInitWrapper;196]:167
+	                               GATHER_ND	    0.167	    0.177	  0.003%	  9.805%	     0.000	        1	[wrapper.VDAInitWrapper;197]:168
+	                           CONCATENATION	    0.019	    0.020	  0.000%	  9.805%	     0.000	        1	[wrapper.VDAInitWrapper;199]:170
+	                               GATHER_ND	    0.164	    0.174	  0.003%	  9.808%	     0.000	        1	[wrapper.VDAInitWrapper;200]:171
+	                            BROADCAST_TO	    0.008	    0.008	  0.000%	  9.808%	     0.000	        1	[wrapper.VDAInitWrapper;209]:180
+	                                 RESHAPE	    0.000	    0.001	  0.000%	  9.808%	     0.000	        1	[wrapper.VDAInitWrapper;210]:181
+	                           CONCATENATION	    0.019	    0.019	  0.000%	  9.808%	     0.000	        1	[wrapper.VDAInitWrapper;211]:182
+	                               GATHER_ND	    0.159	    0.169	  0.003%	  9.811%	     0.000	        1	[wrapper.VDAInitWrapper;212]:183
+	                           CONCATENATION	    0.019	    0.019	  0.000%	  9.811%	     0.000	        1	[wrapper.VDAInitWrapper;214]:185
+	                               GATHER_ND	    0.158	    0.171	  0.003%	  9.814%	     0.000	        1	[wrapper.VDAInitWrapper;215]:186
+	                           CONCATENATION	    0.019	    0.020	  0.000%	  9.814%	     0.000	        1	[wrapper.VDAInitWrapper;217]:188
+	                               GATHER_ND	    0.157	    0.167	  0.003%	  9.816%	     0.000	        1	[wrapper.VDAInitWrapper;218]:189
+	                           CONCATENATION	    0.019	    0.019	  0.000%	  9.817%	     0.000	        1	[wrapper.VDAInitWrapper;220]:191
+	                               GATHER_ND	    0.162	    0.168	  0.003%	  9.819%	     0.000	        1	[wrapper.VDAInitWrapper;221]:192
+	           Transpose (ND, X32) Transpose	    0.854	    0.861	  0.013%	  9.832%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:0
+	           Transpose (ND, X32) Transpose	    0.881	    0.875	  0.013%	  9.846%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:1
+	           Transpose (ND, X32) Transpose	    0.797	    0.823	  0.012%	  9.858%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:2
+	           Transpose (ND, X32) Transpose	    0.809	    0.849	  0.013%	  9.871%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:3
+	                 Binary Elementwise (ND)	    0.477	    0.165	  0.025%	  9.896%	     0.000	       10	Delegate/Binary Elementwise (ND):4
+	                 Binary Elementwise (ND)	    0.491	    0.167	  0.008%	  9.904%	     0.000	        3	Delegate/Binary Elementwise (ND):5
+	                 Binary Elementwise (ND)	    0.566	    0.145	  0.009%	  9.912%	     0.000	        4	Delegate/Binary Elementwise (ND):6
+	                 Binary Elementwise (ND)	    0.469	    0.154	  0.016%	  9.929%	     0.000	        7	Delegate/Binary Elementwise (ND):7
+	                 Binary Elementwise (ND)	    0.586	    0.142	  0.009%	  9.937%	     0.000	        4	Delegate/Binary Elementwise (ND):8
+	                 Binary Elementwise (ND)	    0.490	    0.048	  0.007%	  9.945%	     0.000	       10	Delegate/Binary Elementwise (ND):9
+	                 Binary Elementwise (ND)	    0.558	    0.560	  0.008%	  9.953%	     0.000	        1	Delegate/Binary Elementwise (ND):10
+	           Transpose (ND, X32) Transpose	    0.674	    0.652	  0.010%	  9.963%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:11
+	           Transpose (ND, X32) Transpose	    0.866	    0.858	  0.013%	  9.976%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:12
+	           Transpose (ND, X32) Transpose	    0.869	    0.885	  0.013%	  9.989%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:13
+	           Transpose (ND, X32) Transpose	    0.881	    0.848	  0.013%	 10.002%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:14
+	                 Binary Elementwise (ND)	    0.484	    0.177	  0.011%	 10.013%	     0.000	        4	Delegate/Binary Elementwise (ND):15
+	                 Binary Elementwise (ND)	    0.494	    0.140	  0.015%	 10.028%	     0.000	        7	Delegate/Binary Elementwise (ND):16
+	                 Binary Elementwise (ND)	    0.555	    0.159	  0.017%	 10.045%	     0.000	        7	Delegate/Binary Elementwise (ND):17
+	                 Binary Elementwise (ND)	    0.453	    0.176	  0.011%	 10.055%	     0.000	        4	Delegate/Binary Elementwise (ND):18
+	                 Binary Elementwise (ND)	    0.542	    0.559	  0.008%	 10.064%	     0.000	        1	Delegate/Binary Elementwise (ND):19
+	                 Binary Elementwise (ND)	    0.448	    0.190	  0.011%	 10.075%	     0.000	        4	Delegate/Binary Elementwise (ND):20
+	                 Binary Elementwise (ND)	    0.596	    0.635	  0.039%	 10.114%	     0.000	        4	Delegate/Binary Elementwise (ND):21
+	           Transpose (ND, X32) Transpose	    0.738	    0.804	  0.012%	 10.126%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:22
+	           Transpose (ND, X32) Transpose	    0.727	    0.754	  0.011%	 10.138%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:23
+	           Transpose (ND, X32) Transpose	    0.834	    0.863	  0.013%	 10.151%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:24
+	           Transpose (ND, X32) Transpose	    0.838	    0.850	  0.013%	 10.164%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:25
+	                 Binary Elementwise (ND)	    0.483	    0.148	  0.016%	 10.179%	     0.000	        7	Delegate/Binary Elementwise (ND):26
+	                 Binary Elementwise (ND)	    0.543	    0.193	  0.012%	 10.191%	     0.000	        4	Delegate/Binary Elementwise (ND):27
+	                 Binary Elementwise (ND)	    0.548	    0.561	  0.009%	 10.199%	     0.000	        1	Delegate/Binary Elementwise (ND):28
+	                 Binary Elementwise (ND)	    0.469	    0.128	  0.008%	 10.207%	     0.000	        4	Delegate/Binary Elementwise (ND):29
+	                 Binary Elementwise (ND)	    0.531	    0.276	  0.008%	 10.216%	     0.000	        2	Delegate/Binary Elementwise (ND):30
+	                 Binary Elementwise (ND)	    0.441	    0.177	  0.013%	 10.229%	     0.000	        5	Delegate/Binary Elementwise (ND):31
+	                 Binary Elementwise (ND)	    0.541	    0.550	  0.008%	 10.237%	     0.000	        1	Delegate/Binary Elementwise (ND):32
+	           Transpose (ND, X32) Transpose	    0.821	    0.840	  0.013%	 10.250%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:33
+	           Transpose (ND, X32) Transpose	    0.897	    0.867	  0.013%	 10.263%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:34
+	           Transpose (ND, X32) Transpose	    0.870	    0.885	  0.013%	 10.277%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:35
+	           Transpose (ND, X32) Transpose	    0.846	    0.872	  0.013%	 10.290%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:36
+	                 Binary Elementwise (ND)	    0.477	    0.274	  0.008%	 10.298%	     0.000	        2	Delegate/Binary Elementwise (ND):37
+	                 Binary Elementwise (ND)	    0.479	    0.381	  0.023%	 10.321%	     0.000	        4	Delegate/Binary Elementwise (ND):38
+	                 Binary Elementwise (ND)	    0.560	    0.193	  0.009%	 10.330%	     0.000	        3	Delegate/Binary Elementwise (ND):39
+	                 Binary Elementwise (ND)	    0.613	    0.269	  0.008%	 10.338%	     0.000	        2	Delegate/Binary Elementwise (ND):40
+	                 Binary Elementwise (ND)	    0.562	    0.161	  0.010%	 10.348%	     0.000	        4	Delegate/Binary Elementwise (ND):41
+	                 Binary Elementwise (ND)	    0.501	    0.172	  0.008%	 10.356%	     0.000	        3	Delegate/Binary Elementwise (ND):42
+	                 Binary Elementwise (ND)	    0.552	    0.294	  0.009%	 10.365%	     0.000	        2	Delegate/Binary Elementwise (ND):43
+	                 Binary Elementwise (ND)	    0.461	    0.184	  0.008%	 10.373%	     0.000	        3	Delegate/Binary Elementwise (ND):44
+	                 Binary Elementwise (ND)	    0.482	    0.496	  0.008%	 10.381%	     0.000	        1	Delegate/Binary Elementwise (ND):45
+	                 Binary Elementwise (ND)	    0.562	    0.303	  0.009%	 10.390%	     0.000	        2	Delegate/Binary Elementwise (ND):46
+	                 Binary Elementwise (ND)	    0.480	    0.261	  0.008%	 10.398%	     0.000	        2	Delegate/Binary Elementwise (ND):47
+	                 Binary Elementwise (ND)	    0.533	    0.316	  0.014%	 10.412%	     0.000	        3	Delegate/Binary Elementwise (ND):48
+	                 Binary Elementwise (ND)	    0.436	    0.470	  0.007%	 10.419%	     0.000	        1	Delegate/Binary Elementwise (ND):49
+	                 Binary Elementwise (ND)	    0.530	    0.238	  0.011%	 10.430%	     0.000	        3	Delegate/Binary Elementwise (ND):50
+	                 Binary Elementwise (ND)	    0.538	    0.559	  0.008%	 10.438%	     0.000	        1	Delegate/Binary Elementwise (ND):51
+	                 Binary Elementwise (ND)	    0.524	    0.546	  0.008%	 10.447%	     0.000	        1	Delegate/Binary Elementwise (ND):52
+	           Transpose (ND, X32) Transpose	    0.566	    0.583	  0.009%	 10.456%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:53
+	           Convolution (NHWC, F32) IGEMM	   30.465	   21.295	  0.646%	 11.101%	     0.000	        2	Delegate/Convolution (NHWC, F32) IGEMM:54
+	           Transpose (ND, X32) Transpose	    0.655	    0.703	  0.011%	 11.112%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:55
+	                          Copy (NC, X32)	    0.001	    0.024	  0.001%	 11.112%	     0.000	        2	Delegate/Copy (NC, X32):56
+	           Transpose (ND, X32) Transpose	    0.568	    0.619	  0.009%	 11.122%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:57
+	                          Copy (NC, X32)	    0.192	    0.217	  0.003%	 11.125%	     0.000	        1	Delegate/Copy (NC, X32):58
+	           Transpose (ND, X32) Transpose	    0.775	    0.845	  0.013%	 11.138%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:59
+	           Transpose (ND, X32) Transpose	    0.862	    0.874	  0.013%	 11.151%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:60
+	           Transpose (ND, X32) Transpose	    0.841	    0.902	  0.014%	 11.165%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:61
+	           Transpose (ND, X32) Transpose	    0.839	    0.913	  0.014%	 11.179%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:62
+	                 Binary Elementwise (ND)	    0.318	    0.343	  0.005%	 11.184%	     0.000	        1	Delegate/Binary Elementwise (ND):63
+	                 Binary Elementwise (ND)	    0.320	    0.346	  0.005%	 11.189%	     0.000	        1	Delegate/Binary Elementwise (ND):64
+	                 Binary Elementwise (ND)	    0.411	    0.242	  0.007%	 11.196%	     0.000	        2	Delegate/Binary Elementwise (ND):65
+	                 Binary Elementwise (ND)	    0.281	    0.308	  0.005%	 11.201%	     0.000	        1	Delegate/Binary Elementwise (ND):66
+	                 Binary Elementwise (ND)	    0.401	    0.402	  0.006%	 11.207%	     0.000	        1	Delegate/Binary Elementwise (ND):67
+	                 Binary Elementwise (ND)	    0.306	    0.334	  0.005%	 11.212%	     0.000	        1	Delegate/Binary Elementwise (ND):68
+	                 Binary Elementwise (ND)	    0.375	    0.408	  0.006%	 11.218%	     0.000	        1	Delegate/Binary Elementwise (ND):69
+	           Transpose (ND, X32) Transpose	    0.846	    0.909	  0.014%	 11.232%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:70
+	           Transpose (ND, X32) Transpose	    0.856	    0.897	  0.014%	 11.246%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:71
+	           Transpose (ND, X32) Transpose	    0.876	    0.930	  0.014%	 11.260%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:72
+	           Transpose (ND, X32) Transpose	    0.920	    0.936	  0.014%	 11.274%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:73
+	                 Binary Elementwise (ND)	    0.317	    0.328	  0.005%	 11.279%	     0.000	        1	Delegate/Binary Elementwise (ND):74
+	                 Binary Elementwise (ND)	    0.324	    0.335	  0.005%	 11.284%	     0.000	        1	Delegate/Binary Elementwise (ND):75
+	                 Binary Elementwise (ND)	    0.397	    0.415	  0.006%	 11.290%	     0.000	        1	Delegate/Binary Elementwise (ND):76
+	                 Binary Elementwise (ND)	    0.295	    0.302	  0.005%	 11.295%	     0.000	        1	Delegate/Binary Elementwise (ND):77
+	                 Binary Elementwise (ND)	    0.362	    0.383	  0.006%	 11.301%	     0.000	        1	Delegate/Binary Elementwise (ND):78
+	                 Binary Elementwise (ND)	    0.313	    0.326	  0.005%	 11.306%	     0.000	        1	Delegate/Binary Elementwise (ND):79
+	                 Binary Elementwise (ND)	    0.370	    0.380	  0.006%	 11.312%	     0.000	        1	Delegate/Binary Elementwise (ND):80
+	           Transpose (ND, X32) Transpose	    0.854	    0.907	  0.014%	 11.325%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:81
+	           Transpose (ND, X32) Transpose	    0.911	    0.928	  0.014%	 11.339%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:82
+	           Transpose (ND, X32) Transpose	    0.869	    0.910	  0.014%	 11.353%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:83
+	           Transpose (ND, X32) Transpose	    0.878	    0.939	  0.014%	 11.367%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:84
+	                 Binary Elementwise (ND)	    0.308	    0.327	  0.005%	 11.372%	     0.000	        1	Delegate/Binary Elementwise (ND):85
+	                 Binary Elementwise (ND)	    0.312	    0.329	  0.005%	 11.377%	     0.000	        1	Delegate/Binary Elementwise (ND):86
+	                 Binary Elementwise (ND)	    0.384	    0.412	  0.006%	 11.384%	     0.000	        1	Delegate/Binary Elementwise (ND):87
+	                 Binary Elementwise (ND)	    0.296	    0.311	  0.005%	 11.388%	     0.000	        1	Delegate/Binary Elementwise (ND):88
+	                 Binary Elementwise (ND)	    0.359	    0.376	  0.006%	 11.394%	     0.000	        1	Delegate/Binary Elementwise (ND):89
+	                 Binary Elementwise (ND)	    0.351	    0.333	  0.005%	 11.399%	     0.000	        1	Delegate/Binary Elementwise (ND):90
+	                 Binary Elementwise (ND)	    0.364	    0.381	  0.006%	 11.405%	     0.000	        1	Delegate/Binary Elementwise (ND):91
+	           Transpose (ND, X32) Transpose	    0.828	    0.883	  0.013%	 11.418%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:92
+	           Transpose (ND, X32) Transpose	    0.866	    0.952	  0.014%	 11.433%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:93
+	           Transpose (ND, X32) Transpose	    0.840	    0.907	  0.014%	 11.446%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:94
+	           Transpose (ND, X32) Transpose	    0.906	    0.931	  0.014%	 11.461%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:95
+	                 Binary Elementwise (ND)	    0.312	    0.333	  0.005%	 11.466%	     0.000	        1	Delegate/Binary Elementwise (ND):96
+	                 Binary Elementwise (ND)	    0.311	    0.333	  0.005%	 11.471%	     0.000	        1	Delegate/Binary Elementwise (ND):97
+	                 Binary Elementwise (ND)	    0.385	    0.408	  0.006%	 11.477%	     0.000	        1	Delegate/Binary Elementwise (ND):98
+	                 Binary Elementwise (ND)	    0.308	    0.318	  0.005%	 11.482%	     0.000	        1	Delegate/Binary Elementwise (ND):99
+	                 Binary Elementwise (ND)	    0.342	    0.378	  0.006%	 11.487%	     0.000	        1	Delegate/Binary Elementwise (ND):100
+	                 Binary Elementwise (ND)	    0.321	    0.342	  0.005%	 11.493%	     0.000	        1	Delegate/Binary Elementwise (ND):101
+	                 Binary Elementwise (ND)	    0.348	    0.377	  0.006%	 11.498%	     0.000	        1	Delegate/Binary Elementwise (ND):102
+	                 Binary Elementwise (ND)	    0.314	    0.321	  0.005%	 11.503%	     0.000	        1	Delegate/Binary Elementwise (ND):103
+	                 Binary Elementwise (ND)	    0.331	    0.339	  0.005%	 11.508%	     0.000	        1	Delegate/Binary Elementwise (ND):104
+	                 Binary Elementwise (ND)	    0.400	    0.416	  0.006%	 11.515%	     0.000	        1	Delegate/Binary Elementwise (ND):105
+	                 Binary Elementwise (ND)	    0.312	    0.320	  0.005%	 11.519%	     0.000	        1	Delegate/Binary Elementwise (ND):106
+	                 Binary Elementwise (ND)	    0.403	    0.384	  0.006%	 11.525%	     0.000	        1	Delegate/Binary Elementwise (ND):107
+	                 Binary Elementwise (ND)	    0.294	    0.305	  0.005%	 11.530%	     0.000	        1	Delegate/Binary Elementwise (ND):108
+	                 Binary Elementwise (ND)	    0.363	    0.385	  0.006%	 11.536%	     0.000	        1	Delegate/Binary Elementwise (ND):109
+	           Transpose (ND, X32) Transpose	    0.638	    0.658	  0.010%	 11.546%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:110
+	                          Copy (NC, X32)	    0.001	    0.000	  0.000%	 11.546%	     0.000	        1	Delegate/Copy (NC, X32):111
+	                          Copy (NC, X32)	    0.214	    0.230	  0.003%	 11.549%	     0.000	        1	Delegate/Copy (NC, X32):112
+	                 Binary Elementwise (ND)	    0.385	    0.407	  0.006%	 11.555%	     0.000	        1	Delegate/Binary Elementwise (ND):113
+	                          Mean (ND) Mean	    0.194	    0.204	  0.003%	 11.558%	     0.000	        1	Delegate/Mean (ND) Mean:114
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 11.558%	     0.000	        1	Delegate/Copy (NC, X32):115
+	                 Binary Elementwise (ND)	    0.283	    0.293	  0.004%	 11.563%	     0.000	        1	Delegate/Binary Elementwise (ND):116
+	                          Mean (ND) Mean	    0.194	    0.199	  0.003%	 11.566%	     0.000	        1	Delegate/Mean (ND) Mean:117
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 11.566%	     0.000	        1	Delegate/Binary Elementwise (ND):118
+	                  Unary Elementwise (NC)	    0.002	    0.003	  0.000%	 11.566%	     0.000	        1	Delegate/Unary Elementwise (NC):119
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 11.566%	     0.000	        1	Delegate/Binary Elementwise (ND):120
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 11.566%	     0.000	        1	Delegate/Binary Elementwise (ND):121
+	                          Copy (NC, X32)	    0.000	    0.001	  0.000%	 11.566%	     0.000	        1	Delegate/Copy (NC, X32):122
+	                 Binary Elementwise (ND)	    0.255	    0.269	  0.004%	 11.570%	     0.000	        1	Delegate/Binary Elementwise (ND):123
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 11.570%	     0.000	        1	Delegate/Copy (NC, X32):124
+	                 Binary Elementwise (ND)	    0.232	    0.243	  0.004%	 11.574%	     0.000	        1	Delegate/Binary Elementwise (ND):125
+	          Fully Connected (NC, F32) GEMM	   46.168	   47.236	  0.716%	 12.290%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:126
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 12.290%	     0.000	        1	Delegate/Copy (NC, X32):127
+	           Transpose (ND, X32) Transpose	    0.821	    0.811	  0.012%	 12.302%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:128
+	                         Slice (ND, X32)	    0.238	    0.213	  0.003%	 12.305%	     0.000	        1	Delegate/Slice (ND, X32):129
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 12.305%	     0.000	        1	Delegate/Copy (NC, X32):130
+	                 Binary Elementwise (ND)	    0.250	    0.236	  0.004%	 12.309%	     0.000	        1	Delegate/Binary Elementwise (ND):131
+	                         Slice (ND, X32)	    0.284	    0.272	  0.004%	 12.313%	     0.000	        1	Delegate/Slice (ND, X32):132
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 12.313%	     0.000	        1	Delegate/Copy (NC, X32):133
+	                         Slice (ND, X32)	    0.274	    0.271	  0.004%	 12.317%	     0.000	        1	Delegate/Slice (ND, X32):134
+	           Transpose (ND, X32) Transpose	    0.719	    0.729	  0.011%	 12.328%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:135
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 12.328%	     0.000	        1	Delegate/Copy (NC, X32):136
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 12.328%	     0.000	        1	Delegate/Copy (NC, X32):137
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.054	   97.572	  1.479%	 13.807%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:138
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 13.807%	     0.000	        1	Delegate/Copy (NC, X32):139
+	                       Softmax (NC, F32)	   43.662	   43.812	  0.664%	 14.471%	     0.000	        1	Delegate/Softmax (NC, F32):140
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 14.471%	     0.000	        1	Delegate/Copy (NC, X32):141
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 14.471%	     0.000	        1	Delegate/Copy (NC, X32):142
+	    Batch Matrix Multiply (NC, F32) GEMM	   98.998	   99.708	  1.511%	 15.983%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:143
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 15.983%	     0.000	        1	Delegate/Copy (NC, X32):144
+	           Transpose (ND, X32) Transpose	    0.251	    0.254	  0.004%	 15.986%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:145
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 15.986%	     0.000	        1	Delegate/Copy (NC, X32):146
+	          Fully Connected (NC, F32) GEMM	   14.754	   14.969	  0.227%	 16.213%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:147
+	                 Binary Elementwise (ND)	    0.351	    0.341	  0.005%	 16.218%	     0.000	        1	Delegate/Binary Elementwise (ND):148
+	                 Binary Elementwise (ND)	    0.312	    0.335	  0.005%	 16.224%	     0.000	        1	Delegate/Binary Elementwise (ND):149
+	                          Mean (ND) Mean	    0.187	    0.199	  0.003%	 16.227%	     0.000	        1	Delegate/Mean (ND) Mean:150
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 16.227%	     0.000	        1	Delegate/Copy (NC, X32):151
+	                 Binary Elementwise (ND)	    0.259	    0.261	  0.004%	 16.231%	     0.000	        1	Delegate/Binary Elementwise (ND):152
+	                          Mean (ND) Mean	    0.180	    0.197	  0.003%	 16.234%	     0.000	        1	Delegate/Mean (ND) Mean:153
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 16.234%	     0.000	        1	Delegate/Binary Elementwise (ND):154
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 16.234%	     0.000	        1	Delegate/Unary Elementwise (NC):155
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 16.234%	     0.000	        1	Delegate/Binary Elementwise (ND):156
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 16.234%	     0.000	        1	Delegate/Binary Elementwise (ND):157
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 16.234%	     0.000	        1	Delegate/Copy (NC, X32):158
+	                 Binary Elementwise (ND)	    0.234	    0.244	  0.004%	 16.237%	     0.000	        1	Delegate/Binary Elementwise (ND):159
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 16.237%	     0.000	        1	Delegate/Copy (NC, X32):160
+	                 Binary Elementwise (ND)	    0.214	    0.229	  0.003%	 16.241%	     0.000	        1	Delegate/Binary Elementwise (ND):161
+	          Fully Connected (NC, F32) GEMM	   59.849	   61.125	  0.927%	 17.167%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:162
+	                  Unary Elementwise (NC)	    5.188	    5.191	  0.079%	 17.246%	     0.000	        1	Delegate/Unary Elementwise (NC):163
+	          Fully Connected (NC, F32) GEMM	   60.039	   60.478	  0.917%	 18.163%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:164
+	                 Binary Elementwise (ND)	    0.204	    0.210	  0.003%	 18.166%	     0.000	        1	Delegate/Binary Elementwise (ND):165
+	                 Binary Elementwise (ND)	    0.352	    0.334	  0.005%	 18.171%	     0.000	        1	Delegate/Binary Elementwise (ND):166
+	                          Mean (ND) Mean	    0.191	    0.194	  0.003%	 18.174%	     0.000	        1	Delegate/Mean (ND) Mean:167
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 18.174%	     0.000	        1	Delegate/Copy (NC, X32):168
+	                 Binary Elementwise (ND)	    0.265	    0.273	  0.004%	 18.178%	     0.000	        1	Delegate/Binary Elementwise (ND):169
+	                          Mean (ND) Mean	    0.183	    0.185	  0.003%	 18.181%	     0.000	        1	Delegate/Mean (ND) Mean:170
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 18.181%	     0.000	        1	Delegate/Binary Elementwise (ND):171
+	                  Unary Elementwise (NC)	    0.003	    0.002	  0.000%	 18.181%	     0.000	        1	Delegate/Unary Elementwise (NC):172
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 18.181%	     0.000	        1	Delegate/Binary Elementwise (ND):173
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 18.181%	     0.000	        1	Delegate/Binary Elementwise (ND):174
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 18.181%	     0.000	        1	Delegate/Copy (NC, X32):175
+	                 Binary Elementwise (ND)	    0.253	    0.261	  0.004%	 18.185%	     0.000	        1	Delegate/Binary Elementwise (ND):176
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 18.185%	     0.000	        1	Delegate/Copy (NC, X32):177
+	                 Binary Elementwise (ND)	    0.215	    0.235	  0.004%	 18.188%	     0.000	        1	Delegate/Binary Elementwise (ND):178
+	          Fully Connected (NC, F32) GEMM	   44.647	   44.737	  0.678%	 18.867%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:179
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 18.867%	     0.000	        1	Delegate/Copy (NC, X32):180
+	           Transpose (ND, X32) Transpose	    0.857	    0.886	  0.013%	 18.880%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:181
+	                         Slice (ND, X32)	    0.250	    0.257	  0.004%	 18.884%	     0.000	        1	Delegate/Slice (ND, X32):182
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 18.884%	     0.000	        1	Delegate/Copy (NC, X32):183
+	                 Binary Elementwise (ND)	    0.222	    0.232	  0.004%	 18.887%	     0.000	        1	Delegate/Binary Elementwise (ND):184
+	                         Slice (ND, X32)	    0.248	    0.255	  0.004%	 18.891%	     0.000	        1	Delegate/Slice (ND, X32):185
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 18.891%	     0.000	        1	Delegate/Copy (NC, X32):186
+	                         Slice (ND, X32)	    0.247	    0.253	  0.004%	 18.895%	     0.000	        1	Delegate/Slice (ND, X32):187
+	           Transpose (ND, X32) Transpose	    0.696	    0.686	  0.010%	 18.905%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:188
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 18.905%	     0.000	        1	Delegate/Copy (NC, X32):189
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 18.905%	     0.000	        1	Delegate/Copy (NC, X32):190
+	    Batch Matrix Multiply (NC, F32) GEMM	   96.821	   97.777	  1.482%	 20.388%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:191
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 20.388%	     0.000	        1	Delegate/Copy (NC, X32):192
+	                       Softmax (NC, F32)	   43.779	   44.965	  0.682%	 21.069%	     0.000	        1	Delegate/Softmax (NC, F32):193
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 21.069%	     0.000	        1	Delegate/Copy (NC, X32):194
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 21.069%	     0.000	        1	Delegate/Copy (NC, X32):195
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.357	  101.117	  1.533%	 22.602%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:196
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 22.602%	     0.000	        1	Delegate/Copy (NC, X32):197
+	           Transpose (ND, X32) Transpose	    0.249	    0.263	  0.004%	 22.606%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:198
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.606%	     0.000	        1	Delegate/Copy (NC, X32):199
+	          Fully Connected (NC, F32) GEMM	   14.693	   15.076	  0.229%	 22.834%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:200
+	                 Binary Elementwise (ND)	    0.311	    0.328	  0.005%	 22.839%	     0.000	        1	Delegate/Binary Elementwise (ND):201
+	                 Binary Elementwise (ND)	    0.316	    0.346	  0.005%	 22.845%	     0.000	        1	Delegate/Binary Elementwise (ND):202
+	                          Mean (ND) Mean	    0.221	    0.204	  0.003%	 22.848%	     0.000	        1	Delegate/Mean (ND) Mean:203
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 22.848%	     0.000	        1	Delegate/Copy (NC, X32):204
+	                 Binary Elementwise (ND)	    0.264	    0.278	  0.004%	 22.852%	     0.000	        1	Delegate/Binary Elementwise (ND):205
+	                          Mean (ND) Mean	    0.174	    0.188	  0.003%	 22.855%	     0.000	        1	Delegate/Mean (ND) Mean:206
+	                 Binary Elementwise (ND)	    0.000	    0.001	  0.000%	 22.855%	     0.000	        1	Delegate/Binary Elementwise (ND):207
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 22.855%	     0.000	        1	Delegate/Unary Elementwise (NC):208
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.855%	     0.000	        1	Delegate/Binary Elementwise (ND):209
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 22.855%	     0.000	        1	Delegate/Binary Elementwise (ND):210
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.855%	     0.000	        1	Delegate/Copy (NC, X32):211
+	                 Binary Elementwise (ND)	    0.250	    0.273	  0.004%	 22.859%	     0.000	        1	Delegate/Binary Elementwise (ND):212
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.859%	     0.000	        1	Delegate/Copy (NC, X32):213
+	                 Binary Elementwise (ND)	    0.217	    0.241	  0.004%	 22.863%	     0.000	        1	Delegate/Binary Elementwise (ND):214
+	          Fully Connected (NC, F32) GEMM	   59.525	   61.251	  0.928%	 23.791%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:215
+	                  Unary Elementwise (NC)	    5.183	    5.280	  0.080%	 23.871%	     0.000	        1	Delegate/Unary Elementwise (NC):216
+	          Fully Connected (NC, F32) GEMM	   60.122	   61.213	  0.928%	 24.799%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:217
+	                 Binary Elementwise (ND)	    0.209	    0.220	  0.003%	 24.802%	     0.000	        1	Delegate/Binary Elementwise (ND):218
+	                 Binary Elementwise (ND)	    0.320	    0.341	  0.005%	 24.807%	     0.000	        1	Delegate/Binary Elementwise (ND):219
+	                          Mean (ND) Mean	    0.181	    0.192	  0.003%	 24.810%	     0.000	        1	Delegate/Mean (ND) Mean:220
+	                          Copy (NC, X32)	    0.000	    0.001	  0.000%	 24.810%	     0.000	        1	Delegate/Copy (NC, X32):221
+	                 Binary Elementwise (ND)	    0.257	    0.274	  0.004%	 24.815%	     0.000	        1	Delegate/Binary Elementwise (ND):222
+	                          Mean (ND) Mean	    0.184	    0.189	  0.003%	 24.817%	     0.000	        1	Delegate/Mean (ND) Mean:223
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 24.817%	     0.000	        1	Delegate/Binary Elementwise (ND):224
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 24.817%	     0.000	        1	Delegate/Unary Elementwise (NC):225
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 24.817%	     0.000	        1	Delegate/Binary Elementwise (ND):226
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 24.817%	     0.000	        1	Delegate/Binary Elementwise (ND):227
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 24.817%	     0.000	        1	Delegate/Copy (NC, X32):228
+	                 Binary Elementwise (ND)	    0.242	    0.253	  0.004%	 24.821%	     0.000	        1	Delegate/Binary Elementwise (ND):229
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 24.821%	     0.000	        1	Delegate/Copy (NC, X32):230
+	                 Binary Elementwise (ND)	    0.206	    0.213	  0.003%	 24.825%	     0.000	        1	Delegate/Binary Elementwise (ND):231
+	          Fully Connected (NC, F32) GEMM	   44.982	   45.629	  0.692%	 25.516%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:232
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 25.516%	     0.000	        1	Delegate/Copy (NC, X32):233
+	           Transpose (ND, X32) Transpose	    0.781	    0.822	  0.012%	 25.529%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:234
+	                         Slice (ND, X32)	    0.201	    0.216	  0.003%	 25.532%	     0.000	        1	Delegate/Slice (ND, X32):235
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 25.532%	     0.000	        1	Delegate/Copy (NC, X32):236
+	                 Binary Elementwise (ND)	    0.236	    0.237	  0.004%	 25.535%	     0.000	        1	Delegate/Binary Elementwise (ND):237
+	                         Slice (ND, X32)	    0.257	    0.269	  0.004%	 25.540%	     0.000	        1	Delegate/Slice (ND, X32):238
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 25.540%	     0.000	        1	Delegate/Copy (NC, X32):239
+	                         Slice (ND, X32)	    0.253	    0.263	  0.004%	 25.544%	     0.000	        1	Delegate/Slice (ND, X32):240
+	           Transpose (ND, X32) Transpose	    0.691	    0.730	  0.011%	 25.555%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:241
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 25.555%	     0.000	        1	Delegate/Copy (NC, X32):242
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 25.555%	     0.000	        1	Delegate/Copy (NC, X32):243
+	    Batch Matrix Multiply (NC, F32) GEMM	   97.026	   97.348	  1.476%	 27.030%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:244
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 27.030%	     0.000	        1	Delegate/Copy (NC, X32):245
+	                       Softmax (NC, F32)	   43.823	   44.013	  0.667%	 27.697%	     0.000	        1	Delegate/Softmax (NC, F32):246
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 27.697%	     0.000	        1	Delegate/Copy (NC, X32):247
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 27.697%	     0.000	        1	Delegate/Copy (NC, X32):248
+	    Batch Matrix Multiply (NC, F32) GEMM	  103.067	  100.951	  1.530%	 29.228%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:249
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 29.228%	     0.000	        1	Delegate/Copy (NC, X32):250
+	           Transpose (ND, X32) Transpose	    0.248	    0.251	  0.004%	 29.231%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:251
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 29.231%	     0.000	        1	Delegate/Copy (NC, X32):252
+	          Fully Connected (NC, F32) GEMM	   14.713	   15.174	  0.230%	 29.461%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:253
+	                 Binary Elementwise (ND)	    0.335	    0.329	  0.005%	 29.466%	     0.000	        1	Delegate/Binary Elementwise (ND):254
+	                 Binary Elementwise (ND)	    0.316	    0.349	  0.005%	 29.472%	     0.000	        1	Delegate/Binary Elementwise (ND):255
+	                          Mean (ND) Mean	    0.175	    0.195	  0.003%	 29.475%	     0.000	        1	Delegate/Mean (ND) Mean:256
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 29.475%	     0.000	        1	Delegate/Copy (NC, X32):257
+	                 Binary Elementwise (ND)	    0.240	    0.268	  0.004%	 29.479%	     0.000	        1	Delegate/Binary Elementwise (ND):258
+	                          Mean (ND) Mean	    0.175	    0.192	  0.003%	 29.482%	     0.000	        1	Delegate/Mean (ND) Mean:259
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 29.482%	     0.000	        1	Delegate/Binary Elementwise (ND):260
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 29.482%	     0.000	        1	Delegate/Unary Elementwise (NC):261
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 29.482%	     0.000	        1	Delegate/Binary Elementwise (ND):262
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 29.482%	     0.000	        1	Delegate/Binary Elementwise (ND):263
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 29.482%	     0.000	        1	Delegate/Copy (NC, X32):264
+	                 Binary Elementwise (ND)	    0.229	    0.248	  0.004%	 29.485%	     0.000	        1	Delegate/Binary Elementwise (ND):265
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 29.485%	     0.000	        1	Delegate/Copy (NC, X32):266
+	                 Binary Elementwise (ND)	    0.211	    0.223	  0.003%	 29.489%	     0.000	        1	Delegate/Binary Elementwise (ND):267
+	          Fully Connected (NC, F32) GEMM	   60.165	   61.558	  0.933%	 30.422%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:268
+	                  Unary Elementwise (NC)	    5.203	    5.287	  0.080%	 30.502%	     0.000	        1	Delegate/Unary Elementwise (NC):269
+	          Fully Connected (NC, F32) GEMM	   59.827	   62.630	  0.949%	 31.451%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:270
+	                 Binary Elementwise (ND)	    0.210	    0.220	  0.003%	 31.455%	     0.000	        1	Delegate/Binary Elementwise (ND):271
+	                 Binary Elementwise (ND)	    0.320	    0.344	  0.005%	 31.460%	     0.000	        1	Delegate/Binary Elementwise (ND):272
+	                          Mean (ND) Mean	    0.179	    0.200	  0.003%	 31.463%	     0.000	        1	Delegate/Mean (ND) Mean:273
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 31.463%	     0.000	        1	Delegate/Copy (NC, X32):274
+	                 Binary Elementwise (ND)	    0.246	    0.281	  0.004%	 31.467%	     0.000	        1	Delegate/Binary Elementwise (ND):275
+	                          Mean (ND) Mean	    0.179	    0.192	  0.003%	 31.470%	     0.000	        1	Delegate/Mean (ND) Mean:276
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 31.470%	     0.000	        1	Delegate/Binary Elementwise (ND):277
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 31.470%	     0.000	        1	Delegate/Unary Elementwise (NC):278
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 31.470%	     0.000	        1	Delegate/Binary Elementwise (ND):279
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 31.470%	     0.000	        1	Delegate/Binary Elementwise (ND):280
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 31.470%	     0.000	        1	Delegate/Copy (NC, X32):281
+	                 Binary Elementwise (ND)	    0.236	    0.260	  0.004%	 31.474%	     0.000	        1	Delegate/Binary Elementwise (ND):282
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 31.474%	     0.000	        1	Delegate/Copy (NC, X32):283
+	                 Binary Elementwise (ND)	    0.241	    0.268	  0.004%	 31.478%	     0.000	        1	Delegate/Binary Elementwise (ND):284
+	          Fully Connected (NC, F32) GEMM	   44.977	   46.498	  0.705%	 32.183%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:285
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 32.183%	     0.000	        1	Delegate/Copy (NC, X32):286
+	           Transpose (ND, X32) Transpose	    0.911	    0.942	  0.014%	 32.197%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:287
+	                         Slice (ND, X32)	    0.253	    0.268	  0.004%	 32.201%	     0.000	        1	Delegate/Slice (ND, X32):288
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 32.201%	     0.000	        1	Delegate/Copy (NC, X32):289
+	                 Binary Elementwise (ND)	    0.231	    0.237	  0.004%	 32.205%	     0.000	        1	Delegate/Binary Elementwise (ND):290
+	                         Slice (ND, X32)	    0.254	    0.275	  0.004%	 32.209%	     0.000	        1	Delegate/Slice (ND, X32):291
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 32.209%	     0.000	        1	Delegate/Copy (NC, X32):292
+	                         Slice (ND, X32)	    0.246	    0.273	  0.004%	 32.213%	     0.000	        1	Delegate/Slice (ND, X32):293
+	           Transpose (ND, X32) Transpose	    0.678	    0.713	  0.011%	 32.224%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:294
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 32.224%	     0.000	        1	Delegate/Copy (NC, X32):295
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 32.224%	     0.000	        1	Delegate/Copy (NC, X32):296
+	    Batch Matrix Multiply (NC, F32) GEMM	   96.908	   99.884	  1.514%	 33.738%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:297
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 33.738%	     0.000	        1	Delegate/Copy (NC, X32):298
+	                       Softmax (NC, F32)	   43.790	   44.247	  0.671%	 34.409%	     0.000	        1	Delegate/Softmax (NC, F32):299
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 34.409%	     0.000	        1	Delegate/Copy (NC, X32):300
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 34.409%	     0.000	        1	Delegate/Copy (NC, X32):301
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.317	  100.523	  1.524%	 35.933%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:302
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 35.933%	     0.000	        1	Delegate/Copy (NC, X32):303
+	           Transpose (ND, X32) Transpose	    0.257	    0.255	  0.004%	 35.936%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:304
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 35.936%	     0.000	        1	Delegate/Copy (NC, X32):305
+	          Fully Connected (NC, F32) GEMM	   17.148	   15.233	  0.231%	 36.167%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:306
+	                 Binary Elementwise (ND)	    0.374	    0.330	  0.005%	 36.172%	     0.000	        1	Delegate/Binary Elementwise (ND):307
+	                 Binary Elementwise (ND)	    0.382	    0.333	  0.005%	 36.177%	     0.000	        1	Delegate/Binary Elementwise (ND):308
+	                          Mean (ND) Mean	    0.205	    0.195	  0.003%	 36.180%	     0.000	        1	Delegate/Mean (ND) Mean:309
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 36.180%	     0.000	        1	Delegate/Copy (NC, X32):310
+	                 Binary Elementwise (ND)	    0.263	    0.259	  0.004%	 36.184%	     0.000	        1	Delegate/Binary Elementwise (ND):311
+	                          Mean (ND) Mean	    0.192	    0.183	  0.003%	 36.187%	     0.000	        1	Delegate/Mean (ND) Mean:312
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 36.187%	     0.000	        1	Delegate/Binary Elementwise (ND):313
+	                  Unary Elementwise (NC)	    0.003	    0.002	  0.000%	 36.187%	     0.000	        1	Delegate/Unary Elementwise (NC):314
+	                 Binary Elementwise (ND)	    0.001	    0.000	  0.000%	 36.187%	     0.000	        1	Delegate/Binary Elementwise (ND):315
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 36.187%	     0.000	        1	Delegate/Binary Elementwise (ND):316
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 36.187%	     0.000	        1	Delegate/Copy (NC, X32):317
+	                 Binary Elementwise (ND)	    0.241	    0.241	  0.004%	 36.191%	     0.000	        1	Delegate/Binary Elementwise (ND):318
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 36.191%	     0.000	        1	Delegate/Copy (NC, X32):319
+	                 Binary Elementwise (ND)	    0.231	    0.217	  0.003%	 36.194%	     0.000	        1	Delegate/Binary Elementwise (ND):320
+	          Fully Connected (NC, F32) GEMM	   62.978	   61.254	  0.928%	 37.123%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:321
+	                  Unary Elementwise (NC)	    5.186	    5.278	  0.080%	 37.203%	     0.000	        1	Delegate/Unary Elementwise (NC):322
+	          Fully Connected (NC, F32) GEMM	   63.108	   60.455	  0.916%	 38.119%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:323
+	                 Binary Elementwise (ND)	    0.238	    0.218	  0.003%	 38.122%	     0.000	        1	Delegate/Binary Elementwise (ND):324
+	                 Binary Elementwise (ND)	    0.392	    0.336	  0.005%	 38.127%	     0.000	        1	Delegate/Binary Elementwise (ND):325
+	                          Mean (ND) Mean	    0.220	    0.195	  0.003%	 38.130%	     0.000	        1	Delegate/Mean (ND) Mean:326
+	                          Copy (NC, X32)	    0.002	    0.001	  0.000%	 38.130%	     0.000	        1	Delegate/Copy (NC, X32):327
+	                 Binary Elementwise (ND)	    0.319	    0.262	  0.004%	 38.134%	     0.000	        1	Delegate/Binary Elementwise (ND):328
+	                          Mean (ND) Mean	    0.204	    0.193	  0.003%	 38.137%	     0.000	        1	Delegate/Mean (ND) Mean:329
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 38.137%	     0.000	        1	Delegate/Binary Elementwise (ND):330
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 38.137%	     0.000	        1	Delegate/Unary Elementwise (NC):331
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 38.137%	     0.000	        1	Delegate/Binary Elementwise (ND):332
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 38.137%	     0.000	        1	Delegate/Binary Elementwise (ND):333
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 38.137%	     0.000	        1	Delegate/Copy (NC, X32):334
+	                 Binary Elementwise (ND)	    0.288	    0.255	  0.004%	 38.141%	     0.000	        1	Delegate/Binary Elementwise (ND):335
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 38.141%	     0.000	        1	Delegate/Copy (NC, X32):336
+	                 Binary Elementwise (ND)	    0.254	    0.226	  0.003%	 38.145%	     0.000	        1	Delegate/Binary Elementwise (ND):337
+	          Fully Connected (NC, F32) GEMM	   45.051	   44.895	  0.681%	 38.825%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:338
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 38.825%	     0.000	        1	Delegate/Copy (NC, X32):339
+	           Transpose (ND, X32) Transpose	    1.114	    0.907	  0.014%	 38.839%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:340
+	                         Slice (ND, X32)	    0.286	    0.233	  0.004%	 38.842%	     0.000	        1	Delegate/Slice (ND, X32):341
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 38.842%	     0.000	        1	Delegate/Copy (NC, X32):342
+	                 Binary Elementwise (ND)	    0.215	    0.174	  0.003%	 38.845%	     0.000	        1	Delegate/Binary Elementwise (ND):343
+	                         Slice (ND, X32)	    0.319	    0.262	  0.004%	 38.849%	     0.000	        1	Delegate/Slice (ND, X32):344
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 38.849%	     0.000	        1	Delegate/Copy (NC, X32):345
+	                         Slice (ND, X32)	    0.316	    0.261	  0.004%	 38.853%	     0.000	        1	Delegate/Slice (ND, X32):346
+	           Transpose (ND, X32) Transpose	    0.794	    0.719	  0.011%	 38.864%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:347
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 38.864%	     0.000	        1	Delegate/Copy (NC, X32):348
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 38.864%	     0.000	        1	Delegate/Copy (NC, X32):349
+	    Batch Matrix Multiply (NC, F32) GEMM	   97.653	   98.338	  1.491%	 40.354%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:350
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 40.354%	     0.000	        1	Delegate/Copy (NC, X32):351
+	                       Softmax (NC, F32)	   49.138	   44.927	  0.681%	 41.035%	     0.000	        1	Delegate/Softmax (NC, F32):352
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 41.035%	     0.000	        1	Delegate/Copy (NC, X32):353
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 41.035%	     0.000	        1	Delegate/Copy (NC, X32):354
+	    Batch Matrix Multiply (NC, F32) GEMM	  113.686	  104.752	  1.588%	 42.623%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:355
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 42.623%	     0.000	        1	Delegate/Copy (NC, X32):356
+	           Transpose (ND, X32) Transpose	    0.260	    0.269	  0.004%	 42.627%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:357
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 42.627%	     0.000	        1	Delegate/Copy (NC, X32):358
+	          Fully Connected (NC, F32) GEMM	   14.876	   15.282	  0.232%	 42.859%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:359
+	                 Binary Elementwise (ND)	    0.360	    0.359	  0.005%	 42.864%	     0.000	        1	Delegate/Binary Elementwise (ND):360
+	                 Binary Elementwise (ND)	    0.327	    0.362	  0.005%	 42.870%	     0.000	        1	Delegate/Binary Elementwise (ND):361
+	                          Mean (ND) Mean	    0.185	    0.197	  0.003%	 42.873%	     0.000	        1	Delegate/Mean (ND) Mean:362
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 42.873%	     0.000	        1	Delegate/Copy (NC, X32):363
+	                 Binary Elementwise (ND)	    0.260	    0.269	  0.004%	 42.877%	     0.000	        1	Delegate/Binary Elementwise (ND):364
+	                          Mean (ND) Mean	    0.189	    0.192	  0.003%	 42.880%	     0.000	        1	Delegate/Mean (ND) Mean:365
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 42.880%	     0.000	        1	Delegate/Binary Elementwise (ND):366
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 42.880%	     0.000	        1	Delegate/Unary Elementwise (NC):367
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 42.880%	     0.000	        1	Delegate/Binary Elementwise (ND):368
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 42.880%	     0.000	        1	Delegate/Binary Elementwise (ND):369
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 42.880%	     0.000	        1	Delegate/Copy (NC, X32):370
+	                 Binary Elementwise (ND)	    0.239	    0.257	  0.004%	 42.884%	     0.000	        1	Delegate/Binary Elementwise (ND):371
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 42.884%	     0.000	        1	Delegate/Copy (NC, X32):372
+	                 Binary Elementwise (ND)	    0.217	    0.232	  0.004%	 42.887%	     0.000	        1	Delegate/Binary Elementwise (ND):373
+	          Fully Connected (NC, F32) GEMM	   60.165	   62.161	  0.942%	 43.830%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:374
+	                  Unary Elementwise (NC)	    5.177	    5.369	  0.081%	 43.911%	     0.000	        1	Delegate/Unary Elementwise (NC):375
+	          Fully Connected (NC, F32) GEMM	   59.845	   61.654	  0.935%	 44.846%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:376
+	                 Binary Elementwise (ND)	    0.203	    0.227	  0.003%	 44.849%	     0.000	        1	Delegate/Binary Elementwise (ND):377
+	                 Binary Elementwise (ND)	    0.315	    0.356	  0.005%	 44.854%	     0.000	        1	Delegate/Binary Elementwise (ND):378
+	                          Mean (ND) Mean	    0.178	    0.200	  0.003%	 44.857%	     0.000	        1	Delegate/Mean (ND) Mean:379
+	                          Copy (NC, X32)	    0.000	    0.001	  0.000%	 44.857%	     0.000	        1	Delegate/Copy (NC, X32):380
+	                 Binary Elementwise (ND)	    0.246	    0.271	  0.004%	 44.862%	     0.000	        1	Delegate/Binary Elementwise (ND):381
+	                          Mean (ND) Mean	    0.176	    0.191	  0.003%	 44.864%	     0.000	        1	Delegate/Mean (ND) Mean:382
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 44.864%	     0.000	        1	Delegate/Binary Elementwise (ND):383
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 44.864%	     0.000	        1	Delegate/Unary Elementwise (NC):384
+	                 Binary Elementwise (ND)	    0.001	    0.000	  0.000%	 44.864%	     0.000	        1	Delegate/Binary Elementwise (ND):385
+	                 Binary Elementwise (ND)	    0.000	    0.001	  0.000%	 44.864%	     0.000	        1	Delegate/Binary Elementwise (ND):386
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 44.864%	     0.000	        1	Delegate/Copy (NC, X32):387
+	                 Binary Elementwise (ND)	    0.235	    0.257	  0.004%	 44.868%	     0.000	        1	Delegate/Binary Elementwise (ND):388
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 44.868%	     0.000	        1	Delegate/Copy (NC, X32):389
+	                 Binary Elementwise (ND)	    0.223	    0.240	  0.004%	 44.872%	     0.000	        1	Delegate/Binary Elementwise (ND):390
+	          Fully Connected (NC, F32) GEMM	   44.843	   45.610	  0.691%	 45.563%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:391
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 45.563%	     0.000	        1	Delegate/Copy (NC, X32):392
+	           Transpose (ND, X32) Transpose	    0.913	    0.932	  0.014%	 45.577%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:393
+	                         Slice (ND, X32)	    0.223	    0.235	  0.004%	 45.581%	     0.000	        1	Delegate/Slice (ND, X32):394
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 45.581%	     0.000	        1	Delegate/Copy (NC, X32):395
+	                 Binary Elementwise (ND)	    0.172	    0.178	  0.003%	 45.584%	     0.000	        1	Delegate/Binary Elementwise (ND):396
+	                         Slice (ND, X32)	    0.244	    0.269	  0.004%	 45.588%	     0.000	        1	Delegate/Slice (ND, X32):397
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 45.588%	     0.000	        1	Delegate/Copy (NC, X32):398
+	                         Slice (ND, X32)	    0.248	    0.271	  0.004%	 45.592%	     0.000	        1	Delegate/Slice (ND, X32):399
+	           Transpose (ND, X32) Transpose	    0.669	    0.695	  0.011%	 45.602%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:400
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 45.602%	     0.000	        1	Delegate/Copy (NC, X32):401
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 45.602%	     0.000	        1	Delegate/Copy (NC, X32):402
+	    Batch Matrix Multiply (NC, F32) GEMM	   96.675	   99.060	  1.502%	 47.104%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:403
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 47.104%	     0.000	        1	Delegate/Copy (NC, X32):404
+	                       Softmax (NC, F32)	   43.882	   44.678	  0.677%	 47.781%	     0.000	        1	Delegate/Softmax (NC, F32):405
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 47.781%	     0.000	        1	Delegate/Copy (NC, X32):406
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 47.781%	     0.000	        1	Delegate/Copy (NC, X32):407
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.117	  102.884	  1.559%	 49.341%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:408
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 49.341%	     0.000	        1	Delegate/Copy (NC, X32):409
+	           Transpose (ND, X32) Transpose	    0.244	    0.264	  0.004%	 49.345%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:410
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 49.345%	     0.000	        1	Delegate/Copy (NC, X32):411
+	          Fully Connected (NC, F32) GEMM	   14.755	   15.292	  0.232%	 49.577%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:412
+	                 Binary Elementwise (ND)	    0.330	    0.368	  0.006%	 49.582%	     0.000	        1	Delegate/Binary Elementwise (ND):413
+	                 Binary Elementwise (ND)	    0.315	    0.364	  0.006%	 49.588%	     0.000	        1	Delegate/Binary Elementwise (ND):414
+	                          Mean (ND) Mean	    0.185	    0.204	  0.003%	 49.591%	     0.000	        1	Delegate/Mean (ND) Mean:415
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 49.591%	     0.000	        1	Delegate/Copy (NC, X32):416
+	                 Binary Elementwise (ND)	    0.262	    0.282	  0.004%	 49.595%	     0.000	        1	Delegate/Binary Elementwise (ND):417
+	                          Mean (ND) Mean	    0.177	    0.195	  0.003%	 49.598%	     0.000	        1	Delegate/Mean (ND) Mean:418
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 49.598%	     0.000	        1	Delegate/Binary Elementwise (ND):419
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 49.598%	     0.000	        1	Delegate/Unary Elementwise (NC):420
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 49.598%	     0.000	        1	Delegate/Binary Elementwise (ND):421
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 49.598%	     0.000	        1	Delegate/Binary Elementwise (ND):422
+	                          Copy (NC, X32)	    0.000	    0.001	  0.000%	 49.598%	     0.000	        1	Delegate/Copy (NC, X32):423
+	                 Binary Elementwise (ND)	    0.236	    0.265	  0.004%	 49.602%	     0.000	        1	Delegate/Binary Elementwise (ND):424
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 49.602%	     0.000	        1	Delegate/Copy (NC, X32):425
+	                 Binary Elementwise (ND)	    0.213	    0.234	  0.004%	 49.606%	     0.000	        1	Delegate/Binary Elementwise (ND):426
+	          Fully Connected (NC, F32) GEMM	   59.807	   61.641	  0.934%	 50.540%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:427
+	                  Unary Elementwise (NC)	    5.183	    5.239	  0.079%	 50.619%	     0.000	        1	Delegate/Unary Elementwise (NC):428
+	          Fully Connected (NC, F32) GEMM	   59.836	   59.890	  0.908%	 51.527%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:429
+	                 Binary Elementwise (ND)	    0.210	    0.212	  0.003%	 51.530%	     0.000	        1	Delegate/Binary Elementwise (ND):430
+	                 Binary Elementwise (ND)	    0.321	    0.322	  0.005%	 51.535%	     0.000	        1	Delegate/Binary Elementwise (ND):431
+	                          Mean (ND) Mean	    0.181	    0.187	  0.003%	 51.538%	     0.000	        1	Delegate/Mean (ND) Mean:432
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 51.538%	     0.000	        1	Delegate/Copy (NC, X32):433
+	                 Binary Elementwise (ND)	    0.294	    0.257	  0.004%	 51.542%	     0.000	        1	Delegate/Binary Elementwise (ND):434
+	                          Mean (ND) Mean	    0.177	    0.190	  0.003%	 51.545%	     0.000	        1	Delegate/Mean (ND) Mean:435
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 51.545%	     0.000	        1	Delegate/Binary Elementwise (ND):436
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 51.545%	     0.000	        1	Delegate/Unary Elementwise (NC):437
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 51.545%	     0.000	        1	Delegate/Binary Elementwise (ND):438
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 51.545%	     0.000	        1	Delegate/Binary Elementwise (ND):439
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 51.545%	     0.000	        1	Delegate/Copy (NC, X32):440
+	                 Binary Elementwise (ND)	    0.224	    0.242	  0.004%	 51.549%	     0.000	        1	Delegate/Binary Elementwise (ND):441
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 51.549%	     0.000	        1	Delegate/Copy (NC, X32):442
+	                 Binary Elementwise (ND)	    0.236	    0.260	  0.004%	 51.553%	     0.000	        1	Delegate/Binary Elementwise (ND):443
+	          Fully Connected (NC, F32) GEMM	   45.031	   45.120	  0.684%	 52.236%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:444
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 52.237%	     0.000	        1	Delegate/Copy (NC, X32):445
+	           Transpose (ND, X32) Transpose	    0.884	    0.891	  0.014%	 52.250%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:446
+	                         Slice (ND, X32)	    0.258	    0.256	  0.004%	 52.254%	     0.000	        1	Delegate/Slice (ND, X32):447
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 52.254%	     0.000	        1	Delegate/Copy (NC, X32):448
+	                 Binary Elementwise (ND)	    0.234	    0.230	  0.003%	 52.257%	     0.000	        1	Delegate/Binary Elementwise (ND):449
+	                         Slice (ND, X32)	    0.261	    0.261	  0.004%	 52.261%	     0.000	        1	Delegate/Slice (ND, X32):450
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 52.261%	     0.000	        1	Delegate/Copy (NC, X32):451
+	                         Slice (ND, X32)	    0.252	    0.261	  0.004%	 52.265%	     0.000	        1	Delegate/Slice (ND, X32):452
+	           Transpose (ND, X32) Transpose	    0.703	    0.705	  0.011%	 52.276%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:453
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 52.276%	     0.000	        1	Delegate/Copy (NC, X32):454
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 52.276%	     0.000	        1	Delegate/Copy (NC, X32):455
+	    Batch Matrix Multiply (NC, F32) GEMM	   96.925	   98.443	  1.492%	 53.768%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:456
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 53.768%	     0.000	        1	Delegate/Copy (NC, X32):457
+	                       Softmax (NC, F32)	   43.869	   44.646	  0.677%	 54.445%	     0.000	        1	Delegate/Softmax (NC, F32):458
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 54.445%	     0.000	        1	Delegate/Copy (NC, X32):459
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 54.445%	     0.000	        1	Delegate/Copy (NC, X32):460
+	    Batch Matrix Multiply (NC, F32) GEMM	   98.900	  103.550	  1.570%	 56.015%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:461
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 56.015%	     0.000	        1	Delegate/Copy (NC, X32):462
+	           Transpose (ND, X32) Transpose	    0.254	    0.275	  0.004%	 56.019%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:463
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 56.019%	     0.000	        1	Delegate/Copy (NC, X32):464
+	          Fully Connected (NC, F32) GEMM	   14.693	   15.163	  0.230%	 56.249%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:465
+	                 Binary Elementwise (ND)	    0.319	    0.352	  0.005%	 56.254%	     0.000	        1	Delegate/Binary Elementwise (ND):466
+	                 Binary Elementwise (ND)	    0.323	    0.354	  0.005%	 56.259%	     0.000	        1	Delegate/Binary Elementwise (ND):467
+	                          Mean (ND) Mean	    0.201	    0.198	  0.003%	 56.262%	     0.000	        1	Delegate/Mean (ND) Mean:468
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 56.262%	     0.000	        1	Delegate/Copy (NC, X32):469
+	                 Binary Elementwise (ND)	    0.254	    0.280	  0.004%	 56.267%	     0.000	        1	Delegate/Binary Elementwise (ND):470
+	                          Mean (ND) Mean	    0.182	    0.194	  0.003%	 56.269%	     0.000	        1	Delegate/Mean (ND) Mean:471
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 56.269%	     0.000	        1	Delegate/Binary Elementwise (ND):472
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 56.269%	     0.000	        1	Delegate/Unary Elementwise (NC):473
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 56.269%	     0.000	        1	Delegate/Binary Elementwise (ND):474
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 56.270%	     0.000	        1	Delegate/Binary Elementwise (ND):475
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 56.270%	     0.000	        1	Delegate/Copy (NC, X32):476
+	                 Binary Elementwise (ND)	    0.233	    0.262	  0.004%	 56.273%	     0.000	        1	Delegate/Binary Elementwise (ND):477
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 56.273%	     0.000	        1	Delegate/Copy (NC, X32):478
+	                 Binary Elementwise (ND)	    0.216	    0.239	  0.004%	 56.277%	     0.000	        1	Delegate/Binary Elementwise (ND):479
+	          Fully Connected (NC, F32) GEMM	   59.892	   62.539	  0.948%	 57.225%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:480
+	                  Unary Elementwise (NC)	    5.185	    5.277	  0.080%	 57.305%	     0.000	        1	Delegate/Unary Elementwise (NC):481
+	          Fully Connected (NC, F32) GEMM	   59.586	   61.042	  0.925%	 58.230%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:482
+	                 Binary Elementwise (ND)	    0.220	    0.229	  0.003%	 58.234%	     0.000	        1	Delegate/Binary Elementwise (ND):483
+	                 Binary Elementwise (ND)	    0.333	    0.351	  0.005%	 58.239%	     0.000	        1	Delegate/Binary Elementwise (ND):484
+	                          Mean (ND) Mean	    0.191	    0.202	  0.003%	 58.242%	     0.000	        1	Delegate/Mean (ND) Mean:485
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 58.242%	     0.000	        1	Delegate/Copy (NC, X32):486
+	                 Binary Elementwise (ND)	    0.261	    0.280	  0.004%	 58.246%	     0.000	        1	Delegate/Binary Elementwise (ND):487
+	                          Mean (ND) Mean	    0.182	    0.196	  0.003%	 58.249%	     0.000	        1	Delegate/Mean (ND) Mean:488
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 58.249%	     0.000	        1	Delegate/Binary Elementwise (ND):489
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 58.249%	     0.000	        1	Delegate/Unary Elementwise (NC):490
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 58.249%	     0.000	        1	Delegate/Binary Elementwise (ND):491
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 58.249%	     0.000	        1	Delegate/Binary Elementwise (ND):492
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 58.249%	     0.000	        1	Delegate/Copy (NC, X32):493
+	                 Binary Elementwise (ND)	    0.245	    0.255	  0.004%	 58.253%	     0.000	        1	Delegate/Binary Elementwise (ND):494
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 58.253%	     0.000	        1	Delegate/Copy (NC, X32):495
+	                 Binary Elementwise (ND)	    0.222	    0.233	  0.004%	 58.257%	     0.000	        1	Delegate/Binary Elementwise (ND):496
+	          Fully Connected (NC, F32) GEMM	   44.848	   45.473	  0.689%	 58.946%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:497
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 58.946%	     0.000	        1	Delegate/Copy (NC, X32):498
+	           Transpose (ND, X32) Transpose	    0.886	    0.947	  0.014%	 58.960%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:499
+	                         Slice (ND, X32)	    0.242	    0.242	  0.004%	 58.964%	     0.000	        1	Delegate/Slice (ND, X32):500
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 58.964%	     0.000	        1	Delegate/Copy (NC, X32):501
+	                 Binary Elementwise (ND)	    0.182	    0.181	  0.003%	 58.967%	     0.000	        1	Delegate/Binary Elementwise (ND):502
+	                         Slice (ND, X32)	    0.262	    0.269	  0.004%	 58.971%	     0.000	        1	Delegate/Slice (ND, X32):503
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 58.971%	     0.000	        1	Delegate/Copy (NC, X32):504
+	                         Slice (ND, X32)	    0.254	    0.272	  0.004%	 58.975%	     0.000	        1	Delegate/Slice (ND, X32):505
+	           Transpose (ND, X32) Transpose	    0.697	    0.734	  0.011%	 58.986%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:506
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 58.986%	     0.000	        1	Delegate/Copy (NC, X32):507
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 58.986%	     0.000	        1	Delegate/Copy (NC, X32):508
+	    Batch Matrix Multiply (NC, F32) GEMM	   97.035	   97.416	  1.477%	 60.463%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:509
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 60.463%	     0.000	        1	Delegate/Copy (NC, X32):510
+	                       Softmax (NC, F32)	   43.764	   44.535	  0.675%	 61.138%	     0.000	        1	Delegate/Softmax (NC, F32):511
+	                          Copy (NC, X32)	    0.002	    0.001	  0.000%	 61.138%	     0.000	        1	Delegate/Copy (NC, X32):512
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 61.138%	     0.000	        1	Delegate/Copy (NC, X32):513
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.378	  102.932	  1.560%	 62.698%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:514
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 62.698%	     0.000	        1	Delegate/Copy (NC, X32):515
+	           Transpose (ND, X32) Transpose	    0.247	    0.264	  0.004%	 62.702%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:516
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 62.702%	     0.000	        1	Delegate/Copy (NC, X32):517
+	          Fully Connected (NC, F32) GEMM	   14.719	   15.085	  0.229%	 62.931%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:518
+	                 Binary Elementwise (ND)	    0.322	    0.327	  0.005%	 62.936%	     0.000	        1	Delegate/Binary Elementwise (ND):519
+	                 Binary Elementwise (ND)	    0.326	    0.359	  0.005%	 62.941%	     0.000	        1	Delegate/Binary Elementwise (ND):520
+	                          Mean (ND) Mean	    0.182	    0.195	  0.003%	 62.944%	     0.000	        1	Delegate/Mean (ND) Mean:521
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 62.944%	     0.000	        1	Delegate/Copy (NC, X32):522
+	                 Binary Elementwise (ND)	    0.246	    0.264	  0.004%	 62.948%	     0.000	        1	Delegate/Binary Elementwise (ND):523
+	                          Mean (ND) Mean	    0.176	    0.194	  0.003%	 62.951%	     0.000	        1	Delegate/Mean (ND) Mean:524
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 62.951%	     0.000	        1	Delegate/Binary Elementwise (ND):525
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 62.951%	     0.000	        1	Delegate/Unary Elementwise (NC):526
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 62.951%	     0.000	        1	Delegate/Binary Elementwise (ND):527
+	                 Binary Elementwise (ND)	    0.000	    0.001	  0.000%	 62.951%	     0.000	        1	Delegate/Binary Elementwise (ND):528
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 62.951%	     0.000	        1	Delegate/Copy (NC, X32):529
+	                 Binary Elementwise (ND)	    0.238	    0.252	  0.004%	 62.955%	     0.000	        1	Delegate/Binary Elementwise (ND):530
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 62.955%	     0.000	        1	Delegate/Copy (NC, X32):531
+	                 Binary Elementwise (ND)	    0.222	    0.229	  0.003%	 62.958%	     0.000	        1	Delegate/Binary Elementwise (ND):532
+	          Fully Connected (NC, F32) GEMM	   62.644	   61.361	  0.930%	 63.889%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:533
+	                  Unary Elementwise (NC)	    5.776	    5.258	  0.080%	 63.968%	     0.000	        1	Delegate/Unary Elementwise (NC):534
+	          Fully Connected (NC, F32) GEMM	   61.902	   60.434	  0.916%	 64.884%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:535
+	                 Binary Elementwise (ND)	    0.203	    0.209	  0.003%	 64.887%	     0.000	        1	Delegate/Binary Elementwise (ND):536
+	                 Binary Elementwise (ND)	    0.321	    0.325	  0.005%	 64.892%	     0.000	        1	Delegate/Binary Elementwise (ND):537
+	                          Mean (ND) Mean	    0.182	    0.185	  0.003%	 64.895%	     0.000	        1	Delegate/Mean (ND) Mean:538
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 64.895%	     0.000	        1	Delegate/Copy (NC, X32):539
+	                 Binary Elementwise (ND)	    0.253	    0.258	  0.004%	 64.899%	     0.000	        1	Delegate/Binary Elementwise (ND):540
+	                          Mean (ND) Mean	    0.189	    0.184	  0.003%	 64.902%	     0.000	        1	Delegate/Mean (ND) Mean:541
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 64.902%	     0.000	        1	Delegate/Binary Elementwise (ND):542
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 64.902%	     0.000	        1	Delegate/Unary Elementwise (NC):543
+	                 Binary Elementwise (ND)	    0.001	    0.000	  0.000%	 64.902%	     0.000	        1	Delegate/Binary Elementwise (ND):544
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 64.902%	     0.000	        1	Delegate/Binary Elementwise (ND):545
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 64.902%	     0.000	        1	Delegate/Copy (NC, X32):546
+	                 Binary Elementwise (ND)	    0.250	    0.243	  0.004%	 64.906%	     0.000	        1	Delegate/Binary Elementwise (ND):547
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 64.906%	     0.000	        1	Delegate/Copy (NC, X32):548
+	                 Binary Elementwise (ND)	    0.227	    0.224	  0.003%	 64.909%	     0.000	        1	Delegate/Binary Elementwise (ND):549
+	          Fully Connected (NC, F32) GEMM	   44.973	   44.882	  0.680%	 65.589%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:550
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 65.589%	     0.000	        1	Delegate/Copy (NC, X32):551
+	           Transpose (ND, X32) Transpose	    0.882	    0.882	  0.013%	 65.603%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:552
+	                         Slice (ND, X32)	    0.221	    0.222	  0.003%	 65.606%	     0.000	        1	Delegate/Slice (ND, X32):553
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 65.606%	     0.000	        1	Delegate/Copy (NC, X32):554
+	                 Binary Elementwise (ND)	    0.173	    0.174	  0.003%	 65.609%	     0.000	        1	Delegate/Binary Elementwise (ND):555
+	                         Slice (ND, X32)	    0.255	    0.256	  0.004%	 65.613%	     0.000	        1	Delegate/Slice (ND, X32):556
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 65.613%	     0.000	        1	Delegate/Copy (NC, X32):557
+	                         Slice (ND, X32)	    0.251	    0.252	  0.004%	 65.616%	     0.000	        1	Delegate/Slice (ND, X32):558
+	           Transpose (ND, X32) Transpose	    0.668	    0.683	  0.010%	 65.627%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:559
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 65.627%	     0.000	        1	Delegate/Copy (NC, X32):560
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 65.627%	     0.000	        1	Delegate/Copy (NC, X32):561
+	    Batch Matrix Multiply (NC, F32) GEMM	   96.795	   96.934	  1.469%	 67.096%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:562
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 67.096%	     0.000	        1	Delegate/Copy (NC, X32):563
+	                       Softmax (NC, F32)	   43.644	   43.810	  0.664%	 67.760%	     0.000	        1	Delegate/Softmax (NC, F32):564
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 67.760%	     0.000	        1	Delegate/Copy (NC, X32):565
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 67.760%	     0.000	        1	Delegate/Copy (NC, X32):566
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.207	  100.831	  1.528%	 69.289%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:567
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 69.289%	     0.000	        1	Delegate/Copy (NC, X32):568
+	           Transpose (ND, X32) Transpose	    0.251	    0.251	  0.004%	 69.292%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:569
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 69.292%	     0.000	        1	Delegate/Copy (NC, X32):570
+	          Fully Connected (NC, F32) GEMM	   14.796	   14.762	  0.224%	 69.516%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:571
+	                 Binary Elementwise (ND)	    0.341	    0.336	  0.005%	 69.521%	     0.000	        1	Delegate/Binary Elementwise (ND):572
+	                 Binary Elementwise (ND)	    0.334	    0.332	  0.005%	 69.526%	     0.000	        1	Delegate/Binary Elementwise (ND):573
+	                          Mean (ND) Mean	    0.188	    0.188	  0.003%	 69.529%	     0.000	        1	Delegate/Mean (ND) Mean:574
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 69.529%	     0.000	        1	Delegate/Copy (NC, X32):575
+	                 Binary Elementwise (ND)	    0.254	    0.258	  0.004%	 69.533%	     0.000	        1	Delegate/Binary Elementwise (ND):576
+	                          Mean (ND) Mean	    0.181	    0.181	  0.003%	 69.536%	     0.000	        1	Delegate/Mean (ND) Mean:577
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 69.536%	     0.000	        1	Delegate/Binary Elementwise (ND):578
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 69.536%	     0.000	        1	Delegate/Unary Elementwise (NC):579
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 69.536%	     0.000	        1	Delegate/Binary Elementwise (ND):580
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 69.536%	     0.000	        1	Delegate/Binary Elementwise (ND):581
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 69.536%	     0.000	        1	Delegate/Copy (NC, X32):582
+	                 Binary Elementwise (ND)	    0.243	    0.240	  0.004%	 69.540%	     0.000	        1	Delegate/Binary Elementwise (ND):583
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 69.540%	     0.000	        1	Delegate/Copy (NC, X32):584
+	                 Binary Elementwise (ND)	    0.232	    0.225	  0.003%	 69.543%	     0.000	        1	Delegate/Binary Elementwise (ND):585
+	          Fully Connected (NC, F32) GEMM	   59.893	   60.801	  0.922%	 70.465%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:586
+	                  Unary Elementwise (NC)	    5.205	    5.281	  0.080%	 70.545%	     0.000	        1	Delegate/Unary Elementwise (NC):587
+	          Fully Connected (NC, F32) GEMM	   59.845	   60.799	  0.922%	 71.466%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:588
+	                 Binary Elementwise (ND)	    0.211	    0.224	  0.003%	 71.470%	     0.000	        1	Delegate/Binary Elementwise (ND):589
+	                 Binary Elementwise (ND)	    0.318	    0.344	  0.005%	 71.475%	     0.000	        1	Delegate/Binary Elementwise (ND):590
+	                          Mean (ND) Mean	    0.179	    0.200	  0.003%	 71.478%	     0.000	        1	Delegate/Mean (ND) Mean:591
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 71.478%	     0.000	        1	Delegate/Copy (NC, X32):592
+	                 Binary Elementwise (ND)	    0.248	    0.259	  0.004%	 71.482%	     0.000	        1	Delegate/Binary Elementwise (ND):593
+	                          Mean (ND) Mean	    0.178	    0.184	  0.003%	 71.485%	     0.000	        1	Delegate/Mean (ND) Mean:594
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 71.485%	     0.000	        1	Delegate/Binary Elementwise (ND):595
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 71.485%	     0.000	        1	Delegate/Unary Elementwise (NC):596
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 71.485%	     0.000	        1	Delegate/Binary Elementwise (ND):597
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 71.485%	     0.000	        1	Delegate/Binary Elementwise (ND):598
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 71.485%	     0.000	        1	Delegate/Copy (NC, X32):599
+	                 Binary Elementwise (ND)	    0.238	    0.242	  0.004%	 71.488%	     0.000	        1	Delegate/Binary Elementwise (ND):600
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 71.488%	     0.000	        1	Delegate/Copy (NC, X32):601
+	                 Binary Elementwise (ND)	    0.258	    0.264	  0.004%	 71.492%	     0.000	        1	Delegate/Binary Elementwise (ND):602
+	          Fully Connected (NC, F32) GEMM	   44.767	   44.929	  0.681%	 72.173%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:603
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 72.173%	     0.000	        1	Delegate/Copy (NC, X32):604
+	           Transpose (ND, X32) Transpose	    0.868	    0.898	  0.014%	 72.187%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:605
+	                         Slice (ND, X32)	    0.251	    0.262	  0.004%	 72.191%	     0.000	        1	Delegate/Slice (ND, X32):606
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 72.191%	     0.000	        1	Delegate/Copy (NC, X32):607
+	                 Binary Elementwise (ND)	    0.258	    0.234	  0.004%	 72.194%	     0.000	        1	Delegate/Binary Elementwise (ND):608
+	                         Slice (ND, X32)	    0.263	    0.271	  0.004%	 72.199%	     0.000	        1	Delegate/Slice (ND, X32):609
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 72.199%	     0.000	        1	Delegate/Copy (NC, X32):610
+	                         Slice (ND, X32)	    0.254	    0.264	  0.004%	 72.203%	     0.000	        1	Delegate/Slice (ND, X32):611
+	           Transpose (ND, X32) Transpose	    0.673	    0.702	  0.011%	 72.213%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:612
+	                          Copy (NC, X32)	    0.001	    0.000	  0.000%	 72.213%	     0.000	        1	Delegate/Copy (NC, X32):613
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 72.213%	     0.000	        1	Delegate/Copy (NC, X32):614
+	    Batch Matrix Multiply (NC, F32) GEMM	   97.015	   97.438	  1.477%	 73.690%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:615
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 73.690%	     0.000	        1	Delegate/Copy (NC, X32):616
+	                       Softmax (NC, F32)	   43.697	   44.422	  0.673%	 74.363%	     0.000	        1	Delegate/Softmax (NC, F32):617
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 74.364%	     0.000	        1	Delegate/Copy (NC, X32):618
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 74.364%	     0.000	        1	Delegate/Copy (NC, X32):619
+	    Batch Matrix Multiply (NC, F32) GEMM	   98.803	  100.694	  1.526%	 75.890%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:620
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 75.890%	     0.000	        1	Delegate/Copy (NC, X32):621
+	           Transpose (ND, X32) Transpose	    0.248	    0.255	  0.004%	 75.894%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:622
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 75.894%	     0.000	        1	Delegate/Copy (NC, X32):623
+	          Fully Connected (NC, F32) GEMM	   14.704	   14.731	  0.223%	 76.117%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:624
+	                 Binary Elementwise (ND)	    0.347	    0.345	  0.005%	 76.122%	     0.000	        1	Delegate/Binary Elementwise (ND):625
+	                 Binary Elementwise (ND)	    0.326	    0.329	  0.005%	 76.127%	     0.000	        1	Delegate/Binary Elementwise (ND):626
+	                          Mean (ND) Mean	    0.179	    0.192	  0.003%	 76.130%	     0.000	        1	Delegate/Mean (ND) Mean:627
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 76.130%	     0.000	        1	Delegate/Copy (NC, X32):628
+	                 Binary Elementwise (ND)	    0.241	    0.255	  0.004%	 76.134%	     0.000	        1	Delegate/Binary Elementwise (ND):629
+	                          Mean (ND) Mean	    0.175	    0.185	  0.003%	 76.137%	     0.000	        1	Delegate/Mean (ND) Mean:630
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 76.137%	     0.000	        1	Delegate/Binary Elementwise (ND):631
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 76.137%	     0.000	        1	Delegate/Unary Elementwise (NC):632
+	                 Binary Elementwise (ND)	    0.001	    0.000	  0.000%	 76.137%	     0.000	        1	Delegate/Binary Elementwise (ND):633
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 76.137%	     0.000	        1	Delegate/Binary Elementwise (ND):634
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 76.137%	     0.000	        1	Delegate/Copy (NC, X32):635
+	                 Binary Elementwise (ND)	    0.238	    0.240	  0.004%	 76.140%	     0.000	        1	Delegate/Binary Elementwise (ND):636
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 76.140%	     0.000	        1	Delegate/Copy (NC, X32):637
+	                 Binary Elementwise (ND)	    0.217	    0.217	  0.003%	 76.144%	     0.000	        1	Delegate/Binary Elementwise (ND):638
+	          Fully Connected (NC, F32) GEMM	   59.862	   60.549	  0.918%	 77.062%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:639
+	                  Unary Elementwise (NC)	    5.183	    5.337	  0.081%	 77.142%	     0.000	        1	Delegate/Unary Elementwise (NC):640
+	          Fully Connected (NC, F32) GEMM	   59.839	   63.194	  0.958%	 78.100%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:641
+	                 Binary Elementwise (ND)	    0.214	    0.224	  0.003%	 78.104%	     0.000	        1	Delegate/Binary Elementwise (ND):642
+	                 Binary Elementwise (ND)	    0.344	    0.355	  0.005%	 78.109%	     0.000	        1	Delegate/Binary Elementwise (ND):643
+	                          Mean (ND) Mean	    0.206	    0.200	  0.003%	 78.112%	     0.000	        1	Delegate/Mean (ND) Mean:644
+	                          Copy (NC, X32)	    0.000	    0.001	  0.000%	 78.112%	     0.000	        1	Delegate/Copy (NC, X32):645
+	                 Binary Elementwise (ND)	    0.264	    0.281	  0.004%	 78.116%	     0.000	        1	Delegate/Binary Elementwise (ND):646
+	                          Mean (ND) Mean	    0.194	    0.199	  0.003%	 78.119%	     0.000	        1	Delegate/Mean (ND) Mean:647
+	                 Binary Elementwise (ND)	    0.002	    0.001	  0.000%	 78.119%	     0.000	        1	Delegate/Binary Elementwise (ND):648
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 78.119%	     0.000	        1	Delegate/Unary Elementwise (NC):649
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 78.119%	     0.000	        1	Delegate/Binary Elementwise (ND):650
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 78.120%	     0.000	        1	Delegate/Binary Elementwise (ND):651
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 78.120%	     0.000	        1	Delegate/Copy (NC, X32):652
+	                 Binary Elementwise (ND)	    0.253	    0.261	  0.004%	 78.123%	     0.000	        1	Delegate/Binary Elementwise (ND):653
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 78.123%	     0.000	        1	Delegate/Copy (NC, X32):654
+	                 Binary Elementwise (ND)	    0.259	    0.236	  0.004%	 78.127%	     0.000	        1	Delegate/Binary Elementwise (ND):655
+	          Fully Connected (NC, F32) GEMM	   44.856	   46.257	  0.701%	 78.828%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:656
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 78.828%	     0.000	        1	Delegate/Copy (NC, X32):657
+	           Transpose (ND, X32) Transpose	    0.888	    0.950	  0.014%	 78.843%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:658
+	                         Slice (ND, X32)	    0.236	    0.241	  0.004%	 78.846%	     0.000	        1	Delegate/Slice (ND, X32):659
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 78.846%	     0.000	        1	Delegate/Copy (NC, X32):660
+	                 Binary Elementwise (ND)	    0.184	    0.177	  0.003%	 78.849%	     0.000	        1	Delegate/Binary Elementwise (ND):661
+	                         Slice (ND, X32)	    0.258	    0.271	  0.004%	 78.853%	     0.000	        1	Delegate/Slice (ND, X32):662
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 78.853%	     0.000	        1	Delegate/Copy (NC, X32):663
+	                         Slice (ND, X32)	    0.260	    0.270	  0.004%	 78.857%	     0.000	        1	Delegate/Slice (ND, X32):664
+	           Transpose (ND, X32) Transpose	    0.686	    0.694	  0.011%	 78.868%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:665
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 78.868%	     0.000	        1	Delegate/Copy (NC, X32):666
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 78.868%	     0.000	        1	Delegate/Copy (NC, X32):667
+	    Batch Matrix Multiply (NC, F32) GEMM	   97.046	  100.521	  1.524%	 80.391%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:668
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 80.391%	     0.000	        1	Delegate/Copy (NC, X32):669
+	                       Softmax (NC, F32)	   43.694	   45.898	  0.696%	 81.087%	     0.000	        1	Delegate/Softmax (NC, F32):670
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 81.087%	     0.000	        1	Delegate/Copy (NC, X32):671
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 81.087%	     0.000	        1	Delegate/Copy (NC, X32):672
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.632	  103.883	  1.575%	 82.662%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:673
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 82.662%	     0.000	        1	Delegate/Copy (NC, X32):674
+	           Transpose (ND, X32) Transpose	    0.282	    0.284	  0.004%	 82.666%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:675
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 82.666%	     0.000	        1	Delegate/Copy (NC, X32):676
+	          Fully Connected (NC, F32) GEMM	   14.669	   15.288	  0.232%	 82.898%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:677
+	                 Binary Elementwise (ND)	    0.314	    0.366	  0.006%	 82.903%	     0.000	        1	Delegate/Binary Elementwise (ND):678
+	                 Binary Elementwise (ND)	    0.320	    0.370	  0.006%	 82.909%	     0.000	        1	Delegate/Binary Elementwise (ND):679
+	                          Mean (ND) Mean	    0.182	    0.205	  0.003%	 82.912%	     0.000	        1	Delegate/Mean (ND) Mean:680
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 82.912%	     0.000	        1	Delegate/Copy (NC, X32):681
+	                 Binary Elementwise (ND)	    0.251	    0.287	  0.004%	 82.916%	     0.000	        1	Delegate/Binary Elementwise (ND):682
+	                          Mean (ND) Mean	    0.215	    0.201	  0.003%	 82.919%	     0.000	        1	Delegate/Mean (ND) Mean:683
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 82.919%	     0.000	        1	Delegate/Binary Elementwise (ND):684
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 82.919%	     0.000	        1	Delegate/Unary Elementwise (NC):685
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 82.919%	     0.000	        1	Delegate/Binary Elementwise (ND):686
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 82.920%	     0.000	        1	Delegate/Binary Elementwise (ND):687
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 82.920%	     0.000	        1	Delegate/Copy (NC, X32):688
+	                 Binary Elementwise (ND)	    0.235	    0.275	  0.004%	 82.924%	     0.000	        1	Delegate/Binary Elementwise (ND):689
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 82.924%	     0.000	        1	Delegate/Copy (NC, X32):690
+	                 Binary Elementwise (ND)	    0.217	    0.236	  0.004%	 82.927%	     0.000	        1	Delegate/Binary Elementwise (ND):691
+	          Fully Connected (NC, F32) GEMM	   59.816	   62.063	  0.941%	 83.868%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:692
+	                  Unary Elementwise (NC)	    5.187	    5.209	  0.079%	 83.947%	     0.000	        1	Delegate/Unary Elementwise (NC):693
+	          Fully Connected (NC, F32) GEMM	   59.860	   60.967	  0.924%	 84.871%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:694
+	                 Binary Elementwise (ND)	    0.212	    0.219	  0.003%	 84.874%	     0.000	        1	Delegate/Binary Elementwise (ND):695
+	                 Binary Elementwise (ND)	    0.318	    0.336	  0.005%	 84.879%	     0.000	        1	Delegate/Binary Elementwise (ND):696
+	                          Mean (ND) Mean	    0.182	    0.200	  0.003%	 84.883%	     0.000	        1	Delegate/Mean (ND) Mean:697
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 84.883%	     0.000	        1	Delegate/Copy (NC, X32):698
+	                 Binary Elementwise (ND)	    0.246	    0.266	  0.004%	 84.887%	     0.000	        1	Delegate/Binary Elementwise (ND):699
+	                          Mean (ND) Mean	    0.177	    0.187	  0.003%	 84.889%	     0.000	        1	Delegate/Mean (ND) Mean:700
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 84.889%	     0.000	        1	Delegate/Binary Elementwise (ND):701
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 84.889%	     0.000	        1	Delegate/Unary Elementwise (NC):702
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 84.889%	     0.000	        1	Delegate/Binary Elementwise (ND):703
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 84.889%	     0.000	        1	Delegate/Binary Elementwise (ND):704
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 84.889%	     0.000	        1	Delegate/Copy (NC, X32):705
+	                 Binary Elementwise (ND)	    0.238	    0.257	  0.004%	 84.893%	     0.000	        1	Delegate/Binary Elementwise (ND):706
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 84.893%	     0.000	        1	Delegate/Copy (NC, X32):707
+	                 Binary Elementwise (ND)	    0.225	    0.233	  0.004%	 84.897%	     0.000	        1	Delegate/Binary Elementwise (ND):708
+	          Fully Connected (NC, F32) GEMM	   44.826	   45.341	  0.687%	 85.584%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:709
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 85.584%	     0.000	        1	Delegate/Copy (NC, X32):710
+	           Transpose (ND, X32) Transpose	    0.932	    0.899	  0.014%	 85.598%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:711
+	                         Slice (ND, X32)	    0.229	    0.225	  0.003%	 85.601%	     0.000	        1	Delegate/Slice (ND, X32):712
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 85.601%	     0.000	        1	Delegate/Copy (NC, X32):713
+	                 Binary Elementwise (ND)	    0.181	    0.171	  0.003%	 85.604%	     0.000	        1	Delegate/Binary Elementwise (ND):714
+	                         Slice (ND, X32)	    0.252	    0.257	  0.004%	 85.608%	     0.000	        1	Delegate/Slice (ND, X32):715
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 85.608%	     0.000	        1	Delegate/Copy (NC, X32):716
+	                         Slice (ND, X32)	    0.258	    0.258	  0.004%	 85.612%	     0.000	        1	Delegate/Slice (ND, X32):717
+	           Transpose (ND, X32) Transpose	    0.686	    0.683	  0.010%	 85.622%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:718
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 85.622%	     0.000	        1	Delegate/Copy (NC, X32):719
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 85.622%	     0.000	        1	Delegate/Copy (NC, X32):720
+	    Batch Matrix Multiply (NC, F32) GEMM	   96.832	   97.978	  1.485%	 87.107%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:721
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 87.107%	     0.000	        1	Delegate/Copy (NC, X32):722
+	                       Softmax (NC, F32)	   43.736	   43.929	  0.666%	 87.773%	     0.000	        1	Delegate/Softmax (NC, F32):723
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 87.773%	     0.000	        1	Delegate/Copy (NC, X32):724
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 87.773%	     0.000	        1	Delegate/Copy (NC, X32):725
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.469	  100.962	  1.530%	 89.303%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:726
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 89.303%	     0.000	        1	Delegate/Copy (NC, X32):727
+	           Transpose (ND, X32) Transpose	    0.253	    0.253	  0.004%	 89.307%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:728
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 89.307%	     0.000	        1	Delegate/Copy (NC, X32):729
+	          Fully Connected (NC, F32) GEMM	   14.705	   14.919	  0.226%	 89.533%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:730
+	                 Binary Elementwise (ND)	    0.364	    0.351	  0.005%	 89.539%	     0.000	        1	Delegate/Binary Elementwise (ND):731
+	                 Binary Elementwise (ND)	    0.320	    0.345	  0.005%	 89.544%	     0.000	        1	Delegate/Binary Elementwise (ND):732
+	                          Mean (ND) Mean	    0.178	    0.198	  0.003%	 89.547%	     0.000	        1	Delegate/Mean (ND) Mean:733
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 89.547%	     0.000	        1	Delegate/Copy (NC, X32):734
+	                 Binary Elementwise (ND)	    0.245	    0.258	  0.004%	 89.551%	     0.000	        1	Delegate/Binary Elementwise (ND):735
+	                          Mean (ND) Mean	    0.180	    0.186	  0.003%	 89.554%	     0.000	        1	Delegate/Mean (ND) Mean:736
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 89.554%	     0.000	        1	Delegate/Binary Elementwise (ND):737
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 89.554%	     0.000	        1	Delegate/Unary Elementwise (NC):738
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 89.554%	     0.000	        1	Delegate/Binary Elementwise (ND):739
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 89.554%	     0.000	        1	Delegate/Binary Elementwise (ND):740
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 89.554%	     0.000	        1	Delegate/Copy (NC, X32):741
+	                 Binary Elementwise (ND)	    0.244	    0.259	  0.004%	 89.558%	     0.000	        1	Delegate/Binary Elementwise (ND):742
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 89.558%	     0.000	        1	Delegate/Copy (NC, X32):743
+	                 Binary Elementwise (ND)	    0.218	    0.232	  0.004%	 89.561%	     0.000	        1	Delegate/Binary Elementwise (ND):744
+	          Fully Connected (NC, F32) GEMM	   59.580	   60.901	  0.923%	 90.484%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:745
+	                  Unary Elementwise (NC)	    5.183	    5.309	  0.080%	 90.565%	     0.000	        1	Delegate/Unary Elementwise (NC):746
+	          Fully Connected (NC, F32) GEMM	   59.920	   61.616	  0.934%	 91.499%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:747
+	                 Binary Elementwise (ND)	    0.236	    0.228	  0.003%	 91.502%	     0.000	        1	Delegate/Binary Elementwise (ND):748
+	                 Binary Elementwise (ND)	    0.323	    0.346	  0.005%	 91.507%	     0.000	        1	Delegate/Binary Elementwise (ND):749
+	                 Binary Elementwise (ND)	    0.269	    0.298	  0.005%	 91.512%	     0.000	        1	Delegate/Binary Elementwise (ND):750
+	                 Binary Elementwise (ND)	    0.252	    0.269	  0.004%	 91.516%	     0.000	        1	Delegate/Binary Elementwise (ND):751
+	                 Binary Elementwise (ND)	    0.274	    0.306	  0.005%	 91.521%	     0.000	        1	Delegate/Binary Elementwise (ND):752
+	                 Binary Elementwise (ND)	    0.226	    0.242	  0.004%	 91.524%	     0.000	        1	Delegate/Binary Elementwise (ND):753
+	                 Binary Elementwise (ND)	    0.268	    0.305	  0.005%	 91.529%	     0.000	        1	Delegate/Binary Elementwise (ND):754
+	                 Binary Elementwise (ND)	    0.250	    0.275	  0.004%	 91.533%	     0.000	        1	Delegate/Binary Elementwise (ND):755
+	                          Mean (ND) Mean	    0.202	    0.231	  0.004%	 91.537%	     0.000	        1	Delegate/Mean (ND) Mean:756
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 91.537%	     0.000	        1	Delegate/Copy (NC, X32):757
+	                 Binary Elementwise (ND)	    0.262	    0.295	  0.004%	 91.541%	     0.000	        1	Delegate/Binary Elementwise (ND):758
+	                          Mean (ND) Mean	    0.183	    0.200	  0.003%	 91.544%	     0.000	        1	Delegate/Mean (ND) Mean:759
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 91.544%	     0.000	        1	Delegate/Binary Elementwise (ND):760
+	                  Unary Elementwise (NC)	    0.002	    0.002	  0.000%	 91.544%	     0.000	        1	Delegate/Unary Elementwise (NC):761
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 91.544%	     0.000	        1	Delegate/Binary Elementwise (ND):762
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 91.544%	     0.000	        1	Delegate/Binary Elementwise (ND):763
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 91.544%	     0.000	        1	Delegate/Copy (NC, X32):764
+	                 Binary Elementwise (ND)	    0.243	    0.266	  0.004%	 91.548%	     0.000	        1	Delegate/Binary Elementwise (ND):765
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 91.548%	     0.000	        1	Delegate/Copy (NC, X32):766
+	                 Binary Elementwise (ND)	    0.253	    0.279	  0.004%	 91.552%	     0.000	        1	Delegate/Binary Elementwise (ND):767
+	                 Binary Elementwise (ND)	    0.278	    0.319	  0.005%	 91.557%	     0.000	        1	Delegate/Binary Elementwise (ND):768
+	                 Binary Elementwise (ND)	    0.232	    0.257	  0.004%	 91.561%	     0.000	        1	Delegate/Binary Elementwise (ND):769
+	                         Slice (ND, X32)	    0.255	    0.289	  0.004%	 91.566%	     0.000	        1	Delegate/Slice (ND, X32):770
+	                         Slice (ND, X32)	    0.281	    0.276	  0.004%	 91.570%	     0.000	        1	Delegate/Slice (ND, X32):771
+	                         Slice (ND, X32)	    0.221	    0.254	  0.004%	 91.574%	     0.000	        1	Delegate/Slice (ND, X32):772
+	                         Slice (ND, X32)	    0.194	    0.221	  0.003%	 91.577%	     0.000	        1	Delegate/Slice (ND, X32):773
+	           Transpose (ND, X32) Transpose	    0.772	    0.813	  0.012%	 91.589%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:774
+	                          Copy (NC, X32)	    0.000	    0.001	  0.000%	 91.589%	     0.000	        1	Delegate/Copy (NC, X32):775
+	           Transpose (ND, X32) Transpose	    0.618	    0.658	  0.010%	 91.599%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:776
+	          Fully Connected (NC, F32) GEMM	    1.881	    1.959	  0.030%	 91.629%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:777
+	     Deconvolution (NHWC, F32) Subconv2D	    6.729	    6.850	  0.104%	 91.733%	     0.000	        1	Delegate/Deconvolution (NHWC, F32) Subconv2D:778
+	           Transpose (ND, X32) Transpose	    0.787	    0.829	  0.013%	 91.745%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:779
+	                          Copy (NC, X32)	    0.000	    0.001	  0.000%	 91.745%	     0.000	        1	Delegate/Copy (NC, X32):780
+	           Transpose (ND, X32) Transpose	    0.630	    0.635	  0.010%	 91.755%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:781
+	          Fully Connected (NC, F32) GEMM	    3.633	    3.820	  0.058%	 91.813%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:782
+	     Deconvolution (NHWC, F32) Subconv2D	    6.325	    6.491	  0.098%	 91.911%	     0.000	        1	Delegate/Deconvolution (NHWC, F32) Subconv2D:783
+	           Transpose (ND, X32) Transpose	    0.762	    0.780	  0.012%	 91.923%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:784
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 91.923%	     0.000	        1	Delegate/Copy (NC, X32):785
+	           Transpose (ND, X32) Transpose	    0.560	    0.578	  0.009%	 91.932%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:786
+	          Fully Connected (NC, F32) GEMM	    7.181	    7.643	  0.116%	 92.048%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:787
+	           Transpose (ND, X32) Transpose	    0.748	    0.815	  0.012%	 92.060%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:788
+	                          Copy (NC, X32)	    0.001	    0.001	  0.000%	 92.060%	     0.000	        1	Delegate/Copy (NC, X32):789
+	           Transpose (ND, X32) Transpose	    0.472	    0.525	  0.008%	 92.068%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:790
+	          Fully Connected (NC, F32) GEMM	   14.506	   15.078	  0.229%	 92.297%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:791
+	           Convolution (NHWC, F32) IGEMM	   35.219	   37.093	  0.562%	 92.859%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:792
+	           Convolution (NHWC, F32) IGEMM	   41.829	   41.475	  0.629%	 93.488%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:793
+	           Convolution (NHWC, F32) IGEMM	   20.908	   21.598	  0.327%	 93.815%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:794
+	                  Unary Elementwise (NC)	    0.159	    0.167	  0.003%	 93.817%	     0.000	        1	Delegate/Unary Elementwise (NC):795
+	           Convolution (NHWC, F32) IGEMM	   13.772	   14.370	  0.218%	 94.035%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:796
+	           Convolution (NHWC, F32) IGEMM	   13.740	   14.127	  0.214%	 94.249%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:797
+	                 Binary Elementwise (ND)	    0.266	    0.252	  0.004%	 94.253%	     0.000	        1	Delegate/Binary Elementwise (ND):798
+	                  Unary Elementwise (NC)	    0.703	    0.760	  0.012%	 94.265%	     0.000	        1	Delegate/Unary Elementwise (NC):799
+	           Convolution (NHWC, F32) IGEMM	   55.167	   56.827	  0.861%	 95.126%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:800
+	           Convolution (NHWC, F32) IGEMM	   55.245	   55.669	  0.844%	 95.970%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:801
+	                 Binary Elementwise (ND)	    1.054	    1.021	  0.015%	 95.985%	     0.000	        1	Delegate/Binary Elementwise (ND):802
+	                     STABLEHLO_COMPOSITE	    1.997	    2.009	  0.030%	 96.016%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_0/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/torch.nn.modules.normalization.GroupNorm_norm;]:892
+	                     STABLEHLO_COMPOSITE	    0.899	    0.923	  0.014%	 96.030%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_1/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/torch.nn.modules.normalization.GroupNorm_norm;]:987
+	                         Slice (ND, X32)	    0.426	    0.390	  0.006%	 96.036%	     0.000	        1	Delegate/Slice (ND, X32):46
+	                         Slice (ND, X32)	    0.541	    0.443	  0.007%	 96.042%	     0.000	        1	Delegate/Slice (ND, X32):45
+	          Fully Connected (NC, F32) GEMM	   31.488	   16.519	  0.501%	 96.543%	     0.000	        2	Delegate/Fully Connected (NC, F32) GEMM:44
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 96.543%	     0.000	        1	Delegate/Copy (NC, X32):42
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 96.543%	     0.000	        1	Delegate/Copy (NC, X32):40
+	                  Unary Elementwise (NC)	    0.001	    0.001	  0.000%	 96.543%	     0.000	        1	Delegate/Unary Elementwise (NC):37
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 96.543%	     0.000	        1	Delegate/Copy (NC, X32):33
+	          Fully Connected (NC, F32) GEMM	    3.621	    3.632	  0.055%	 96.598%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:30
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 96.598%	     0.000	        1	Delegate/Copy (NC, X32):29
+	                 Binary Elementwise (ND)	    0.172	    0.160	  0.007%	 96.606%	     0.000	        3	Delegate/Binary Elementwise (ND):23
+	                  Unary Elementwise (NC)	    2.605	    2.338	  0.106%	 96.712%	     0.000	        3	Delegate/Unary Elementwise (NC):20
+	                         Slice (ND, X32)	    0.881	    0.718	  0.033%	 96.745%	     0.000	        3	Delegate/Slice (ND, X32):19
+	                         Slice (ND, X32)	    1.058	    0.849	  0.039%	 96.783%	     0.000	        3	Delegate/Slice (ND, X32):18
+	          Fully Connected (NC, F32) GEMM	   28.776	   15.327	  0.697%	 97.480%	     0.000	        3	Delegate/Fully Connected (NC, F32) GEMM:17
+	                                     EXP	    0.019	    0.019	  0.000%	 97.480%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_1/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_1;8]:1054
+	                                     EXP	    0.073	    0.074	  0.001%	 97.481%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_0/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_1;8]:959
+	                           CONCATENATION	    0.278	    0.277	  0.004%	 97.486%	     0.000	        1	[wrapper.VDAInitWrapper;249]:1324
+	                           CONCATENATION	    0.564	    0.579	  0.009%	 97.494%	     0.000	        1	[wrapper.VDAInitWrapper;247]:1322
+	                              REDUCE_MAX	    0.002	    0.002	  0.000%	 97.494%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_1/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_1;5]:1050
+	                              REDUCE_MAX	    0.011	    0.011	  0.000%	 97.495%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_0/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_1;5]:955
+	                 Binary Elementwise (ND)	    0.002	    0.006	  0.000%	 97.495%	     0.000	        2	Delegate/Binary Elementwise (ND):59
+	    Batch Matrix Multiply (NC, F32) GEMM	    1.500	    1.489	  0.023%	 97.517%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:58
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 97.517%	     0.000	        1	Delegate/Copy (NC, X32):57
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 97.517%	     0.000	        1	Delegate/Copy (NC, X32):55
+	          Fully Connected (NC, F32) GEMM	    3.629	    3.631	  0.055%	 97.572%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:54
+	          Fully Connected (NC, F32) GEMM	    3.629	    3.670	  0.056%	 97.628%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:53
+	          Fully Connected (NC, F32) GEMM	    3.652	    3.710	  0.056%	 97.684%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:52
+	                  Unary Elementwise (NC)	    0.001	    0.001	  0.000%	 97.684%	     0.000	        1	Delegate/Unary Elementwise (NC):40
+	                          Mean (ND) Mean	    0.034	    0.030	  0.000%	 97.685%	     0.000	        1	Delegate/Mean (ND) Mean:38
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 97.685%	     0.000	        1	Delegate/Copy (NC, X32):36
+	                          Mean (ND) Mean	    0.046	    0.037	  0.001%	 97.686%	     0.000	        2	Delegate/Mean (ND) Mean:35
+	                 Binary Elementwise (ND)	    0.098	    0.364	  0.017%	 97.702%	     0.000	        3	Delegate/Binary Elementwise (ND):34
+	          Fully Connected (NC, F32) GEMM	    3.639	    4.034	  0.183%	 97.886%	     0.000	        3	Delegate/Fully Connected (NC, F32) GEMM:33
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 97.886%	     0.000	        1	Delegate/Copy (NC, X32):32
+	    Batch Matrix Multiply (NC, F32) GEMM	    0.691	    0.690	  0.010%	 97.896%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:31
+	                          Copy (NC, X32)	    0.085	    0.070	  0.003%	 97.900%	     0.000	        3	Delegate/Copy (NC, X32):0
+	          Fully Connected (NC, F32) GEMM	    3.571	    1.858	  0.085%	 97.984%	     0.000	        3	Delegate/Fully Connected (NC, F32) GEMM:1
+	                          Mean (ND) Mean	    0.071	    0.082	  0.004%	 97.988%	     0.000	        3	Delegate/Mean (ND) Mean:2
+	                          Copy (NC, X32)	    0.000	    0.439	  0.047%	 98.034%	     0.000	        7	Delegate/Copy (NC, X32):3
+	                          Mean (ND) Mean	    0.060	    0.085	  0.012%	 98.046%	     0.000	        9	Delegate/Mean (ND) Mean:5
+	                  Unary Elementwise (NC)	    0.002	    0.004	  0.000%	 98.046%	     0.000	        3	Delegate/Unary Elementwise (NC):7
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 98.046%	     0.000	        3	Delegate/Copy (NC, X32):10
+	                 Binary Elementwise (ND)	    0.066	    0.024	  0.003%	 98.049%	     0.000	        9	Delegate/Binary Elementwise (ND):11
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 98.049%	     0.000	        3	Delegate/Copy (NC, X32):12
+	                 Binary Elementwise (ND)	    0.063	    0.070	  0.003%	 98.053%	     0.000	        3	Delegate/Binary Elementwise (ND):13
+	                 Binary Elementwise (ND)	    0.090	    0.091	  0.012%	 98.065%	     0.000	        9	Delegate/Binary Elementwise (ND):14
+	                          Copy (NC, X32)	    0.082	    0.073	  0.003%	 98.068%	     0.000	        3	Delegate/Copy (NC, X32):16
+	                          Copy (NC, X32)	    0.073	    0.070	  0.003%	 98.072%	     0.000	        3	Delegate/Copy (NC, X32):18
+	          Fully Connected (NC, F32) GEMM	    3.750	    1.910	  0.087%	 98.158%	     0.000	        3	Delegate/Fully Connected (NC, F32) GEMM:19
+	          Fully Connected (NC, F32) GEMM	    3.520	    1.864	  0.085%	 98.243%	     0.000	        3	Delegate/Fully Connected (NC, F32) GEMM:20
+	          Fully Connected (NC, F32) GEMM	    3.487	    1.827	  0.083%	 98.326%	     0.000	        3	Delegate/Fully Connected (NC, F32) GEMM:21
+	                          Copy (NC, X32)	    0.001	    0.000	  0.000%	 98.326%	     0.000	        3	Delegate/Copy (NC, X32):22
+	                          Copy (NC, X32)	    0.103	    0.089	  0.004%	 98.330%	     0.000	        3	Delegate/Copy (NC, X32):23
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 98.330%	     0.000	        3	Delegate/Copy (NC, X32):24
+	    Batch Matrix Multiply (NC, F32) GEMM	    3.445	    3.511	  0.160%	 98.490%	     0.000	        3	Delegate/Batch Matrix Multiply (NC, F32) GEMM:25
+	                          Copy (NC, X32)	    0.065	    0.018	  0.001%	 98.491%	     0.000	        4	Delegate/Copy (NC, X32):27
+	          Fully Connected (NC, F32) GEMM	    3.655	    3.678	  0.056%	 98.547%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:28
+	                          Mean (ND) Mean	    0.025	    0.030	  0.000%	 98.547%	     0.000	        1	Delegate/Mean (ND) Mean:29
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 98.547%	     0.000	        1	Delegate/Copy (NC, X32):30
+	                          Mean (ND) Mean	    0.023	    0.031	  0.001%	 98.548%	     0.000	        2	Delegate/Mean (ND) Mean:32
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 98.548%	     0.000	        1	Delegate/Binary Elementwise (ND):33
+	                  Unary Elementwise (NC)	    0.001	    0.001	  0.000%	 98.548%	     0.000	        1	Delegate/Unary Elementwise (NC):34
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 98.548%	     0.000	        1	Delegate/Binary Elementwise (ND):35
+	                 Binary Elementwise (ND)	    0.000	    0.001	  0.000%	 98.548%	     0.000	        2	Delegate/Binary Elementwise (ND):36
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 98.548%	     0.000	        1	Delegate/Copy (NC, X32):37
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 98.548%	     0.000	        1	Delegate/Copy (NC, X32):39
+	                          Copy (NC, X32)	    0.038	    0.019	  0.001%	 98.549%	     0.000	        2	Delegate/Copy (NC, X32):43
+	                          Copy (NC, X32)	    0.034	    0.017	  0.001%	 98.549%	     0.000	        2	Delegate/Copy (NC, X32):45
+	          Fully Connected (NC, F32) GEMM	    3.638	    3.655	  0.055%	 98.605%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:46
+	          Fully Connected (NC, F32) GEMM	    3.637	    3.639	  0.055%	 98.660%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:47
+	          Fully Connected (NC, F32) GEMM	    3.634	    3.624	  0.055%	 98.715%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:48
+	                          Copy (NC, X32)	    0.000	    0.020	  0.001%	 98.715%	     0.000	        2	Delegate/Copy (NC, X32):49
+	                          Copy (NC, X32)	    0.048	    0.049	  0.001%	 98.716%	     0.000	        1	Delegate/Copy (NC, X32):50
+	                          Copy (NC, X32)	    0.000	    0.017	  0.001%	 98.717%	     0.000	        2	Delegate/Copy (NC, X32):51
+	    Batch Matrix Multiply (NC, F32) GEMM	    1.508	    1.530	  0.023%	 98.740%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:52
+	                 Binary Elementwise (ND)	    0.004	    0.037	  0.001%	 98.741%	     0.000	        2	Delegate/Binary Elementwise (ND):53
+	                              REDUCE_MAX	    0.012	    0.015	  0.000%	 98.741%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_0/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_0;7]:920
+	                              REDUCE_MAX	    0.002	    0.003	  0.000%	 98.741%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_1/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_0;7]:1015
+	                           CONCATENATION	    0.552	    0.577	  0.009%	 98.750%	     0.000	        1	[wrapper.VDAInitWrapper;246]:1321
+	                           CONCATENATION	    0.259	    0.277	  0.004%	 98.754%	     0.000	        1	[wrapper.VDAInitWrapper;248]:1323
+	                 Binary Elementwise (ND)	    0.005	    0.008	  0.001%	 98.755%	     0.000	        6	Delegate/Binary Elementwise (ND):2
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 98.755%	     0.000	        2	Delegate/Binary Elementwise (ND):3
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 98.755%	     0.000	        2	Delegate/Copy (NC, X32):4
+	                          Copy (NC, X32)	    0.937	    0.230	  0.028%	 98.783%	     0.000	        8	Delegate/Copy (NC, X32):6
+	                          Copy (NC, X32)	    0.448	    0.458	  0.014%	 98.797%	     0.000	        2	Delegate/Copy (NC, X32):7
+	                                     EXP	    0.073	    0.073	  0.001%	 98.798%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_0/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_0;11]:924
+	                                     EXP	    0.018	    0.019	  0.000%	 98.798%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dpt_temporal.DPTHeadTemporal_head/video_depth_anything.motion_module.motion_module.TemporalModule_1/video_depth_anything.motion_module.motion_module.TemporalTransformer3DModel_temporal_transformer/video_depth_anything.motion_module.motion_module.TemporalTransformerBlock_0/video_depth_anything.motion_module.motion_module.TemporalAttention_0;11]:1019
+	    Batch Matrix Multiply (NC, F32) GEMM	    1.727	    1.723	  0.157%	 98.955%	     0.000	        6	Delegate/Batch Matrix Multiply (NC, F32) GEMM:1
+	                          Copy (NC, X32)	    0.001	    0.000	  0.000%	 98.955%	     0.000	        6	Delegate/Copy (NC, X32):2
+	          Fully Connected (NC, F32) GEMM	    3.529	    1.868	  0.170%	 99.125%	     0.000	        6	Delegate/Fully Connected (NC, F32) GEMM:3
+	                          Mean (ND) Mean	    0.088	    0.083	  0.008%	 99.132%	     0.000	        6	Delegate/Mean (ND) Mean:8
+	                  Unary Elementwise (NC)	    0.002	    0.004	  0.000%	 99.133%	     0.000	        6	Delegate/Unary Elementwise (NC):10
+	    Batch Matrix Multiply (NC, F32) GEMM	    3.404	    2.826	  0.171%	 99.304%	     0.000	        4	Delegate/Batch Matrix Multiply (NC, F32) GEMM:28
+	                          Copy (NC, X32)	    0.103	    0.095	  0.004%	 99.308%	     0.000	        3	Delegate/Copy (NC, X32):26
+	                          Copy (NC, X32)	    0.001	    0.000	  0.000%	 99.308%	     0.000	        6	Delegate/Copy (NC, X32):25
+	          Fully Connected (NC, F32) GEMM	    3.502	    1.847	  0.168%	 99.476%	     0.000	        6	Delegate/Fully Connected (NC, F32) GEMM:24
+	          Fully Connected (NC, F32) GEMM	    3.515	    1.885	  0.086%	 99.562%	     0.000	        3	Delegate/Fully Connected (NC, F32) GEMM:23
+	          Fully Connected (NC, F32) GEMM	    3.684	    4.747	  0.432%	 99.994%	     0.000	        6	Delegate/Fully Connected (NC, F32) GEMM:22
+	                 Binary Elementwise (ND)	    0.001	    0.001	  0.000%	 99.994%	     0.000	        6	Delegate/Binary Elementwise (ND):12
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 99.994%	     0.000	        6	Delegate/Copy (NC, X32):13
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 99.994%	     0.000	        6	Delegate/Copy (NC, X32):15
+	                          Copy (NC, X32)	    0.078	    0.069	  0.003%	 99.997%	     0.000	        3	Delegate/Copy (NC, X32):19
+	                          Copy (NC, X32)	    0.078	    0.066	  0.003%	100.000%	     0.000	        3	Delegate/Copy (NC, X32):21
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Convolution (NHWC, F32) IGEMM	  167.093	  169.447	  2.568%	  2.568%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:43
+	           Convolution (NHWC, F32) IGEMM	  112.309	  112.554	  1.706%	  4.275%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:41
+	    Batch Matrix Multiply (NC, F32) GEMM	  113.686	  104.752	  1.588%	  5.862%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:355
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.632	  103.883	  1.575%	  7.437%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:673
+	    Batch Matrix Multiply (NC, F32) GEMM	   98.900	  103.550	  1.570%	  9.007%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:461
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.378	  102.932	  1.560%	 10.567%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:514
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.117	  102.884	  1.559%	 12.126%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:408
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.357	  101.117	  1.533%	 13.659%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:196
+	    Batch Matrix Multiply (NC, F32) GEMM	   99.469	  100.962	  1.530%	 15.189%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:726
+	    Batch Matrix Multiply (NC, F32) GEMM	  103.067	  100.951	  1.530%	 16.720%	     0.000	        1	Delegate/Batch Matrix Multiply (NC, F32) GEMM:249
+
+Number of nodes executed: 1048
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	          Fully Connected (NC, F32) GEMM	       75	  2473.034	    37.488%	    37.488%	     0.000	      105
+	    Batch Matrix Multiply (NC, F32) GEMM	       30	  2437.367	    36.947%	    74.435%	     0.000	       40
+	           Convolution (NHWC, F32) IGEMM	       19	   726.221	    11.008%	    85.443%	     0.000	       22
+	                       Softmax (NC, F32)	       12	   533.879	     8.093%	    93.536%	     0.000	       12
+	                 Binary Elementwise (ND)	      307	    84.850	     1.286%	    94.822%	     0.000	      450
+	                  Unary Elementwise (NC)	       51	    73.764	     1.118%	    95.941%	     0.000	       61
+	                               GATHER_ND	       32	    69.672	     1.056%	    96.997%	     0.000	       32
+	                           CONCATENATION	       40	    61.847	     0.938%	    97.934%	     0.000	       40
+	           Transpose (ND, X32) Transpose	       80	    58.489	     0.887%	    98.821%	     0.000	       80
+	             Resize Bilinear (NHWC, F32)	        6	    15.831	     0.240%	    99.061%	     0.000	        7
+	                         Slice (ND, X32)	       44	    15.775	     0.239%	    99.300%	     0.000	       48
+	     Deconvolution (NHWC, F32) Subconv2D	        2	    13.340	     0.202%	    99.502%	     0.000	        2
+	                          Mean (ND) Mean	       57	    11.420	     0.173%	    99.675%	     0.000	       74
+	                          Copy (NC, X32)	      241	     9.020	     0.137%	    99.812%	     0.000	      312
+	                     STABLEHLO_COMPOSITE	        4	     6.176	     0.094%	    99.906%	     0.000	        4
+	                            BROADCAST_TO	       16	     5.237	     0.079%	    99.985%	     0.000	       16
+	                                     EXP	        8	     0.909	     0.014%	    99.999%	     0.000	        8
+	                              REDUCE_MAX	        8	     0.080	     0.001%	   100.000%	     0.000	        8
+	                                 RESHAPE	       16	     0.001	     0.000%	   100.000%	     0.000	       16
+
+Timings (microseconds): count=10 first=6515890 curr=6670217 min=6515890 max=6681568 avg=6.59727e+06 std=59920
+Memory (bytes): count=0
+1048 nodes observed
+
+Subgraph (index: 1, name: odml.group_norm.impl) profile:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Transpose (ND, X32) Transpose	    0.245	    0.245	 13.621%	 13.621%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:4
+	                 Binary Elementwise (ND)	    0.086	    0.086	  4.809%	 18.430%	     0.000	        1	Delegate/Binary Elementwise (ND):2
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 18.430%	     0.000	        1	Delegate/Copy (NC, X32):0
+	                               GATHER_ND	    0.002	    0.002	  0.095%	 18.525%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/video_depth_anything.dinov2_layers.attention.MemEffAttention_attn/torch.nn.modules.linear.Linear_proj;]:21
+	                               GATHER_ND	    0.004	    0.004	  0.228%	 18.753%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/torch.nn.modules.normalization.LayerNorm_norm2;;wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/video_depth_anything.dinov2_layers.mlp.Mlp_mlp/torch.nn.modules.linear.Linear_fc1;]:19
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Copy (NC, X32):19
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Copy (NC, X32):18
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Binary Elementwise (ND):17
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Copy (NC, X32):16
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Binary Elementwise (ND):15
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Binary Elementwise (ND):14
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Binary Elementwise (ND):13
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Copy (NC, X32):12
+	                  Unary Elementwise (NC)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Unary Elementwise (NC):11
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Copy (NC, X32):10
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Binary Elementwise (ND):9
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 18.753%	     0.000	        1	Delegate/Binary Elementwise (ND):8
+	                           Sum (ND) Mean	    0.093	    0.090	  4.987%	 23.741%	     0.000	        1	Delegate/Sum (ND) Mean:7
+	                 Binary Elementwise (ND)	    0.110	    0.118	  6.579%	 30.320%	     0.000	        1	Delegate/Binary Elementwise (ND):6
+	                 Binary Elementwise (ND)	    0.092	    0.095	  5.288%	 35.608%	     0.000	        1	Delegate/Binary Elementwise (ND):5
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 35.608%	     0.000	        1	Delegate/Copy (NC, X32):4
+	                 Binary Elementwise (ND)	    0.001	    0.042	  4.704%	 40.312%	     0.000	        2	Delegate/Binary Elementwise (ND):3
+	                           Sum (ND) Mean	    0.074	    0.083	  4.626%	 44.937%	     0.000	        1	Delegate/Sum (ND) Mean:2
+	                          Copy (NC, X32)	    0.081	    0.041	  4.615%	 49.552%	     0.000	        2	Delegate/Copy (NC, X32):1
+	           Transpose (ND, X32) Transpose	    0.818	    0.826	 45.967%	 95.519%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:0
+	                         AllocateTensors	    0.109	    0.081	  4.481%	100.000%	     0.000	        1	AllocateTensors/1
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Transpose (ND, X32) Transpose	    0.818	    0.826	 45.967%	 45.967%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:0
+	           Transpose (ND, X32) Transpose	    0.245	    0.245	 13.621%	 59.588%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:4
+	                 Binary Elementwise (ND)	    0.110	    0.118	  6.579%	 66.168%	     0.000	        1	Delegate/Binary Elementwise (ND):6
+	                 Binary Elementwise (ND)	    0.092	    0.095	  5.288%	 71.456%	     0.000	        1	Delegate/Binary Elementwise (ND):5
+	                           Sum (ND) Mean	    0.093	    0.090	  4.987%	 76.443%	     0.000	        1	Delegate/Sum (ND) Mean:7
+	                 Binary Elementwise (ND)	    0.086	    0.086	  4.809%	 81.252%	     0.000	        1	Delegate/Binary Elementwise (ND):2
+	                           Sum (ND) Mean	    0.074	    0.083	  4.626%	 85.878%	     0.000	        1	Delegate/Sum (ND) Mean:2
+	                         AllocateTensors	    0.109	    0.081	  4.481%	 90.359%	     0.000	        1	AllocateTensors/1
+	                 Binary Elementwise (ND)	    0.001	    0.042	  4.704%	 95.063%	     0.000	        2	Delegate/Binary Elementwise (ND):3
+	                          Copy (NC, X32)	    0.081	    0.041	  4.615%	 99.677%	     0.000	        2	Delegate/Copy (NC, X32):1
+
+Number of nodes executed: 26
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	           Transpose (ND, X32) Transpose	        2	     1.069	    59.687%	    59.687%	     0.000	        2
+	                 Binary Elementwise (ND)	       10	     0.383	    21.385%	    81.072%	     0.000	       11
+	                           Sum (ND) Mean	        2	     0.172	     9.604%	    90.676%	     0.000	        2
+	                          Copy (NC, X32)	        8	     0.082	     4.578%	    95.254%	     0.000	        9
+	                         AllocateTensors	        1	     0.080	     4.467%	    99.721%	     0.000	        1
+	                               GATHER_ND	        2	     0.005	     0.279%	   100.000%	     0.000	        2
+	                  Unary Elementwise (NC)	        1	     0.000	     0.000%	   100.000%	     0.000	        1
+
+Subgraph (index: 1, name: odml.group_norm.impl) Timings (microseconds): count=10 first=1797 curr=1739 min=1739 max=1835 avg=1796.5 std=31
+Memory (bytes): count=0
+26 nodes observed
+
+Subgraph (index: 2, name: odml.group_norm.impl_0) profile:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Transpose (ND, X32) Transpose	    0.126	    0.134	 16.458%	 16.458%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:4
+	                 Binary Elementwise (ND)	    0.035	    0.037	  4.489%	 20.947%	     0.000	        1	Delegate/Binary Elementwise (ND):2
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 20.947%	     0.000	        1	Delegate/Copy (NC, X32):0
+	                               GATHER_ND	    0.003	    0.003	  0.356%	 21.302%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/video_depth_anything.dinov2_layers.attention.MemEffAttention_attn/torch.nn.modules.linear.Linear_proj;]:21
+	                               GATHER_ND	    0.005	    0.005	  0.625%	 21.928%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/torch.nn.modules.normalization.LayerNorm_norm2;;wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/video_depth_anything.dinov2_layers.mlp.Mlp_mlp/torch.nn.modules.linear.Linear_fc1;]:19
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 21.928%	     0.000	        1	Delegate/Copy (NC, X32):19
+	                          Copy (NC, X32)	    0.002	    0.003	  0.343%	 22.271%	     0.000	        1	Delegate/Copy (NC, X32):18
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.271%	     0.000	        1	Delegate/Binary Elementwise (ND):17
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.271%	     0.000	        1	Delegate/Copy (NC, X32):16
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.271%	     0.000	        1	Delegate/Binary Elementwise (ND):15
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.271%	     0.000	        1	Delegate/Binary Elementwise (ND):14
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.271%	     0.000	        1	Delegate/Binary Elementwise (ND):13
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.271%	     0.000	        1	Delegate/Copy (NC, X32):12
+	                  Unary Elementwise (NC)	    0.000	    0.000	  0.000%	 22.271%	     0.000	        1	Delegate/Unary Elementwise (NC):11
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.271%	     0.000	        1	Delegate/Copy (NC, X32):10
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.271%	     0.000	        1	Delegate/Binary Elementwise (ND):9
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.271%	     0.000	        1	Delegate/Binary Elementwise (ND):8
+	                           Sum (ND) Mean	    0.031	    0.039	  4.832%	 27.103%	     0.000	        1	Delegate/Sum (ND) Mean:7
+	                 Binary Elementwise (ND)	    0.040	    0.047	  5.776%	 32.880%	     0.000	        1	Delegate/Binary Elementwise (ND):6
+	                 Binary Elementwise (ND)	    0.037	    0.041	  5.065%	 37.945%	     0.000	        1	Delegate/Binary Elementwise (ND):5
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 37.945%	     0.000	        1	Delegate/Copy (NC, X32):4
+	                 Binary Elementwise (ND)	    0.000	    0.017	  4.170%	 42.114%	     0.000	        2	Delegate/Binary Elementwise (ND):3
+	                           Sum (ND) Mean	    0.023	    0.026	  3.225%	 45.340%	     0.000	        1	Delegate/Sum (ND) Mean:2
+	                          Copy (NC, X32)	    0.036	    0.020	  4.881%	 50.221%	     0.000	        2	Delegate/Copy (NC, X32):1
+	           Transpose (ND, X32) Transpose	    0.343	    0.354	 43.402%	 93.623%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:0
+	                         AllocateTensors	    0.065	    0.052	  6.377%	100.000%	     0.000	        1	AllocateTensors/2
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Transpose (ND, X32) Transpose	    0.343	    0.354	 43.402%	 43.402%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:0
+	           Transpose (ND, X32) Transpose	    0.126	    0.134	 16.458%	 59.860%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:4
+	                         AllocateTensors	    0.065	    0.052	  6.377%	 66.237%	     0.000	        1	AllocateTensors/2
+	                 Binary Elementwise (ND)	    0.040	    0.047	  5.776%	 72.014%	     0.000	        1	Delegate/Binary Elementwise (ND):6
+	                 Binary Elementwise (ND)	    0.037	    0.041	  5.065%	 77.079%	     0.000	        1	Delegate/Binary Elementwise (ND):5
+	                           Sum (ND) Mean	    0.031	    0.039	  4.832%	 81.911%	     0.000	        1	Delegate/Sum (ND) Mean:7
+	                 Binary Elementwise (ND)	    0.035	    0.037	  4.489%	 86.399%	     0.000	        1	Delegate/Binary Elementwise (ND):2
+	                           Sum (ND) Mean	    0.023	    0.026	  3.225%	 89.625%	     0.000	        1	Delegate/Sum (ND) Mean:2
+	                          Copy (NC, X32)	    0.036	    0.020	  4.881%	 94.506%	     0.000	        2	Delegate/Copy (NC, X32):1
+	                 Binary Elementwise (ND)	    0.000	    0.017	  4.170%	 98.675%	     0.000	        2	Delegate/Binary Elementwise (ND):3
+
+Number of nodes executed: 26
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	           Transpose (ND, X32) Transpose	        2	     0.487	    60.123%	    60.123%	     0.000	        2
+	                 Binary Elementwise (ND)	       10	     0.158	    19.506%	    79.630%	     0.000	       11
+	                           Sum (ND) Mean	        2	     0.065	     8.025%	    87.654%	     0.000	        2
+	                         AllocateTensors	        1	     0.052	     6.420%	    94.074%	     0.000	        1
+	                          Copy (NC, X32)	        8	     0.041	     5.062%	    99.136%	     0.000	        9
+	                               GATHER_ND	        2	     0.007	     0.864%	   100.000%	     0.000	        2
+	                  Unary Elementwise (NC)	        1	     0.000	     0.000%	   100.000%	     0.000	        1
+
+Subgraph (index: 2, name: odml.group_norm.impl_0) Timings (microseconds): count=10 first=778 curr=785 min=758 max=888 avg=815.4 std=41
+Memory (bytes): count=0
+26 nodes observed
+
+Subgraph (index: 3, name: odml.group_norm.impl_1) profile:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Transpose (ND, X32) Transpose	    0.086	    0.091	 16.306%	 16.306%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:4
+	                 Binary Elementwise (ND)	    0.022	    0.022	  3.898%	 20.204%	     0.000	        1	Delegate/Binary Elementwise (ND):2
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 20.204%	     0.000	        1	Delegate/Copy (NC, X32):0
+	                               GATHER_ND	    0.001	    0.001	  0.161%	 20.365%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/video_depth_anything.dinov2_layers.attention.MemEffAttention_attn/torch.nn.modules.linear.Linear_proj;]:21
+	                               GATHER_ND	    0.003	    0.003	  0.536%	 20.901%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/torch.nn.modules.normalization.LayerNorm_norm2;;wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/video_depth_anything.dinov2_layers.mlp.Mlp_mlp/torch.nn.modules.linear.Linear_fc1;]:19
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Copy (NC, X32):19
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Copy (NC, X32):18
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Binary Elementwise (ND):17
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Copy (NC, X32):16
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Binary Elementwise (ND):15
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Binary Elementwise (ND):14
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Binary Elementwise (ND):13
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Copy (NC, X32):12
+	                  Unary Elementwise (NC)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Unary Elementwise (NC):11
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Copy (NC, X32):10
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Binary Elementwise (ND):9
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 20.901%	     0.000	        1	Delegate/Binary Elementwise (ND):8
+	                           Sum (ND) Mean	    0.014	    0.018	  3.218%	 24.119%	     0.000	        1	Delegate/Sum (ND) Mean:7
+	                 Binary Elementwise (ND)	    0.024	    0.024	  4.309%	 28.428%	     0.000	        1	Delegate/Binary Elementwise (ND):6
+	                 Binary Elementwise (ND)	    0.022	    0.022	  3.933%	 32.362%	     0.000	        1	Delegate/Binary Elementwise (ND):5
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 32.362%	     0.000	        1	Delegate/Copy (NC, X32):4
+	                 Binary Elementwise (ND)	    0.000	    0.009	  3.326%	 35.687%	     0.000	        2	Delegate/Binary Elementwise (ND):3
+	                           Sum (ND) Mean	    0.015	    0.015	  2.664%	 38.352%	     0.000	        1	Delegate/Sum (ND) Mean:2
+	                          Copy (NC, X32)	    0.019	    0.010	  3.504%	 41.856%	     0.000	        2	Delegate/Copy (NC, X32):1
+	           Transpose (ND, X32) Transpose	    0.246	    0.248	 44.305%	 86.161%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:0
+	                         AllocateTensors	    0.096	    0.077	 13.839%	100.000%	     0.000	        1	AllocateTensors/3
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Transpose (ND, X32) Transpose	    0.246	    0.248	 44.305%	 44.305%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:0
+	           Transpose (ND, X32) Transpose	    0.086	    0.091	 16.306%	 60.611%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:4
+	                         AllocateTensors	    0.096	    0.077	 13.839%	 74.450%	     0.000	        1	AllocateTensors/3
+	                 Binary Elementwise (ND)	    0.024	    0.024	  4.309%	 78.759%	     0.000	        1	Delegate/Binary Elementwise (ND):6
+	                 Binary Elementwise (ND)	    0.022	    0.022	  3.933%	 82.693%	     0.000	        1	Delegate/Binary Elementwise (ND):5
+	                 Binary Elementwise (ND)	    0.022	    0.022	  3.898%	 86.590%	     0.000	        1	Delegate/Binary Elementwise (ND):2
+	                           Sum (ND) Mean	    0.014	    0.018	  3.218%	 89.809%	     0.000	        1	Delegate/Sum (ND) Mean:7
+	                           Sum (ND) Mean	    0.015	    0.015	  2.664%	 92.473%	     0.000	        1	Delegate/Sum (ND) Mean:2
+	                          Copy (NC, X32)	    0.019	    0.010	  3.504%	 95.977%	     0.000	        2	Delegate/Copy (NC, X32):1
+	                 Binary Elementwise (ND)	    0.000	    0.009	  3.326%	 99.303%	     0.000	        2	Delegate/Binary Elementwise (ND):3
+
+Number of nodes executed: 26
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	           Transpose (ND, X32) Transpose	        2	     0.338	    61.011%	    61.011%	     0.000	        2
+	                 Binary Elementwise (ND)	       10	     0.085	    15.343%	    76.354%	     0.000	       11
+	                         AllocateTensors	        1	     0.077	    13.899%	    90.253%	     0.000	        1
+	                           Sum (ND) Mean	        2	     0.032	     5.776%	    96.029%	     0.000	        2
+	                          Copy (NC, X32)	        8	     0.019	     3.430%	    99.458%	     0.000	        9
+	                               GATHER_ND	        2	     0.003	     0.542%	   100.000%	     0.000	        2
+	                  Unary Elementwise (NC)	        1	     0.000	     0.000%	   100.000%	     0.000	        1
+
+Subgraph (index: 3, name: odml.group_norm.impl_1) Timings (microseconds): count=10 first=567 curr=521 min=521 max=594 avg=559.3 std=19
+Memory (bytes): count=0
+26 nodes observed
+
+Subgraph (index: 4, name: odml.group_norm.impl_2) profile:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Transpose (ND, X32) Transpose	    0.425	    0.414	 17.908%	 17.908%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:4
+	                 Binary Elementwise (ND)	    0.114	    0.107	  4.615%	 22.524%	     0.000	        1	Delegate/Binary Elementwise (ND):2
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.524%	     0.000	        1	Delegate/Copy (NC, X32):0
+	                               GATHER_ND	    0.001	    0.001	  0.039%	 22.563%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/video_depth_anything.dinov2_layers.attention.MemEffAttention_attn/torch.nn.modules.linear.Linear_proj;]:21
+	                               GATHER_ND	    0.004	    0.003	  0.147%	 22.710%	     0.000	        1	[wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/torch.nn.modules.normalization.LayerNorm_norm2;;wrapper.VDAInitWrapper/video_depth_anything.dinov2_layers.block.NestedTensorBlock_11/video_depth_anything.dinov2_layers.mlp.Mlp_mlp/torch.nn.modules.linear.Linear_fc1;]:19
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Copy (NC, X32):19
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Copy (NC, X32):18
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Binary Elementwise (ND):17
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Copy (NC, X32):16
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Binary Elementwise (ND):15
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Binary Elementwise (ND):14
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Binary Elementwise (ND):13
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Copy (NC, X32):12
+	                  Unary Elementwise (NC)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Unary Elementwise (NC):11
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Copy (NC, X32):10
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Binary Elementwise (ND):9
+	                 Binary Elementwise (ND)	    0.000	    0.000	  0.000%	 22.710%	     0.000	        1	Delegate/Binary Elementwise (ND):8
+	                           Sum (ND) Mean	    0.115	    0.116	  5.018%	 27.727%	     0.000	        1	Delegate/Sum (ND) Mean:7
+	                 Binary Elementwise (ND)	    0.158	    0.162	  7.021%	 34.748%	     0.000	        1	Delegate/Binary Elementwise (ND):6
+	                 Binary Elementwise (ND)	    0.116	    0.122	  5.299%	 40.047%	     0.000	        1	Delegate/Binary Elementwise (ND):5
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 40.047%	     0.000	        1	Delegate/Copy (NC, X32):4
+	                 Binary Elementwise (ND)	    0.000	    0.056	  4.849%	 44.896%	     0.000	        2	Delegate/Binary Elementwise (ND):3
+	                           Sum (ND) Mean	    0.102	    0.111	  4.806%	 49.702%	     0.000	        1	Delegate/Sum (ND) Mean:2
+	                          Copy (NC, X32)	    0.107	    0.054	  4.637%	 54.339%	     0.000	        2	Delegate/Copy (NC, X32):1
+	           Transpose (ND, X32) Transpose	    0.972	    0.984	 42.560%	 96.899%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:0
+	                         AllocateTensors	    0.095	    0.072	  3.101%	100.000%	     0.000	        1	AllocateTensors/4
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Transpose (ND, X32) Transpose	    0.972	    0.984	 42.560%	 42.560%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:0
+	           Transpose (ND, X32) Transpose	    0.425	    0.414	 17.908%	 60.468%	     0.000	        1	Delegate/Transpose (ND, X32) Transpose:4
+	                 Binary Elementwise (ND)	    0.158	    0.162	  7.021%	 67.489%	     0.000	        1	Delegate/Binary Elementwise (ND):6
+	                 Binary Elementwise (ND)	    0.116	    0.122	  5.299%	 72.787%	     0.000	        1	Delegate/Binary Elementwise (ND):5
+	                           Sum (ND) Mean	    0.115	    0.116	  5.018%	 77.805%	     0.000	        1	Delegate/Sum (ND) Mean:7
+	                           Sum (ND) Mean	    0.102	    0.111	  4.806%	 82.611%	     0.000	        1	Delegate/Sum (ND) Mean:2
+	                 Binary Elementwise (ND)	    0.114	    0.107	  4.615%	 87.226%	     0.000	        1	Delegate/Binary Elementwise (ND):2
+	                         AllocateTensors	    0.095	    0.072	  3.101%	 90.328%	     0.000	        1	AllocateTensors/4
+	                 Binary Elementwise (ND)	    0.000	    0.056	  4.849%	 95.177%	     0.000	        2	Delegate/Binary Elementwise (ND):3
+	                          Copy (NC, X32)	    0.107	    0.054	  4.637%	 99.814%	     0.000	        2	Delegate/Copy (NC, X32):1
+
+Number of nodes executed: 26
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	           Transpose (ND, X32) Transpose	        2	     1.397	    60.555%	    60.555%	     0.000	        2
+	                 Binary Elementwise (ND)	       10	     0.502	    21.760%	    82.315%	     0.000	       11
+	                           Sum (ND) Mean	        2	     0.227	     9.840%	    92.154%	     0.000	        2
+	                          Copy (NC, X32)	        8	     0.107	     4.638%	    96.792%	     0.000	        9
+	                         AllocateTensors	        1	     0.071	     3.078%	    99.870%	     0.000	        1
+	                               GATHER_ND	        2	     0.003	     0.130%	   100.000%	     0.000	        2
+	                  Unary Elementwise (NC)	        1	     0.000	     0.000%	   100.000%	     0.000	        1
+
+Subgraph (index: 4, name: odml.group_norm.impl_2) Timings (microseconds): count=10 first=2313 curr=2238 min=2200 max=2402 avg=2311.8 std=66
+Memory (bytes): count=0
+26 nodes observed
+
+
+

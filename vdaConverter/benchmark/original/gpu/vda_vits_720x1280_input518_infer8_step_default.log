@@ -1,0 +1,94 @@
+INFO: STARTING!
+INFO: Log parameter values verbosely: [1]
+INFO: Min num runs: [10]
+INFO: Min runs duration (seconds): [1]
+INFO: Max runs duration (seconds): [150]
+INFO: Inter-run delay (seconds): [-1]
+INFO: Number of prorated runs per second: [-1]
+INFO: Num threads: [-1]
+INFO: Use caching: [0]
+INFO: Benchmark name: []
+INFO: Output prefix: []
+INFO: Min warmup runs: [1]
+INFO: Min warmup runs duration (seconds): [0.5]
+INFO: Run w/o invoking kernels: [0]
+INFO: Report the peak memory footprint: [0]
+INFO: Memory footprint check interval (ms): [50]
+INFO: Graph: [/data/local/tmp/vda_benchmark/vda_vits_720x1280_input518_infer8_step.tflite]
+INFO: Signature to run: []
+INFO: Input layers: []
+INFO: Input shapes: []
+INFO: Input value ranges: []
+INFO: Input value files: []
+INFO: Allow fp16: [0]
+INFO: Require full delegation: [0]
+INFO: Enable op profiling: [1]
+INFO: Op profiling output mode.: [stdout]
+INFO: Op profiling output file.: []
+INFO: Max initial profiling buffer entries: [1024]
+INFO: Allow dynamic increase on profiling buffer entries: [0]
+INFO: CSV File to export profiling data to: []
+INFO: Enable Model Runtime Info Export: [0]
+INFO: Proto File to export model runtime info to: []
+INFO: Print pre-invoke interpreter state: [0]
+INFO: Print post-invoke interpreter state: [0]
+INFO: Release dynamic tensor memory: [0]
+INFO: Optimize memory usage for large tensors: [0]
+INFO: Disable delegate clustering: [0]
+INFO: Constant CAST output cache: [0]
+INFO: File path to export outputs layer to: []
+INFO: File path to export outputs layer as tf example to: []
+INFO: Tensor name display length: [25]
+INFO: Tensor type display length: [15]
+INFO: Tensor allocation type display length: [18]
+INFO: print out all supported flags: [0]
+INFO: #threads used for CPU inference: [-1]
+INFO: Max number of delegated partitions: [0]
+INFO: Min nodes per partition: [0]
+INFO: Index of the first node that could be delegated: [0]
+INFO: Index of the last node that could be delegated: [2147483647]
+INFO: Number of GPU delegate invoke loop iterations: [1]
+INFO: Directory for delegate serialization: []
+INFO: Model-specific token/key for delegate serialization.: []
+INFO: External delegate path: []
+INFO: External delegate options: []
+INFO: Use gpu: [1]
+INFO: Allow lower precision in gpu: [1]
+INFO: Enable running quant models in gpu: [1]
+INFO: Prefer maximizing the throughput in gpu: [0]
+INFO: GPU backend: []
+INFO: Use Hexagon: [0]
+INFO: Hexagon lib path: [/data/local/tmp]
+INFO: Hexagon profiling: [0]
+INFO: Use NNAPI: [0]
+INFO: Use xnnpack: [0]
+INFO: xnnpack_force_fp16: [0]
+INFO: xnnpack_weight_cache_file_path: []
+INFO: Use Slinky: [0]
+INFO: Loaded model /data/local/tmp/vda_benchmark/vda_vits_720x1280_input518_infer8_step.tflite
+INFO: Initialized TensorFlow Lite runtime.
+INFO: GPU delegate created.
+INFO: Created TensorFlow Lite delegate for GPU.
+INFO: Loaded OpenCL library with dlopen.
+ERROR: Following operations are not supported by GPU delegate:
+ADD: Doesn't support broadcasting - input0: [2442,192], input1: [1,2442,192]
+ADD: Doesn't support broadcasting - input0: [2442,64], input1: [1,2442,64]
+ADD: Doesn't support broadcasting - input0: [627,384], input1: [1,627,384]
+ADD: Doesn't support broadcasting - input0: [9768,64], input1: [1,9768,64]
+BROADCAST_TO: Operation is not supported.
+CONCATENATION: OP is supported, but tensor type/shape isn't compatible.
+GATHER_ND: Operation is not supported.
+MUL: Doesn't support broadcasting - input0: [2443,384], input1: [1,1,384]
+RESHAPE: OP is supported, but tensor type/shape isn't compatible.
+SLICE: Max version supported: 2. Requested version 5.
+STABLEHLO_COMPOSITE: Operation is not supported.
+TRANSPOSE: OP is supported, but tensor type/shape isn't compatible.
+127 operations will run on the GPU, and the remaining 1243 operations will run on the CPU.
+VERBOSE: Replacing 127 out of 1370 node(s) with delegate (TfLiteGpuDelegateV2) node, yielding 3 partitions for subgraph 0.
+ERROR: TfLiteGpuDelegate Init: CONCATENATION: Expected a 4D tensor of shape BxHxWxC but got 1x1x384
+INFO: Created 0 GPU delegate kernels.
+ERROR: TfLiteGpuDelegate Prepare: delegate is not initialized
+ERROR: Node number 1370 (TfLiteGpuDelegateV2) failed to prepare.
+ERROR: Restored original execution plan after delegate application failure.
+ERROR: Failed to apply GPU delegate.
+ERROR: Benchmarking failed.

@@ -1,0 +1,12 @@
+*.pth
+*.tflite
+
+/tflite_models/
+/Video-Depth-Anything/checkpoints/
+
+# Python bytecode cache
+__pycache__/
+*.pyc
+
+# Editor-specific config
+/.vscode/
