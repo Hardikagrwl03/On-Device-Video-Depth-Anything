@@ -1,0 +1,16 @@
+numpy
+torch
+torchvision
+opencv-python
+matplotlib
+pillow
+imageio==2.37.0
+imageio-ffmpeg==0.4.7
+decord
+einops==0.4.1
+easydict
+tqdm
+OpenEXR==3.3.1
+litert_torch
+netron
+selenium
