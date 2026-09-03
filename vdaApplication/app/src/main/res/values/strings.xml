@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">VDA</string>
+
+    <string name="select_video">Select Video</string>
+    <string name="run">Run</string>
+    <string name="reset">Reset</string>
+    <string name="input_video_label">Input Video</string>
+    <string name="output_video_label">Processed Video</string>
+
+    <string name="error_no_video">Please select a video first.</string>
+    <string name="error_selection_cancelled">Video selection cancelled.</string>
+    <string name="error_decode_failed">Failed to decode the video.</string>
+    <string name="error_encode_failed">Failed to encode the processed video.</string>
+    <string name="error_invalid_buffer">Processed buffer has an invalid size.</string>
+    <string name="error_processing_failed">Video processing failed.</string>
+    <string name="error_out_of_memory">Video is too large to process in memory. Try a shorter or lower-resolution clip.</string>
+    <string name="error_playback">Could not play the video (error %1$d).</string>
+
+    <string name="status_processing">Processing video…</string>
+    <string name="status_decoding">Decoding frames… %1$d/%2$d</string>
+    <string name="status_packing">Preparing buffer… %1$d/%2$d</string>
+    <string name="status_encoding">Encoding frames… %1$d/%2$d</string>
+    <string name="status_done">Done. Playing processed video.</string>
+    <string name="status_truncated">Note: only the first %1$d frames were processed.</string>
 </resources>
