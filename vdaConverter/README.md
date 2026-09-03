@@ -17,6 +17,10 @@ for what that took.
 The layout takes direct inspiration from the sibling
 [On-Device-RVM converter](../../../On-Device-RVM/converter/rvmConverter).
 
+**Quickest path**: `./run.sh` — converts `vits`/`gpu` at the defaults, then
+compares, verifies, benchmarks, and visualizes both the `init` and `step`
+models in one shot. See [`run.sh`](#runsh--one-shot-pipeline) below.
+
 ## Contents
 
 - [Setup](#setup)
@@ -27,7 +31,9 @@ The layout takes direct inspiration from the sibling
   - [`verify.py` — check a `.tflite` pair against PyTorch](#verifypy--check-a-tflite-pair-against-pytorch)
   - [`compare.py` — check `gpu` against `original`](#comparepy--check-gpu-against-original)
   - [`benchmark/` — on-device CPU/GPU benchmarking](#benchmark--on-device-cpugpu-benchmarking)
+  - [`analysis/visualize.py` — render a `.tflite` op-graph image](#analysisvisualizepy--render-a-tflite-op-graph-image)
   - [`scripts/` — user-friendly wrappers](#scripts--user-friendly-wrappers)
+  - [`run.sh` — one-shot pipeline](#runsh--one-shot-pipeline)
 - [The `original` vs. `gpu` split](#the-original-vs-gpu-split)
 - [Typical workflow](#typical-workflow)
 - [Claude Code skills](#claude-code-skills)
@@ -84,6 +90,30 @@ binary; the scripts detect this via `adb shell getprop ro.product.cpu.abi`
 and abort with an explicit "Unsupported device architecture" error rather
 than failing unhelpfully at push/exec time.
 
+### 4. Pre-converted `.tflite` models (optional)
+
+Already-exported `.tflite` models (see [Utilities → `convert.py`](#convertpy--export-to-tflite))
+are available on Google Drive, for skipping local conversion entirely:
+
+**[Pre-converted VDA `.tflite` models](https://drive.google.com/drive/folders/1kYM5fFGPH9slXKdKNDpb28LuaFczSPj9?usp=sharing)**
+
+Drop a downloaded pair under `tflite_models/<source>/`, keeping
+`convert.py`'s own filename convention (see [Core
+concepts](#core-concepts)) intact, and `verify.py`/`benchmark/*.sh`/
+`scripts/visualize.sh` can all find and infer options from them exactly as
+if you'd run `convert.sh` yourself — no local checkpoint or PyTorch trace
+needed for verification/benchmarking/visualization alone (`compare.py`
+still needs the `.pth` checkpoint, since it's a pure-PyTorch tool).
+
+### 5. A local browser (optional, for `visualize.py` only)
+
+`analysis/visualize.py` drives **headless Chrome** (via Selenium — installed
+by `requirements.txt`/`environment.yaml`) to render a `.tflite` op-graph
+image; it looks for `google-chrome`, `google-chrome-stable`, `chromium`, or
+`chromium-browser` on `PATH`. This is the one tool here with a dependency
+outside the conda/pip environment — if none of those are installed,
+`scripts/visualize.sh` fails at launch rather than during setup.
+
 ## File structure
 
 ```
@@ -94,19 +124,24 @@ vdaConverter/
 ├── wrapper.py                     # InitWrapper/StepWrapper: the nn.Modules actually traced/exported
 ├── convert.py                     # PyTorch checkpoint -> .tflite (init + step signatures)
 ├── verify.py                      # exported .tflite pair vs. PyTorch, numerical check
-├── compare.py                     # original vs. gpu, numerical check (pure PyTorch; gpu not implemented yet)
+├── compare.py                     # original vs. gpu, numerical check (pure PyTorch)
+├── run.sh                         # one-shot pipeline: convert -> compare -> verify -> benchmark -> visualize
 ├── scripts/                       # user-friendly wrappers (env activation + cwd handled)
 │   ├── convert.sh
 │   ├── verify.sh
-│   └── benchmark.sh
+│   ├── compare.sh
+│   ├── benchmark.sh
+│   └── visualize.sh
 ├── benchmark/                     # on-device CPU/GPU benchmarking via adb
 │   ├── benchmark_cpu.sh
 │   ├── benchmark_gpu.sh
 │   ├── binary/                    # prebuilt per-ABI TFLite benchmark tools (see Setup step 3)
-│   └── <original|gpu>/<cpu|gpu>/*.log   # generated logs, gitignored
+│   └── <original|gpu>/<cpu|gpu>/*.log   # generated logs -- committed as a benchmark record, not gitignored
 ├── tflite_models/                 # convert.py's output, gitignored
 │   └── <original|gpu>/*.tflite
-├── analysis/                      # generated op-graph visualizations, gitignored
+├── analysis/                      # visualize.py's home
+│   ├── visualize.py               # .tflite -> op-graph image (SVG/PNG), via headless Chrome + netron
+│   └── <original|gpu>/*.svg|png   # generated images -- committed, not gitignored
 ├── environment.yaml               # conda env export
 ├── requirements.txt               # pip equivalent
 └── .gitignore
@@ -147,7 +182,7 @@ by `verify.py`'s filename inference and `benchmark/*.sh`'s log-folder
 mirroring:
 
 ```
-tflite_models/<source>/video_depth_<variant>_<height>x<width>_<init|step>.tflite
+tflite_models/<source>/vda_<variant>_<height>x<width>_input<input_size>_infer<infer_len>_<init|step>.tflite
 ```
 
 ## Utilities
@@ -272,6 +307,31 @@ layer = backend). A model outside `tflite_models/` falls back to a flat
 `benchmark/<cpu|gpu>/foo_<device>.log`. Since only `init`/`step` pairs of
 `.tflite` files exist, benchmark each half separately.
 
+### `analysis/visualize.py` — render a `.tflite` op-graph image
+
+```bash
+python analysis/visualize.py --tflite <path/to/model.tflite> [options]   # or: ./scripts/visualize.sh ...
+```
+
+Renders a `.tflite` model's op graph to an image by actually driving
+**headless Chrome** to trigger [netron](https://github.com/lutzroeder/netron)'s
+own "Export as SVG"/"Export as PNG" action — not a screenshot. netron's
+Python API has no headless export function and lays the graph out
+client-side in JS, so this script starts netron's local server on the given
+model, loads the page in Chrome via Selenium, waits for the layout pass to
+actually finish (not just for node elements to exist — see the source
+comments for the race this avoids), then calls the exact function the
+"Export as..." menu items call. That gets netron's real behavior for free:
+CSS inlined into the SVG (self-contained), cropped to the graph's true
+bounding box instead of its raw canvas, and — for PNG — rendered through
+netron's own tiled encoder rather than bound by Chrome's screenshot limits.
+
+| Flag | Default | Meaning |
+|---|---|---|
+| `--tflite` | *required* | path to the `.tflite` model |
+| `--format` | `svg` | `svg` or `png`. SVG is the sane default — these graphs commonly render 60,000+ px tall, and PNG export is noticeably slower (rendered through netron's own JS canvas encoder, not a native screenshot) |
+| `--output` | derived | defaults to `analysis/<source>/<model-basename>.<format>`, `<source>` inferred from a *directory* component of `--tflite`'s path — same convention and same caveat as `verify.py`'s `--source` inference |
+
 ### `scripts/` — user-friendly wrappers
 
 Thin wrappers that activate the `vda-convert` conda env and `cd` to the
@@ -281,13 +341,48 @@ then forward everything else through:
 ```bash
 ./scripts/convert.sh [convert.py options]
 ./scripts/verify.sh --tflite <path> [verify.py options]
+./scripts/compare.sh --variant {vits,vitb,vitl} [compare.py options]
 ./scripts/benchmark.sh <cpu|gpu> <model.tflite> [device_name_or_id]
+./scripts/visualize.sh --tflite <path> [visualize.py options]
 ```
 
-`convert.sh`/`verify.sh` pass `--help` straight through to the underlying
-Python CLI. `benchmark.sh` has its own `-h`/`--help` (it has one more
-required argument — the backend — that the other two don't) and dispatches
-to `benchmark/benchmark_cpu.sh` or `benchmark_gpu.sh`.
+`convert.sh`/`verify.sh`/`compare.sh`/`visualize.sh` pass `--help` straight
+through to the underlying Python CLI. `benchmark.sh` has its own
+`-h`/`--help` (it has one more required argument — the backend — that the
+others don't) and dispatches to `benchmark/benchmark_cpu.sh` or
+`benchmark_gpu.sh`.
+
+### `run.sh` — one-shot pipeline
+
+```bash
+./run.sh [options]        # defaults: --variant vits --source gpu --backend gpu
+```
+
+Chains all five tools above for one variant/source/resolution combination:
+`convert.sh` → `compare.sh` → `verify.sh` (once per model file) →
+`benchmark.sh` (once per model file) → `visualize.sh` (once per model
+file). It reads the exported `init`/`step` paths back out of `convert.py`'s
+own "conversion successful: ..." log lines rather than recomputing the
+naming convention itself, and passes `--source`/`--output` explicitly to
+`verify.sh`/`visualize.sh` (see [Gotchas](#gotchas)) rather than relying on
+their own path-based inference, so it stays correct even with a custom
+`--output-dir`.
+
+| Flag | Default | Meaning |
+|---|---|---|
+| `--variant` | `vits` | the only variant with a checkpoint present by default (see [Setup step 2](#2-checkpoints)) |
+| `--source` | `gpu` | the TFLite-GPU-delegate-compatible build this project exists for |
+| `--checkpoint` | derived | forwarded to `convert.sh`/`compare.sh` |
+| `--height` / `--width` / `--input-size` / `--infer-len` | `720` / `1280` / `518` / `8` | forwarded to `convert.sh`/`compare.sh` |
+| `--output-dir` | `tflite_models/<source>` | forwarded to `convert.sh` |
+| `--backend` | `gpu` | forwarded to `benchmark.sh` |
+| `--device` | — | forwarded to `benchmark.sh`, only needed if more than one is connected |
+| `--format` | `svg` | forwarded to `visualize.sh` |
+
+Run `./run.sh --help` for the same list with fuller explanations. Each
+underlying script's own `--help` documents flags `run.sh` doesn't expose
+(e.g. `convert.py --skip-verify`) — this wrapper only surfaces what's
+needed to chain the five tools together.
 
 ## The `original` vs. `gpu` split
 
@@ -384,17 +479,35 @@ This applies to `--source gpu` only; `original` keeps plain `F.interpolate`.
 
 ## Typical workflow
 
+The one-shot way — `--variant`/`--source`/`--backend` default to
+`vits`/`gpu`/`gpu`, so this alone converts, compares, verifies, benchmarks,
+and visualizes both `init` and `step`:
+
 ```bash
-# 1. Convert (all three variants, original source)
-./scripts/convert.sh
+./run.sh
+```
 
-# 2. Verify each export is numerically correct
-./scripts/verify.sh --tflite tflite_models/original/video_depth_vits_720x1280_init.tflite
-./scripts/verify.sh --tflite tflite_models/original/video_depth_vitb_720x1280_init.tflite
+The same sequence broken into individual steps, for when you want to run
+just one of them (e.g. while iterating on `video_depth_anything_gpu/`, only
+`compare.sh` — pure PyTorch, no device needed — on every edit):
 
-# 3. Benchmark on-device
-./scripts/benchmark.sh cpu tflite_models/original/video_depth_vits_720x1280_init.tflite <device>
-./scripts/benchmark.sh cpu tflite_models/original/video_depth_vits_720x1280_step.tflite <device>
+```bash
+# 1. While editing video_depth_anything_gpu/: prove the edit is behaviour-preserving
+./scripts/compare.sh --variant vits
+
+# 2. Convert
+./scripts/convert.sh --variant vits --source gpu
+
+# 3. Verify each export is numerically correct (either half of the pair; sibling found automatically)
+./scripts/verify.sh --tflite tflite_models/gpu/vda_vits_720x1280_input518_infer8_init.tflite
+
+# 4. Benchmark on-device (init and step separately -- different graphs)
+./scripts/benchmark.sh gpu tflite_models/gpu/vda_vits_720x1280_input518_infer8_init.tflite <device>
+./scripts/benchmark.sh gpu tflite_models/gpu/vda_vits_720x1280_input518_infer8_step.tflite <device>
+
+# 5. Render an op-graph image (init and step separately)
+./scripts/visualize.sh --tflite tflite_models/gpu/vda_vits_720x1280_input518_infer8_init.tflite
+./scripts/visualize.sh --tflite tflite_models/gpu/vda_vits_720x1280_input518_infer8_step.tflite
 ```
 
 ## Claude Code skills
@@ -409,6 +522,8 @@ operational detail than this README:
 - `vda-compare` — `compare.py` in depth (original vs `original`/`gpu` wrappers);
   the tool to run while editing `video_depth_anything_gpu/`
 - `vda-benchmark` — on-device benchmarking in depth
+- `vda-visualize` — `analysis/visualize.py`/`scripts/visualize.sh` in depth
+  (rendering a `.tflite` op-graph image)
 - `vda-gpu-delegate-fix` — the recipe for diagnosing and fixing a
   GPU-delegate-unsupported op, with every fix from the port as a worked
   example and the pitfalls that cost the most time
@@ -453,6 +568,17 @@ operational detail than this README:
   contains neither "ERROR" nor "not supported". Matching only the first
   pattern will make you think ops disappeared when they didn't.
 
+- **`--source` inference is path-based and fails silently.** `verify.py`
+  (and `analysis/visualize.py`'s default `--output`) infer `original`/`gpu`
+  from a *directory component* of the `.tflite` path
+  (`tflite_models/<source>/...`). A custom `--output-dir` without `gpu` or
+  `original` as a path segment makes `verify.py` silently fall back to
+  `original` — building the *wrong* PyTorch reference and reporting a false
+  PASS rather than an error, since most `_gpu` edits are near-exact
+  rewrites anyway. `run.sh` sidesteps this by passing `--source` explicitly
+  (it already knows the real value); do the same if you script around a
+  custom `--output-dir` yourself.
+
 - **A fix that clears an op category can still be a regression.** Removing
   one blocker often just exposes a later one that was previously hidden
   behind it (this happened twice: `DIV` and `Batch size mismatch` both
@@ -469,6 +595,9 @@ operational detail than this README:
   — `verify.py`/`benchmark/*.sh` both need the actual on-device streaming
   loop (init once, then step per subsequent frame) to be exercised, not
   just one signature in isolation.
-- `benchmark/`, `tflite_models/`, and `analysis/` are all gitignored
-  (generated outputs); `benchmark/binary/benchmark_model` and the `.sh`
-  scripts themselves are tracked.
+- `tflite_models/` is gitignored (checkpoints and exports are large and
+  regenerable); `benchmark/*.log` and `analysis/<source>/*.svg|png` are
+  **deliberately not** — they're committed as a running record of
+  benchmark results and op-graph snapshots alongside the code that
+  produced them, so expect `git status` to show them after a `benchmark.sh`
+  or `visualize.sh` run and commit them intentionally.

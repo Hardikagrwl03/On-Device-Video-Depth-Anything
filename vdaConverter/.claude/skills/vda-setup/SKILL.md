@@ -50,9 +50,26 @@ explicit "Unsupported device architecture" error.
 ## Verifying the setup worked
 
 ```bash
-./scripts/convert.sh --variant vits --skip-verify
-./scripts/verify.sh --tflite tflite_models/original/video_depth_vits_720x1280_init.tflite
+./scripts/convert.sh --variant vits --source gpu --skip-verify
+./scripts/verify.sh --tflite tflite_models/gpu/vda_vits_720x1280_input518_infer8_init.tflite
 ```
 
 If both succeed, the environment and checkpoints are correctly set up. See
-the `vda-convert` and `vda-verify` skills for what each does in depth.
+the `vda-convert` and `vda-verify` skills for what each does in depth. Or
+run `./run.sh` directly -- it does the above (plus `compare.py`, on-device
+benchmarking, and rendering an op-graph image) in one shot, defaulting to
+`--variant vits --source gpu --backend gpu`.
+
+## Skipping conversion: pre-converted models
+
+Already-exported `.tflite` models are available on Google Drive (see the
+README's Setup section) -- download a pair into `tflite_models/<source>/`,
+keeping `convert.py`'s filename convention, to use `vda-verify`/
+`vda-benchmark`/`vda-visualize` without a local checkpoint or PyTorch trace.
+
+## One more dependency, for `vda-visualize` only
+
+`analysis/visualize.py` drives headless Chrome (via Selenium, installed by
+`requirements.txt`/`environment.yaml`) and looks for `google-chrome`,
+`google-chrome-stable`, `chromium`, or `chromium-browser` on `PATH`. This is
+the one tool here with a dependency outside the conda/pip environment.

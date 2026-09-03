@@ -74,3 +74,6 @@ show a long unsupported-op list -- that's expected, not a regression.
 
 If a `gpu`-source build reports unsupported ops or fails delegate init, see
 the `vda-gpu-delegate-fix` skill for the diagnosis recipe.
+
+`./run.sh` runs this (plus convert/compare/verify/visualize) for one
+variant/source in a single command -- see `vda-convert`.

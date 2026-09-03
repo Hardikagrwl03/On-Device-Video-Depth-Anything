@@ -71,3 +71,7 @@ Typical healthy output is `max_diff` around `1e-5` on every tensor.
   `--output-dir` that doesn't contain `gpu` or `original` as a path segment,
   inference silently falls back to `original` and will build the wrong
   wrapper. Pass `--source` explicitly in that case.
+
+`./run.sh` runs this (plus convert/compare/benchmark/visualize) for one
+variant/source in a single command, always passing `--source` explicitly
+(sidestepping the inference caveat above) -- see `vda-convert`.

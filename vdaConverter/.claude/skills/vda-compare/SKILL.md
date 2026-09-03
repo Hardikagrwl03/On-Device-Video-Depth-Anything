@@ -70,3 +70,6 @@ it as a bug in the rewrite rather than reaching for a looser `--atol`.
 edit is behaviour-preserving, but says nothing about whether it achieved
 anything for the GPU delegate. Confirm that separately by reading the
 exported flatbuffer and benchmarking on device -- see `vda-gpu-delegate-fix`.
+
+`./run.sh` runs this (plus convert/verify/benchmark/visualize) for one
+variant/source in a single command -- see `vda-convert`.

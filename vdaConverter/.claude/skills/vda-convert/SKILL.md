@@ -45,11 +45,11 @@ Files are named and located by convention -- other tools in this repo
 on this:
 
 ```
-tflite_models/<source>/video_depth_<variant>_<height>x<width>_<init|step>.tflite
+tflite_models/<source>/vda_<variant>_<height>x<width>_input<input_size>_infer<infer_len>_<init|step>.tflite
 ```
 
-E.g. `tflite_models/original/video_depth_vits_720x1280_init.tflite` and its
-sibling `..._step.tflite`.
+E.g. `tflite_models/gpu/vda_vits_720x1280_input518_infer8_init.tflite` and
+its sibling `..._step.tflite`.
 
 ## What the wrappers do
 
@@ -88,6 +88,14 @@ that look like a regression but aren't.
    edit didn't change the model's behaviour vs. the untouched original.
 3. `vda-benchmark` -- measure on device, benchmarking `init` and `step`
    separately.
+4. `vda-visualize` -- render an op-graph image, `init` and `step` separately.
+
+`./run.sh` chains all four of the above (plus this conversion step) for one
+variant/source/resolution combination in a single command -- defaults to
+`--variant vits --source gpu --backend gpu`. Reach for it instead of the
+individual scripts when you just want the full pipeline run once, end to
+end; use the individual scripts (and skills) directly when iterating on one
+step.
 
 For a `--source gpu` build that reports unsupported ops or fails delegate
 init, see `vda-gpu-delegate-fix`.
