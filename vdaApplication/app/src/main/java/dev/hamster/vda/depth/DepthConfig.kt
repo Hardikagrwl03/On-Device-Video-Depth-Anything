@@ -1,25 +1,48 @@
 package dev.hamster.vda.depth
 
-import dev.hamster.vda.modelRunner.RuntimeConfig
 import dev.hamster.vda.interfaces.ConfigInterface
-//import dev.hamster.vda.models.ModelSource
+import dev.hamster.vda.modelRunner.RuntimeConfig
+import kotlin.math.ceil
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
 
-/** Matte-specific implementation of [ConfigInterface]; resolves to a [RuntimeConfig] naming the RVM model to load. */
+/**
+ * Depth-specific implementation of [ConfigInterface]; resolves to the [RuntimeConfig]s naming the
+ * two Video Depth Anything models to load.
+ *
+ * VDA is exported as a *pair* of graphs -- an `init` graph that seeds the temporal caches from the
+ * first frame, and a `step` graph that consumes and re-emits them for every later frame -- so this
+ * config carries two runtime configs. [runtimeConfig] is the step model (the one that runs for all
+ * but one frame, and the one [ConfigInterface] exposes); [initRuntimeConfig] is derived from it and
+ * differs only in the file name, so a single device/thread choice covers both.
+ *
+ * There is no downsample-ratio knob as in RVM: VDA resizes internally, and the working resolution
+ * is baked into the exported graph. [targetHeight]/[targetWidth] re-derive that resolution the same
+ * way the converter's `compute_target_size()` does, because the hidden-state buffers are sized from
+ * it and nothing in the `.tflite` file names it.
+ */
 data class DepthConfig(
     override var height: Int = 720,
     override var width: Int = 1280,
     override var runtimeConfig: RuntimeConfig = RuntimeConfig(""),
     var dtype: Dtype = Dtype.FLOAT32,
     var variant: Variant = Variant.VITS,
-    // Defaults to the auto sentinel so a fresh install resolves to a bootstrap model
-    // (rvm_gpu_resnet50_720x1280_ds_auto.tflite) rather than to a ds_100 build nothing downloads.
-    var downsampleRatio: Float = -1.0F,
-//    var source: ModelSource = ModelSource.GPU
+    /** The converter's `--input-size`: the short side VDA resizes frames to before the ViT. */
+    var inputSize: Int = 518,
+    /** The converter's `--infer-len`: frames in the sliding window, of which `infer - 1` are cache. */
+    var inferenceLength: Int = 8,
+    var source: ModelSource = ModelSource.GPU
 ) : ConfigInterface {
-    enum class Variant(id: Int, val backbone: String, val channels: IntArray){
+
+    /**
+     * Backbone, with the channel width of each of the eight temporal caches in the order the step
+     * model binds them. Only `vits` has been exported so far, hence the empty arrays.
+     */
+    enum class Variant(val id: Int, val backbone: String, val channels: IntArray) {
         VITS(0, "vits", intArrayOf(192, 192, 384, 384, 64, 64, 64, 64)),
         VITB(1, "vitb", intArrayOf()),
-        VITL(3, "vitl", intArrayOf())
+        VITL(2, "vitl", intArrayOf())
     }
 
     enum class Dtype(val nBytes: Int, val suffix: String) {
@@ -28,29 +51,91 @@ data class DepthConfig(
         FLOAT32(4, "fp32")
     }
 
-    val requestedDownsampleRatio: Float
-        get() = if (runtimeConfig.modelFileName.contains("_ds_auto")) -1.0F else downsampleRatio
+    /**
+     * Which converter tree the model came from: `original` is the faithful export, `gpu` is the
+     * rewritten graph whose ops the TFLite GPU delegate can actually take (the `original` tree
+     * falls back to CPU there -- see TFLiteModelRunner's delegate-rejection handling).
+     */
+    enum class ModelSource(val tag: String) {
+        GPU("gpu"),
+        ORIGINAL("original")
+    }
+
+    /** The init model's runtime config: same device and thread count as [runtimeConfig], other file. */
+    var initRuntimeConfig: RuntimeConfig = RuntimeConfig("")
+        private set
+
+    /** Frames of history each temporal cache holds; the converter's `context_len`. */
+    val contextLength: Int get() = inferenceLength - 1
+
+    /** Working resolution the exported graph resizes to internally, e.g. 518x924 for 720x1280. */
+    var targetHeight: Int = 0
+        private set
+    var targetWidth: Int = 0
+        private set
 
     init {
         require(width > 0)
         require(height > 0)
-        require(width%16 == 0)
-        require(height%16 == 0)
+        require(inputSize % PATCH_SIZE == 0) { "inputSize must be a multiple of $PATCH_SIZE" }
+        require(inferenceLength >= 2) { "inferenceLength must leave at least one frame of context" }
+        require(variant.channels.isNotEmpty()) { "Variant ${variant.backbone} has not been exported yet" }
 
-        runtimeConfig = runtimeConfig.copy(modelFileName = buildModelFileName())
+        val (targetH, targetW) = computeTargetSize()
+        targetHeight = targetH
+        targetWidth = targetW
 
-        if(downsampleRatio == -1.0F){
-            downsampleRatio = minOf(512F / maxOf(height, width), 1.0F)
-        }
+        runtimeConfig = runtimeConfig.copy(modelFileName = buildModelFileName(STEP))
+        initRuntimeConfig = runtimeConfig.copy(modelFileName = buildModelFileName(INIT))
     }
 
-    private fun buildModelFileName(): String {
-        val dtypeTag = if (dtype == Dtype.FLOAT32) "" else "_${dtype.suffix}"
-        // Zero-padded to three digits to match the converter's convention (0.5 -> "050"), and
-        // prefixed with the source so the name is byte-identical to the release asset it came
-        // from -- the manifest entry, the URL, the on-disk file and RuntimeConfig.modelFileName
-        // are then all the same string, with no mapping layer to drift.
-        val dsTag = if (downsampleRatio == -1.0F) "auto" else "%03d".format((downsampleRatio * 100).toInt())
-        return "rvm_${source.tag}_${variant.backbone}_${height}x${width}_ds_$dsTag.tflite"
+    /**
+     * The asset path of one of the two graphs. Byte-identical to the file the converter writes
+     * (`vda_<backbone>_<h>x<w>_input<n>_infer<n>_<kind>.tflite`), under the source tree it came
+     * from, so the name in the converter's output, the name in `assets/`, and
+     * [RuntimeConfig.modelFileName] are all the same string with no mapping layer to drift.
+     */
+    private fun buildModelFileName(kind: String): String =
+        "$ASSET_DIR/${source.tag}/vda_${variant.backbone}_${height}x${width}_input${inputSize}_infer${inferenceLength}_$kind.tflite"
+
+    /**
+     * Mirrors the converter's `compute_target_size()`, which in turn mirrors MiDaS' `Resize` with
+     * `keep_aspect_ratio` and `resize_method="lower_bound"`: scale so the short side reaches
+     * [inputSize], then round each side to a multiple of [PATCH_SIZE], never below [inputSize].
+     * Ultra-wide frames shrink the requested input size first, exactly as upstream does.
+     */
+    private fun computeTargetSize(): Pair<Int, Int> {
+        val ratio = max(height, width).toDouble() / min(height, width).toDouble()
+        var shortSide = inputSize
+        if (ratio > WIDE_RATIO) {
+            shortSide = (shortSide * 1.777 / ratio).toInt()
+            shortSide = (shortSide.toDouble() / PATCH_SIZE).roundToInt() * PATCH_SIZE
+        }
+        val scale = shortSide.toDouble() / min(height, width).toDouble()
+        return Pair(
+            constrainToMultipleOf(height * scale, shortSide),
+            constrainToMultipleOf(width * scale, shortSide)
+        )
+    }
+
+    /** Rounds to the nearest multiple of [PATCH_SIZE], then rounds *up* if that fell below [minValue]. */
+    private fun constrainToMultipleOf(value: Double, minValue: Int): Int {
+        var constrained = (value / PATCH_SIZE).roundToInt() * PATCH_SIZE
+        if (constrained < minValue) {
+            constrained = ceil(value / PATCH_SIZE).toInt() * PATCH_SIZE
+        }
+        return constrained
+    }
+
+    private companion object {
+        /** ViT patch size: the working resolution is always a multiple of this in both dimensions. */
+        const val PATCH_SIZE = 14
+
+        /** Above this aspect ratio the converter shrinks the requested input size (upstream's rule). */
+        const val WIDE_RATIO = 1.78
+
+        const val ASSET_DIR = "models"
+        const val INIT = "init"
+        const val STEP = "step"
     }
 }

@@ -3,8 +3,12 @@ package dev.hamster.vda
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import dev.hamster.vda.depth.DepthConfig
+import dev.hamster.vda.depth.DepthIO
 import dev.hamster.vda.depth.DepthModule
+import dev.hamster.vda.modelRunner.RuntimeConfig
 import dev.hamster.vda.modules.VideoHandlerModule
+import dev.hamster.vda.utils.SharedBuffer
 import java.io.File
 import java.nio.ByteOrder
 
@@ -17,16 +21,21 @@ class Controller(val context: Context) {
     var width: Int? = null
     var frames: Int? = null
     var fps: Int? = null
-    val depthModule = DepthModule(context, 720, 1280, 518, 924)
+    val depthModule = DepthModule(context)
+
+    // The exported graphs are fixed to 720x1280 in and 720x1280x1 out; everything else about the
+    // working resolution (518x924) and the cache shapes is derived from this by DepthConfig.
+    // Switch `device` to GPU to run the gpu-source graphs on the GPU delegate.
+    val depthConfig = DepthConfig(
+        height = 720,
+        width = 1280,
+        runtimeConfig = RuntimeConfig("", RuntimeConfig.ComputeDevice.CPU)
+    )
     val videoHandler = VideoHandlerModule(context)
 
 
     fun loadModels(){
-        depthModule.loadModel(
-            "tflite_models/video_depth_init.tflite",
-            "tflite_models/video_depth_step.tflite",
-            useGPU = false
-        )
+        depthModule.configure(depthConfig)
     }
 
     fun loadInputVideo(uri: Uri){
@@ -83,7 +92,7 @@ class Controller(val context: Context) {
             videoHandler.getNextFrame(inputFrameBuffer)
             inputFrameBuffer.rewind()
 
-            depthModule.getDepth(inputFrameBuffer, outputDepthBuffer)
+            depthModule.run(DepthIO(inputFrameBuffer, outputDepthBuffer))
             outputDepthBuffer.rewind()
 
             videoHandler.putNextFrame(outputDepthBuffer, channels = 1, scale = 10.0f)
@@ -93,13 +102,21 @@ class Controller(val context: Context) {
             Log.d(TAG, "depthVideo: Frame $i Depth Estimation in ${System.currentTimeMillis() - startTime} ms")
         }
 
-        depthModule.close()
+        // reset(), not close(): the module owns a single-thread executor that close() shuts down for
+        // good, so closing here would make a second run of the same Controller unusable. reset()
+        // zeroes the caches so the next video starts a fresh sequence through the init model.
+        depthModule.reset()
         frameBuffer.clear()
         depthBuffer.clear()
 
         val outputFile = videoHandler.saveVideo()
         val depthUri = Uri.fromFile(depthFile)
         return depthUri
+    }
+
+    /** Releases the depth module and its confined thread. Call from the owner's teardown. */
+    fun close(){
+        depthModule.close()
     }
 
 }

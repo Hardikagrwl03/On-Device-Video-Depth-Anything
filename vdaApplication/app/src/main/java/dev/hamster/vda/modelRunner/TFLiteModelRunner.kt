@@ -2,13 +2,13 @@ package dev.hamster.vda.modelRunner
 
 import android.content.Context
 import android.util.Log
+import dev.hamster.vda.depth.DepthModule
 import dev.hamster.vda.utils.SharedBuffer
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.gpu.GpuDelegate
 import org.tensorflow.lite.nnapi.NnApiDelegate
 import java.io.FileInputStream
 import java.io.FileNotFoundException
-import java.io.RandomAccessFile
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.MappedByteBuffer
@@ -29,7 +29,7 @@ class TFLiteModelRunner(
         if(!::runtimeConfig.isInitialized || interpreter == null){
             runtimeConfig = newConfig
             loadModel(newConfig.modelFileName)
-//            Log.d(MatteModule.TAG, "configure: TFLite Model Runner configured with:\nModel: ${runtimeConfig.modelFileName}\nDevice: ${runtimeConfig.device}\nNum Threads: ${runtimeConfig.numThreads}")
+            Log.d(DepthModule.TAG, "configure: TFLite Model Runner configured with:\nModel: ${runtimeConfig.modelFileName}\nDevice: ${runtimeConfig.device}\nNum Threads: ${runtimeConfig.numThreads}")
             return
         }
         val oldConfig = runtimeConfig
@@ -42,11 +42,11 @@ class TFLiteModelRunner(
             close()
             runtimeConfig = newConfig
             loadModel(newConfig.modelFileName)
-//            Log.d(MatteModule.TAG, "configure: TFLite Model Runner configured with:\nModel: ${runtimeConfig.modelFileName}\nDevice: ${runtimeConfig.device}\nNum Threads: ${runtimeConfig.numThreads}")
+            Log.d(DepthModule.TAG, "configure: TFLite Model Runner configured with:\nModel: ${runtimeConfig.modelFileName}\nDevice: ${runtimeConfig.device}\nNum Threads: ${runtimeConfig.numThreads}")
         } else {
             runtimeConfig = newConfig
             Log.d(TAG, "configure: no interpreter-affecting change, reusing existing interpreter")
-//            Log.d(MatteModule.TAG, "configure: TFLite Model Runner configured with:\nModel: ${runtimeConfig.modelFileName}\nDevice: ${runtimeConfig.device}\nNum Threads: ${runtimeConfig.numThreads}")
+            Log.d(DepthModule.TAG, "configure: TFLite Model Runner configured with:\nModel: ${runtimeConfig.modelFileName}\nDevice: ${runtimeConfig.device}\nNum Threads: ${runtimeConfig.numThreads}")
         }
     }
 
@@ -176,20 +176,27 @@ class TFLiteModelRunner(
         nnApiDelegate=null
     }
     /**
-     * Memory-maps a downloaded model out of [ModelStore]. Models are no longer bundled as assets:
-     * they are fetched on demand from the `models-v1` release into `filesDir/models/`.
+     * Memory-maps a model straight out of the APK's assets, by the exact asset path
+     * [DepthConfig][dev.hamster.vda.depth.DepthConfig] built (`models/<source>/<file>.tflite`).
      *
-     * This runs on the `rvm-matte` confined thread (see [MatteModule]), which is fine for a
-     * memory-map. Nothing here may ever *download* -- that would block the confined thread on
-     * network I/O of unbounded duration.
+     * `openFd` only works on an asset the packager left uncompressed, hence the `noCompress`
+     * entry for `tflite` in the module's build script; without it this throws with a message
+     * about the asset not being stored uncompressed rather than about it being missing.
+     *
+     * This runs on the `vda-depth` confined thread (see [DepthModule]), which is fine for a
+     * memory-map: no bytes are read here, the pages fault in as the interpreter touches them.
      */
     private fun loadModelFile(modelFileName: String): MappedByteBuffer {
-        val fileDescriptor = context.assets.openFd(modelFileName)
-        val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
-        val fileChannel = inputStream.channel
-        val startOffset = fileDescriptor.startOffset
-        val declaredLength = fileDescriptor.declaredLength
-        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
+        val fileDescriptor = try {
+            context.assets.openFd(modelFileName)
+        } catch (e: java.io.IOException) {
+            throw FileNotFoundException("Model asset not found or stored compressed: $modelFileName (${e.message})")
+        }
+        return fileDescriptor.use { fd ->
+            FileInputStream(fd.fileDescriptor).use { inputStream ->
+                inputStream.channel.map(FileChannel.MapMode.READ_ONLY, fd.startOffset, fd.declaredLength)
+            }
+        }
     }
 
     override fun logSignature() {
