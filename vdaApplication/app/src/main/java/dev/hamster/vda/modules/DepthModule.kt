@@ -4,10 +4,8 @@ import android.content.Context
 import android.util.Log
 import dev.hamster.vda.SharedBuffer
 import dev.hamster.vda.TfliteModelRunner
-import dev.hamster.vda.Utils
-import dev.hamster.vda.interfaces.DepthModuleInterface
+import dev.hamster.vda.guide.DepthModuleInterface
 import java.nio.ByteBuffer
-import kotlin.math.log
 
 class DepthModule(
     context: Context,

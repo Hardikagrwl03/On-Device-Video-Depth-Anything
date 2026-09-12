@@ -3,7 +3,7 @@ package dev.hamster.vda
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import dev.hamster.vda.modules.DepthModule
+import dev.hamster.vda.depth.DepthModule
 import dev.hamster.vda.modules.VideoHandlerModule
 import java.io.File
 import java.nio.ByteOrder
@@ -17,7 +17,7 @@ class Controller(val context: Context) {
     var width: Int? = null
     var frames: Int? = null
     var fps: Int? = null
-    val depthModule = DepthModule(context, 720, 1280)
+    val depthModule = DepthModule(context, 720, 1280, 518, 924)
     val videoHandler = VideoHandlerModule(context)
 
 

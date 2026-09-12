@@ -11,7 +11,7 @@ import android.media.MediaMuxer
 import android.net.Uri
 import android.util.Log
 import dev.hamster.vda.Utils
-import dev.hamster.vda.interfaces.VideoHandlerModuleInterface
+import dev.hamster.vda.guide.VideoHandlerModuleInterface
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.TensorImage
 import java.io.File

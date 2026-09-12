@@ -1,4 +1,4 @@
-package dev.hamster.vda.interfaces
+package dev.hamster.vda.guide
 
 import android.net.Uri
 import java.io.File
