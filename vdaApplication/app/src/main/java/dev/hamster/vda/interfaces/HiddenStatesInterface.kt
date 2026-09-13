@@ -3,8 +3,8 @@ package dev.hamster.vda.interfaces
 import dev.hamster.vda.utils.SharedBuffer
 
 /**
- * Contract for a module's recurrent hidden-state buffers (e.g. MatteHiddenStates' four ConvGRU
- * states used by RVM). Lets a module drive its hidden states without depending on how many
+ * Contract for a module's recurrent hidden-state buffers (e.g. DepthHiddenStates' eight
+ * temporal caches). Lets a module drive its hidden states without depending on how many
  * states there are or how each one is shaped/allocated internally.
  */
 interface HiddenStatesInterface {

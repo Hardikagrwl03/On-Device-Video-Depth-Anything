@@ -2,57 +2,59 @@ package dev.hamster.vda.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Brand tonal ramps. Hue 203.5 (deep cyan-teal) for primary/secondary/neutrals,
-// hue 62 (warm amber) for tertiary. Tone == CIE L*. Generated once and verified for
-// WCAG contrast; see docs/ui-redesign-plan.md "Key decision 3". Do not hand-edit
-// individual values - regenerate the whole ramp if the hue ever changes.
-internal val VdaPrimary10 = Color(0xFF002022)
-internal val VdaPrimary20 = Color(0xFF003739)
-internal val VdaPrimary30 = Color(0xFF004F53)
-internal val VdaPrimary40 = Color(0xFF00696E)
-internal val VdaPrimary80 = Color(0xFF61D7DF)
-internal val VdaPrimary90 = Color(0xFFB6ECEF)
+// Brand tonal ramps. CIE LCh hue 84 (mustard - the hue of #E1AD01) for primary/secondary/
+// neutrals, hue 250 (slate blue) for tertiary. Tone == CIE L*; chroma is reduced per tone
+// only as far as needed to stay inside sRGB, which is how Material builds a tonal palette.
+// Generated once and verified for WCAG contrast on every pair the two colour schemes below
+// actually use (all >= 4.5:1; see the light/dark scheme definitions in Theme.kt). Do not
+// hand-edit individual values - regenerate the whole ramp if the hue ever changes.
+internal val VdaPrimary10 = Color(0xFF241A00)
+internal val VdaPrimary20 = Color(0xFF3F2E00)
+internal val VdaPrimary30 = Color(0xFF5B4301)
+internal val VdaPrimary40 = Color(0xFF785A00)
+internal val VdaPrimary80 = Color(0xFFF1BF4E)
+internal val VdaPrimary90 = Color(0xFFFFDEA5)
 internal val VdaPrimary100 = Color(0xFFFFFFFF)
 
-internal val VdaSecondary10 = Color(0xFF002022)
-internal val VdaSecondary20 = Color(0xFF153537)
-internal val VdaSecondary30 = Color(0xFF2C4C4E)
-internal val VdaSecondary40 = Color(0xFF446466)
-internal val VdaSecondary80 = Color(0xFFAACDCF)
-internal val VdaSecondary90 = Color(0xFFC6E9EB)
+internal val VdaSecondary10 = Color(0xFF241A00)
+internal val VdaSecondary20 = Color(0xFF3C2E0F)
+internal val VdaSecondary30 = Color(0xFF554424)
+internal val VdaSecondary40 = Color(0xFF6E5C3B)
+internal val VdaSecondary80 = Color(0xFFDAC49E)
+internal val VdaSecondary90 = Color(0xFFF7DFB9)
 internal val VdaSecondary100 = Color(0xFFFFFFFF)
 
-internal val VdaTertiary10 = Color(0xFF2C1700)
-internal val VdaTertiary20 = Color(0xFF4D2600)
-internal val VdaTertiary30 = Color(0xFF6F3802)
-internal val VdaTertiary40 = Color(0xFF8C4F1B)
-internal val VdaTertiary80 = Color(0xFFF5BA8F)
-internal val VdaTertiary90 = Color(0xFFFEDCC5)
+internal val VdaTertiary10 = Color(0xFF011E2C)
+internal val VdaTertiary20 = Color(0xFF01344A)
+internal val VdaTertiary30 = Color(0xFF014C6A)
+internal val VdaTertiary40 = Color(0xFF236486)
+internal val VdaTertiary80 = Color(0xFF95CDF3)
+internal val VdaTertiary90 = Color(0xFFC7E7FF)
 internal val VdaTertiary100 = Color(0xFFFFFFFF)
 
 internal val VdaNeutral0 = Color(0xFF000000)
-internal val VdaNeutral4 = Color(0xFF090F10)
-internal val VdaNeutral6 = Color(0xFF0F1414)
-internal val VdaNeutral10 = Color(0xFF181C1C)
-internal val VdaNeutral12 = Color(0xFF1C2021)
-internal val VdaNeutral17 = Color(0xFF262B2B)
-internal val VdaNeutral20 = Color(0xFF2D3131)
-internal val VdaNeutral22 = Color(0xFF313636)
-internal val VdaNeutral24 = Color(0xFF363A3A)
-internal val VdaNeutral87 = Color(0xFFD5DBDB)
-internal val VdaNeutral90 = Color(0xFFDEE3E4)
-internal val VdaNeutral92 = Color(0xFFE4E9E9)
-internal val VdaNeutral94 = Color(0xFFE9EFEF)
-internal val VdaNeutral95 = Color(0xFFECF2F2)
-internal val VdaNeutral96 = Color(0xFFEFF5F5)
-internal val VdaNeutral98 = Color(0xFFF5FAFB)
+internal val VdaNeutral4 = Color(0xFF120E05)
+internal val VdaNeutral6 = Color(0xFF17130C)
+internal val VdaNeutral10 = Color(0xFF1E1B16)
+internal val VdaNeutral12 = Color(0xFF221F1A)
+internal val VdaNeutral17 = Color(0xFF2D2924)
+internal val VdaNeutral20 = Color(0xFF33302B)
+internal val VdaNeutral22 = Color(0xFF38342F)
+internal val VdaNeutral24 = Color(0xFF3C3933)
+internal val VdaNeutral87 = Color(0xFFDED9D2)
+internal val VdaNeutral90 = Color(0xFFE7E2DB)
+internal val VdaNeutral92 = Color(0xFFECE7E0)
+internal val VdaNeutral94 = Color(0xFFF2EDE6)
+internal val VdaNeutral95 = Color(0xFFF5F0E9)
+internal val VdaNeutral96 = Color(0xFFF8F3EC)
+internal val VdaNeutral98 = Color(0xFFFEF9F2)
 internal val VdaNeutral100 = Color(0xFFFFFFFF)
 
-internal val VdaNeutralVariant30 = Color(0xFF3F4849)
-internal val VdaNeutralVariant50 = Color(0xFF6F7979)
-internal val VdaNeutralVariant60 = Color(0xFF889393)
-internal val VdaNeutralVariant80 = Color(0xFFBDC9C9)
-internal val VdaNeutralVariant90 = Color(0xFFD9E5E5)
+internal val VdaNeutralVariant30 = Color(0xFF4E4637)
+internal val VdaNeutralVariant50 = Color(0xFF807666)
+internal val VdaNeutralVariant60 = Color(0xFF9A8F7F)
+internal val VdaNeutralVariant80 = Color(0xFFD0C5B4)
+internal val VdaNeutralVariant90 = Color(0xFFEDE1D0)
 
 /**
  * Extended colours - deliberately identical in light and dark. Every video preview sits on

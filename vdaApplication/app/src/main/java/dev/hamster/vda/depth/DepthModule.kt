@@ -162,8 +162,8 @@ class DepthModule(
     private fun resetImpl(){
         hiddenStates.reset()
         hiddenStates.rewind()
-        // Zeroed caches are not a valid sequence start for VDA the way they are for RVM's ConvGRUs:
-        // the next frame has to go through the init model again to seed them.
+        // Zeroed caches are not a valid sequence start for VDA: the next frame has to go through
+        // the init model again to seed them.
         isSequenceStarted = false
         Log.d(TAG, "reset: Depth Module reset")
     }

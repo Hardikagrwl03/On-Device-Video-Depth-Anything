@@ -99,10 +99,9 @@ object ModelManifest {
     /**
      * Downloaded automatically on first launch: the `gpu` pair only.
      *
-     * RVM bootstraps two models because its small one (15 MB) makes the app usable minutes before
-     * the large one lands. VDA has no such cheap option — every pair is ~240 MB — so it fetches
-     * one, and fetches the one that runs on every compute device rather than the CPU-only
-     * `original` build.
+     * Every pair is ~240 MB, so there is no cheap option that would make the app usable early
+     * while a larger one lands. It fetches one, and fetches the one that runs on every compute
+     * device rather than the CPU-only `original` build.
      */
     val BOOTSTRAP: List<ModelSpec> = listOf(
         ALL.first { it.source == ModelSource.GPU && it.backbone == "vits" }

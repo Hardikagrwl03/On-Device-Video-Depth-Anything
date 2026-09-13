@@ -1,10 +1,10 @@
 package dev.hamster.vda.interfaces
 
 /**
- * Contract every on-device inference module (e.g. MatteModule) must satisfy, generic over its
+ * Contract every on-device inference module (e.g. DepthModule) must satisfy, generic over its
  * own [ConfigInterface] config type and its own [IO] input/output data class, so each
- * module can define whatever named input/output tensors it actually has (one input and two
- * outputs for matting, a single input/output for something else, ...) while still being driven
+ * module can define whatever named input/output tensors it actually has (one input and one
+ * output for depth, several outputs for something else, ...) while still being driven
  * polymorphically, and callers keep readable, named fields instead of positional buffers.
  */
 interface ModuleInterface<Config : ConfigInterface, IO> {

@@ -8,7 +8,7 @@ import java.nio.ByteBuffer
  * Video Depth Anything's recurrent hidden states: the eight temporal-attention caches the step
  * model consumes and re-emits on every frame.
  *
- * Unlike RVM's ConvGRU pyramid these are *token* caches, not feature maps, so each one is shaped
+ * These are *token* caches rather than feature maps, so each one is shaped
  * `[1, tokens, context, channels]`, where:
  *  - [height]/[width] are the model's working resolution (e.g. 518x924, not the 720x1280 frame),
  *  - the ViT token grid is `(height / PATCH_SIZE) x (width / PATCH_SIZE)`, and each state's own
@@ -91,9 +91,9 @@ class DepthHiddenStates(
         if (scale > 0) dimension * scale else (dimension - scale - 1) / -scale
 
     /**
-     * Zeroes [byteBuffer] a chunk at a time. RVM's MatteHiddenStates allocates one array the size
-     * of the buffer, which is fine for its few-MB states; VDA's largest state is ~17 MB and all
-     * eight together are ~83 MB, so a full-size scratch array per reset is worth avoiding.
+     * Zeroes [byteBuffer] a chunk at a time rather than through a scratch array the size of the
+     * buffer: the largest state is ~17 MB and all eight together are ~83 MB, so a full-size
+     * allocation per reset is worth avoiding.
      */
     private fun zero(byteBuffer: ByteBuffer) {
         val chunk = ByteArray(ZERO_CHUNK_BYTES)

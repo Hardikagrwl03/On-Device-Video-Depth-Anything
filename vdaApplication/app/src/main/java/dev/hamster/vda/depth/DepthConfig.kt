@@ -18,7 +18,7 @@ import kotlin.math.roundToInt
  * but one frame, and the one [ConfigInterface] exposes); [initRuntimeConfig] is derived from it and
  * differs only in the file name, so a single device/thread choice covers both.
  *
- * There is no downsample-ratio knob as in RVM: VDA resizes internally, and the working resolution
+ * There is no downsample-ratio knob: VDA resizes internally, and the working resolution
  * is baked into the exported graph. [targetHeight]/[targetWidth] re-derive that resolution the same
  * way the converter's `compute_target_size()` does, because the hidden-state buffers are sized from
  * it and nothing in the `.tflite` file names it.
@@ -27,7 +27,7 @@ data class DepthConfig(
     override var height: Int = 720,
     override var width: Int = 1280,
     /**
-     * Defaults to the GPU delegate, as RVM does.
+     * Defaults to the GPU delegate.
      *
      * This was CPU for a while, and the reason is worth keeping: an earlier `gpu`-source export
      * ran fully delegated with no error and returned a *constant* depth map (every pixel

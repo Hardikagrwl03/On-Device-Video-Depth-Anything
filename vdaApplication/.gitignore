@@ -14,3 +14,15 @@
 .cxx
 local.properties
 *.tflite
+
+# Release signing material -- NEVER commit these.
+# The keystore is the only thing that can sign an update Android will install over
+# an existing install; losing it means users must uninstall/reinstall to update.
+# Back both files up somewhere outside this repo (a gitignored file is still
+# deleted by `git clean -xdf`).
+*.keystore
+*.jks
+keystore.properties
+
+# Built APKs staged for upload -- large binaries, not source.
+dist/

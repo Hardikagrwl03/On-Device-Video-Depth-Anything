@@ -13,7 +13,7 @@ import java.nio.FloatBuffer
 /**
  * Encodes model-output tensor buffers into a video file. Owns its own [MediaCodec]/[MediaMuxer]
  * pair, so multiple independent instances can each write a separate output video (e.g. one for
- * the alpha matte, one for the foreground) from the same decode/inference pass.
+ * the grayscale depth, one for the colormapped depth) from the same decode/inference pass.
  *
  * All work is confined to one dedicated thread via [runner] - [MediaCodec] and [MediaMuxer] are
  * not safe to drive from multiple threads concurrently. [threadName] lets each of `Controller`'s
@@ -175,13 +175,11 @@ class VideoFrameEncoder(threadName: String = "vda-encode") : VideoFrameEncoderIn
     /**
      * Packs one float frame into the NV12 buffer MediaCodec was configured for.
      *
-     * Two things here differ from the RVM app this was ported from, which declares
-     * `COLOR_FormatYUV420SemiPlanar` (NV12: Y plane, then interleaved **U,V**) but fills the
-     * chroma plane as NV21 (**V,U**), and reads each pixel's three floats as B,G,R. Those two
-     * mistakes swap red and blue twice, so RGB input survives by luck - but any producer that
-     * lays pixels out in another order, or any reader of the luma weights, sees the difference:
-     * VDA's inferno-coloured depth came out cyan where it should be yellow. Both are corrected:
-     * floats are read R,G,B, and chroma is written U,V.
+     * `COLOR_FormatYUV420SemiPlanar` is NV12: a Y plane, then interleaved **U,V** - not NV21's
+     * V,U. An earlier version of this converter wrote the chroma plane in NV21 order and read each
+     * pixel's three floats as B,G,R; those two mistakes swap red and blue twice, so RGB input
+     * survived by luck, but the inferno-coloured depth came out cyan where it should be yellow.
+     * Both are corrected: floats are read R,G,B, and chroma is written U,V.
      */
     private fun floatBufferToNV12(floatBuffer: FloatBuffer, channels: Int, scale: Float): ByteArray {
 

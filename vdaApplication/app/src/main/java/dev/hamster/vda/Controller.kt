@@ -115,7 +115,7 @@ class Controller(val context: Context) {
                 outputGrayBuffer.rewind()
                 outputColorBuffer.rewind()
 
-                // scale = 1f: DepthColormap already emits 0-255, unlike RVM's 0-1 matte.
+                // scale = 1f: DepthColormap already emits 0-255.
                 grayEncoder.putNextFrame(outputGrayBuffer, channels = 1, scale = 1.0f)
                 colorEncoder.putNextFrame(outputColorBuffer, channels = 3, scale = 1.0f)
 

@@ -3,9 +3,9 @@ package dev.hamster.vda.interfaces
 import dev.hamster.vda.modelRunner.RuntimeConfig
 
 /**
- * Contract every module-specific config (e.g. MatteModuleConfig) must satisfy.
+ * Contract every module-specific config (e.g. DepthConfig) must satisfy.
  *
- * Each module (matting, segmentation, ...) is free to define its own resolution, variant,
+ * Each module (depth, segmentation, ...) is free to define its own resolution, variant,
  * dtype and other knobs, but every one of those configs must ultimately resolve to a
  * [RuntimeConfig] so the module's underlying TFLiteModelRunner can be configured with it.
  * This is the minimal shape [ModuleInterface] relies on to stay generic across modules.

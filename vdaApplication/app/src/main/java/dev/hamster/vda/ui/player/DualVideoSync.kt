@@ -23,7 +23,7 @@ private const val SOFT_TOLERANCE_MS = 40L
 /**
  * Owns a leader (input) and follower (output) [ExoPlayer] pair, keeping the follower aligned to
  * the leader via small playback-speed nudges rather than continuous seeking - a seek on the
- * matte/foreground outputs (1s keyframe interval) re-decodes up to a second of frames, so doing
+ * depth outputs (1s keyframe interval) re-decodes up to a second of frames, so doing
  * that on every correction tick would stutter continuously.
  */
 class DualVideoSync(context: Context) {
