@@ -43,20 +43,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.hamster.vda.R
 import dev.hamster.vda.depth.DepthConfig
-import dev.hamster.vda.depth.DepthModelCatalog
 import dev.hamster.vda.modelRunner.RuntimeConfig
+import dev.hamster.vda.models.ModelCatalog
+import dev.hamster.vda.models.ModelSource
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 /**
  * Editable draft of the settings [ConfigSheet] exposes, kept separate from [DepthConfig] itself
- * since the sheet talks in terms of [DepthModelCatalog]'s raw resolution/backbone/input-size
+ * since the sheet talks in terms of [ModelCatalog]'s raw resolution/backbone/input-size
  * vocabulary rather than [DepthConfig]'s resolved fields.
  */
 private data class ConfigDraft(
     val device: RuntimeConfig.ComputeDevice,
     val numThreads: Int,
-    val source: DepthConfig.ModelSource,
+    val source: ModelSource,
     val resolution: Pair<Int, Int>,
     val backbone: String,
     val inputSize: Int,
@@ -69,8 +70,8 @@ private data class ConfigDraft(
  * dismissing any other way (Cancel, scrim tap, back gesture) simply discards it, since the draft
  * lives in `remember` state scoped to this composable's lifetime.
  *
- * Every dropdown is populated from [DepthModelCatalog] (the models actually bundled in
- * `assets/models/`), and each one narrows the ones below it, so no reachable combination of
+ * Every dropdown is populated from [ModelCatalog] (the models actually installed in
+ * `filesDir/models/`), and each one narrows the ones below it, so no reachable combination of
  * source/resolution/backbone/input-size/window can name a model file that doesn't exist.
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -86,7 +87,7 @@ fun ConfigSheet(
     if (!visible) return
 
     val context = LocalContext.current
-    val catalog = remember(context) { DepthModelCatalog(context) }
+    val catalog = remember(context) { ModelCatalog(context) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
 
@@ -199,8 +200,8 @@ fun ConfigSheet(
                 }
             }
 
-            // With nothing bundled every dropdown below would render empty with no explanation of
-            // why, and Apply would resolve to an asset that doesn't exist.
+            // With nothing installed every dropdown below would render empty with no explanation
+            // of why, and Apply would resolve to a file that doesn't exist.
             val hasModels = sources.isNotEmpty()
             if (!hasModels) {
                 Text(

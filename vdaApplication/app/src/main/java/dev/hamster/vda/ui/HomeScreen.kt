@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.VideoLibrary
 import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material3.CircularProgressIndicator
@@ -24,6 +25,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,15 +40,31 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.hamster.vda.R
+import dev.hamster.vda.models.ModelManifest
+import dev.hamster.vda.models.ModelDownloadState
+import dev.hamster.vda.models.ModelRepository
+import kotlin.math.roundToInt
 
 @Composable
 fun HomeScreen(
     isModelReady: Boolean,
     modelMissing: Boolean,
     onOpenVideoDepth: () -> Unit,
+    onOpenModels: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    val repository = remember(context) { ModelRepository.get(context) }
+    val modelStates by repository.states.collectAsState()
+    val installedCount = modelStates.count { it.value is ModelDownloadState.Installed }
+    // While no model is usable, the Video Depth tile reports the bootstrap download rather than
+    // looking inert; if that download isn't running (offline first launch, or it failed), the
+    // tile becomes a route into the models page instead of a dead end.
+    val bootstrapProgress = ModelManifest.BOOTSTRAP
+        .firstNotNullOfOrNull { modelStates[it.id] as? ModelDownloadState.Downloading }
+    val bootstrapPending = modelStates.any {
+        it.value is ModelDownloadState.Queued || it.value is ModelDownloadState.Downloading
+    }
 
     // Tapping Video Depth navigates as soon as the model is ready; if it's still loading (the
     // first navigation of a session usually is, since DepthViewModel's initial configure runs in
@@ -109,25 +127,19 @@ fun HomeScreen(
             HomeActionTile(
                 icon = Icons.Filled.VideoLibrary,
                 title = stringResource(R.string.home_video_title),
-                // The models ship inside the APK, so "not ready" here only ever means the
-                // interpreter is still being built - or, if they were stripped from assets to
-                // shrink the build, that there is nothing to build one from.
-                subtitle = if (modelMissing) {
-                    stringResource(R.string.home_video_no_model)
-                } else {
-                    stringResource(R.string.home_video_subtitle)
+                subtitle = when {
+                    !modelMissing -> stringResource(R.string.home_video_subtitle)
+                    bootstrapProgress != null -> stringResource(
+                        R.string.home_video_downloading,
+                        (bootstrapProgress.fraction * 100).roundToInt()
+                    )
+                    else -> stringResource(R.string.home_video_no_model)
                 },
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 badge = null,
-                loading = isNavigating && !isModelReady,
-                onClick = {
-                    if (modelMissing) {
-                        Toast.makeText(context, R.string.home_video_no_model, Toast.LENGTH_LONG).show()
-                    } else {
-                        isNavigating = true
-                    }
-                }
+                loading = (isNavigating && !isModelReady) || (modelMissing && bootstrapPending),
+                onClick = { if (modelMissing) onOpenModels() else isNavigating = true }
             )
             HomeActionTile(
                 icon = Icons.Filled.Videocam,
@@ -139,6 +151,19 @@ fun HomeScreen(
                 onClick = {
                     Toast.makeText(context, R.string.coming_soon, Toast.LENGTH_SHORT).show()
                 }
+            )
+            HomeActionTile(
+                icon = Icons.Filled.Download,
+                title = stringResource(R.string.home_models_title),
+                subtitle = stringResource(R.string.home_models_subtitle),
+                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+                badge = stringResource(
+                    R.string.model_installed_count,
+                    installedCount,
+                    ModelManifest.ALL.size
+                ),
+                onClick = onOpenModels
             )
         }
 

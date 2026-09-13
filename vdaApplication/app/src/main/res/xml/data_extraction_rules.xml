@@ -1,19 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-   Sample data extraction rules file; uncomment and customize as necessary.
-   See https://developer.android.com/about/versions/12/backup-restore#xml-changes
-   for details.
--->
+<?xml version="1.0" encoding="utf-8"?>
 <data-extraction-rules>
-    <cloud-backup>
-        <!-- TODO: Use <include> and <exclude> to control what is backed up.
-        <include .../>
-        <exclude .../>
-        -->
-    </cloud-backup>
     <!--
-    <device-transfer>
-        <include .../>
-        <exclude .../>
-    </device-transfer>
+       Downloaded .tflite models live in filesDir/models/ and total ~480 MB for a full set. They
+       are freely re-downloadable from the models-v1 GitHub release, so backing them up or
+       transferring them to a new device would waste the user's quota and time for nothing.
     -->
+    <cloud-backup>
+        <exclude domain="file" path="models/" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="file" path="models/" />
+    </device-transfer>
 </data-extraction-rules>

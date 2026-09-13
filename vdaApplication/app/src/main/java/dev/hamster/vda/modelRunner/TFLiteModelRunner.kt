@@ -3,13 +3,14 @@ package dev.hamster.vda.modelRunner
 import android.content.Context
 import android.util.Log
 import dev.hamster.vda.depth.DepthModule
+import dev.hamster.vda.models.ModelStore
 import dev.hamster.vda.utils.SharedBuffer
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.gpu.GpuDelegate
 import org.tensorflow.lite.gpu.GpuDelegateFactory
 import org.tensorflow.lite.nnapi.NnApiDelegate
-import java.io.FileInputStream
 import java.io.FileNotFoundException
+import java.io.RandomAccessFile
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.MappedByteBuffer
@@ -189,26 +190,21 @@ class TFLiteModelRunner(
         nnApiDelegate=null
     }
     /**
-     * Memory-maps a model straight out of the APK's assets, by the exact asset path
-     * [DepthConfig][dev.hamster.vda.depth.DepthConfig] built (`models/<source>/<file>.tflite`).
-     *
-     * `openFd` only works on an asset the packager left uncompressed, hence the `noCompress`
-     * entry for `tflite` in the module's build script; without it this throws with a message
-     * about the asset not being stored uncompressed rather than about it being missing.
+     * Memory-maps a downloaded model out of [ModelStore]. Models are not bundled as assets: they
+     * are fetched on demand from the `models-v1` release into `filesDir/models/`, which keeps a
+     * ~480 MB set of weights out of the APK.
      *
      * This runs on the `vda-depth` confined thread (see [DepthModule]), which is fine for a
      * memory-map: no bytes are read here, the pages fault in as the interpreter touches them.
+     * Nothing here may ever *download* — that would block the confined thread on network I/O of
+     * unbounded duration.
      */
     private fun loadModelFile(modelFileName: String): MappedByteBuffer {
-        val fileDescriptor = try {
-            context.assets.openFd(modelFileName)
-        } catch (e: java.io.IOException) {
-            throw FileNotFoundException("Model asset not found or stored compressed: $modelFileName (${e.message})")
-        }
-        return fileDescriptor.use { fd ->
-            FileInputStream(fd.fileDescriptor).use { inputStream ->
-                inputStream.channel.map(FileChannel.MapMode.READ_ONLY, fd.startOffset, fd.declaredLength)
-            }
+        val file = ModelStore(context).fileFor(modelFileName)
+        if (!file.exists()) throw FileNotFoundException("Model not downloaded: $modelFileName")
+        // The mapping outlives the channel, so closing it here is safe.
+        return RandomAccessFile(file, "r").use { raf ->
+            raf.channel.map(FileChannel.MapMode.READ_ONLY, 0, raf.length())
         }
     }
 

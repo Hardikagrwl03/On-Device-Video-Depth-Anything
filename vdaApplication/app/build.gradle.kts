@@ -43,11 +43,6 @@ android {
     buildFeatures {
         compose = true
     }
-    androidResources {
-        // The models are memory-mapped straight out of the APK with AssetManager.openFd(), which
-        // only works on an asset the packager stored uncompressed.
-        noCompress += "tflite"
-    }
 }
 
 dependencies {

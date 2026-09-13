@@ -8,9 +8,11 @@ import androidx.lifecycle.viewModelScope
 import dev.hamster.vda.Controller
 import dev.hamster.vda.R
 import dev.hamster.vda.depth.DepthConfig
-import dev.hamster.vda.depth.DepthModelCatalog
-import dev.hamster.vda.depth.DepthModelSpec
 import dev.hamster.vda.modelRunner.RuntimeConfig
+import dev.hamster.vda.models.ModelRepository
+import dev.hamster.vda.models.ModelSource
+import dev.hamster.vda.models.ModelSpec
+import dev.hamster.vda.models.ModelStore
 import dev.hamster.vda.utils.MediaStoreSaver
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +47,7 @@ data class DepthUiState(
     val isSaving: Boolean = false,
     val transientMessage: String? = null,
     val isConfiguring: Boolean = false,
-    /** No model that [config] could name is bundled in the APK, so nothing can be configured or run. */
+    /** No model that [config] could name is installed yet, so nothing can be configured or run. */
     val modelMissing: Boolean = false
 ) {
     enum class Stage { IDLE, RUNNING, DONE, ERROR }
@@ -85,7 +87,6 @@ class DepthViewModel(
 ) : ViewModel() {
 
     private val controller = Controller(application)
-    private val catalog = DepthModelCatalog(application)
 
     private val _uiState = MutableStateFlow(DepthUiState(config = restoreConfig()))
     val uiState: StateFlow<DepthUiState> = _uiState.asStateFlow()
@@ -94,27 +95,32 @@ class DepthViewModel(
 
     init {
         resolveAndConfigure()
+        observeModelInstalls()
     }
 
     /**
-     * Picks a model that is actually bundled and configures it, or records [modelMissing] when
-     * the APK carries none at all.
+     * Picks a model that actually exists on disk and configures it, or records [modelMissing]
+     * when nothing is installed at all.
      *
-     * Unlike RVM this cannot be fixed at runtime - there is no download step - but the check still
-     * earns its place: a [DepthConfig] restored from an older install can name a pairing this APK
-     * no longer ships, and configuring blindly would throw `FileNotFoundException` out of the
-     * interpreter. When the restored config names something missing, the first bundled spec is
-     * used instead.
+     * Models are downloaded on demand, so the configured one is not guaranteed to be present: on
+     * a fresh install nothing is, and a restored [DepthConfig] can name a pair the user never
+     * downloaded. Configuring blindly would throw `FileNotFoundException` out of the interpreter.
+     *
+     * When the configured model is missing but *some other* model is installed, that one is used
+     * instead, so the app is usable the moment any pair finishes downloading.
      */
     private fun resolveAndConfigure() {
+        val store = ModelStore(application)
         val config = _uiState.value.config
-        if (catalog.isBundled(config)) {
+        if (store.installedSpecs().any { it.matches(config) }) {
+            // A restored config can name an unsupported pairing too, since it was persisted before
+            // this check existed or before the model it names was swapped.
             val effective = coerceUnsupportedDevice(config) ?: config
             _uiState.update { it.copy(config = effective, modelMissing = false) }
             runConfigure(effective)
             return
         }
-        val fallback = catalog.specs.firstOrNull()
+        val fallback = store.installedSpecs().firstOrNull()
         if (fallback == null) {
             _uiState.update { it.copy(modelMissing = true) }
             return
@@ -124,7 +130,24 @@ class DepthViewModel(
         runConfigure(resolved)
     }
 
-    private fun configFrom(spec: DepthModelSpec, base: DepthConfig): DepthConfig = base.copy(
+    /** Configures as soon as a download makes a usable model available. */
+    private fun observeModelInstalls() {
+        viewModelScope.launch {
+            ModelRepository.get(application).states.collect {
+                if (_uiState.value.modelMissing) resolveAndConfigure()
+            }
+        }
+    }
+
+    private fun ModelSpec.matches(config: DepthConfig): Boolean =
+        source == config.source &&
+            backbone == config.variant.backbone &&
+            height == config.height &&
+            width == config.width &&
+            inputSize == config.inputSize &&
+            inferenceLength == config.inferenceLength
+
+    private fun configFrom(spec: ModelSpec, base: DepthConfig): DepthConfig = base.copy(
         height = spec.height,
         width = spec.width,
         variant = DepthConfig.Variant.entries.first { it.backbone == spec.backbone },
@@ -191,7 +214,7 @@ class DepthViewModel(
             ?.let { runCatching { DepthConfig.Variant.valueOf(it) }.getOrNull() }
             ?: return defaults
         val source = savedStateHandle.get<String>(KEY_SOURCE)
-            ?.let { runCatching { DepthConfig.ModelSource.valueOf(it) }.getOrNull() }
+            ?.let { runCatching { ModelSource.valueOf(it) }.getOrNull() }
             ?: return defaults
 
         return DepthConfig(
@@ -273,7 +296,7 @@ class DepthViewModel(
      */
     private fun coerceUnsupportedDevice(config: DepthConfig): DepthConfig? {
         val device = config.runtimeConfig.device
-        val unsupported = config.source == DepthConfig.ModelSource.ORIGINAL &&
+        val unsupported = config.source == ModelSource.ORIGINAL &&
             (device == RuntimeConfig.ComputeDevice.GPU || device == RuntimeConfig.ComputeDevice.NPU)
         if (!unsupported) return null
         return config.copy(

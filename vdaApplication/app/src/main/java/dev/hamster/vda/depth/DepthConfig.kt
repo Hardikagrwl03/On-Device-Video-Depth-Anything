@@ -2,6 +2,7 @@ package dev.hamster.vda.depth
 
 import dev.hamster.vda.interfaces.ConfigInterface
 import dev.hamster.vda.modelRunner.RuntimeConfig
+import dev.hamster.vda.models.ModelSource
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
@@ -26,25 +27,21 @@ data class DepthConfig(
     override var height: Int = 720,
     override var width: Int = 1280,
     /**
-     * Defaults to **CPU**, unlike RVM, which defaults to the GPU delegate.
+     * Defaults to the GPU delegate, as RVM does.
      *
-     * On a Galaxy S23 FE (Adreno, OpenCL backend) the GPU delegate accepts this graph, reports no
-     * error, runs ~4x faster than XNNPack - and returns a *constant* depth map (every pixel
-     * 0.18040268, on every frame, for any input), which renders as a pure black video.
+     * This was CPU for a while, and the reason is worth keeping: an earlier `gpu`-source export
+     * ran fully delegated with no error and returned a *constant* depth map (every pixel
+     * 0.18040268, every frame, any input) - a pure black video. Two independent bugs caused it,
+     * both since fixed outside this file: the delegate's `MEAN` kernel mis-reducing
+     * `nn.LayerNorm`'s `axis=[0, 2]` pattern (fixed in the converter's `video_depth_anything_gpu`
+     * source) and the delegate's default FP16, which produces NaN in the motion modules (fixed in
+     * [dev.hamster.vda.modelRunner.TFLiteModelRunner] by building the delegate with
+     * `setPrecisionLossAllowed(false)`).
      *
-     * The cause is the delegate's `BATCH_MATMUL`, which is the ViT's attention core (24 of them in
-     * this graph). A 7-node model - two FCs, reshape/transpose to [1,6,1024,64], one batched
-     * matmul - returns values within [-3.6, 3.5] on CPU and NaNs plus magnitudes up to 1e33 on
-     * this delegate. It is not an op-support fallback (all 1150 nodes are delegated in one
-     * partition) and not fp16 (disabling precision loss shifts the constant by 1.7e-5 and changes
-     * nothing else); the same failure reproduces outside this app with the stock
-     * `benchmark_model` binary.
-     *
-     * A silently wrong result is worse than a slow one, so the default is the device that is known
-     * to be correct. GPU is still selectable in the config sheet - other drivers may well be fine
-     * - but verify the output is not flat before trusting it.
+     * Neither fix is visible in a `.tflite` file or in delegation coverage, so if a future export
+     * ever goes flat again, check the output's variance before believing "fully delegated".
      */
-    override var runtimeConfig: RuntimeConfig = RuntimeConfig("", RuntimeConfig.ComputeDevice.CPU),
+    override var runtimeConfig: RuntimeConfig = RuntimeConfig(""),
     var dtype: Dtype = Dtype.FLOAT32,
     var variant: Variant = Variant.VITS,
     /** The converter's `--input-size`: the short side VDA resizes frames to before the ViT. */
@@ -68,16 +65,6 @@ data class DepthConfig(
         INT8(1, "int8"),
         FLOAT16(2, "fp16"),
         FLOAT32(4, "fp32")
-    }
-
-    /**
-     * Which converter tree the model came from: `original` is the faithful export, `gpu` is the
-     * rewritten graph whose ops the TFLite GPU delegate can actually take (the `original` tree
-     * falls back to CPU there -- see TFLiteModelRunner's delegate-rejection handling).
-     */
-    enum class ModelSource(val tag: String) {
-        GPU("gpu"),
-        ORIGINAL("original")
     }
 
     /** The init model's runtime config: same device and thread count as [runtimeConfig], other file. */
@@ -109,13 +96,13 @@ data class DepthConfig(
     }
 
     /**
-     * The asset path of one of the two graphs. Byte-identical to the file the converter writes
-     * (`vda_<backbone>_<h>x<w>_input<n>_infer<n>_<kind>.tflite`), under the source tree it came
-     * from, so the name in the converter's output, the name in `assets/`, and
-     * [RuntimeConfig.modelFileName] are all the same string with no mapping layer to drift.
+     * One half of the pair, named exactly as the `models-v1` release publishes it - which is also
+     * its name on disk in [dev.hamster.vda.models.ModelStore] and the value of
+     * [RuntimeConfig.modelFileName], so there is no mapping layer anywhere that could drift.
+     * Must stay in sync with [dev.hamster.vda.models.ModelSpec]'s own name construction.
      */
     private fun buildModelFileName(kind: String): String =
-        "$ASSET_DIR/${source.tag}/vda_${variant.backbone}_${height}x${width}_input${inputSize}_infer${inferenceLength}_$kind.tflite"
+        "vda_${source.tag}_${variant.backbone}_${height}x${width}_input${inputSize}_infer${inferenceLength}_$kind.tflite"
 
     /**
      * Mirrors the converter's `compute_target_size()`, which in turn mirrors MiDaS' `Resize` with
@@ -153,7 +140,6 @@ data class DepthConfig(
         /** Above this aspect ratio the converter shrinks the requested input size (upstream's rule). */
         const val WIDE_RATIO = 1.78
 
-        const val ASSET_DIR = "models"
         const val INIT = "init"
         const val STEP = "step"
     }

@@ -14,12 +14,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import dev.hamster.vda.models.ModelRepository
 import dev.hamster.vda.ui.DepthScreen
 import dev.hamster.vda.ui.DepthViewModel
 import dev.hamster.vda.ui.HomeScreen
+import dev.hamster.vda.ui.ModelsScreen
 import dev.hamster.vda.ui.theme.VdaTheme
 
-private enum class VdaDestination { HOME, DEPTH }
+private enum class VdaDestination { HOME, DEPTH, MODELS }
 
 class MainActivity : ComponentActivity() {
     private val viewModel: DepthViewModel by viewModels {
@@ -32,6 +34,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Idempotent and non-blocking: enqueues only the bootstrap models not already on disk,
+        // onto the repository's own scope. Safe to call on every launch.
+        ModelRepository.get(this).ensureBootstrapModels()
         enableEdgeToEdge()
         setContent {
             VdaTheme {
@@ -48,9 +53,11 @@ class MainActivity : ComponentActivity() {
                     VdaDestination.HOME -> HomeScreen(
                         isModelReady = !uiState.isConfiguring && !uiState.modelMissing,
                         modelMissing = uiState.modelMissing,
-                        onOpenVideoDepth = { destination = VdaDestination.DEPTH }
+                        onOpenVideoDepth = { destination = VdaDestination.DEPTH },
+                        onOpenModels = { destination = VdaDestination.MODELS }
                     )
                     VdaDestination.DEPTH -> DepthScreen(viewModel, onNavigateBack = { destination = VdaDestination.HOME })
+                    VdaDestination.MODELS -> ModelsScreen(onNavigateBack = { destination = VdaDestination.HOME })
                 }
             }
         }
