@@ -93,17 +93,49 @@ than failing unhelpfully at push/exec time.
 ### 4. Pre-converted `.tflite` models (optional)
 
 Already-exported `.tflite` models (see [Utilities → `convert.py`](#convertpy--export-to-tflite))
-are available on Google Drive, for skipping local conversion entirely:
+are available two ways, for skipping local conversion entirely:
 
-**[Pre-converted VDA `.tflite` models](https://drive.google.com/drive/folders/1kYM5fFGPH9slXKdKNDpb28LuaFczSPj9?usp=sharing)**
+**[Pre-converted VDA `.tflite` models (Google Drive)](https://drive.google.com/drive/folders/1kYM5fFGPH9slXKdKNDpb28LuaFczSPj9?usp=sharing)**
 
-Drop a downloaded pair under `tflite_models/<source>/`, keeping
-`convert.py`'s own filename convention (see [Core
-concepts](#core-concepts)) intact, and `verify.py`/`benchmark/*.sh`/
-`scripts/visualize.sh` can all find and infer options from them exactly as
-if you'd run `convert.sh` yourself — no local checkpoint or PyTorch trace
-needed for verification/benchmarking/visualization alone (`compare.py`
-still needs the `.pth` checkpoint, since it's a pure-PyTorch tool).
+Filenames there follow the convention described in [Core
+concepts](#core-concepts) — `vda_<variant>_<height>x<width>_input<input_size>_infer<infer_len>_<init|step>.tflite`.
+Drop a downloaded pair under `tflite_models/<source>/`, keeping that
+convention intact, and `verify.py`/`benchmark/*.sh`/`scripts/visualize.sh`
+can all find and infer options from them exactly as if you'd run
+`convert.sh` yourself — no local checkpoint or PyTorch trace needed for
+verification/benchmarking/visualization alone (`compare.py` still needs
+the `.pth` checkpoint, since it's a pure-PyTorch tool).
+
+**[GitHub Release `models-v1`](https://github.com/Hardikagrwl03/On-Device-Video-Depth-Anything/releases/tag/models-v1)**
+— the same 4 files, but as direct-download URLs suitable for fetching from
+app code at runtime instead of bundling every weight file into the app.
+Since a release's assets are flat (no subfolders), `<source>` is folded
+into the filename instead of being a parent directory:
+
+```
+https://github.com/Hardikagrwl03/On-Device-Video-Depth-Anything/releases/download/models-v1/vda_<source>_<variant>_<height>x<width>_input<input_size>_infer<infer_len>_<init|step>.tflite
+```
+
+| Source | Signature | Size | Download |
+|---|---|---|---|
+| gpu | init | ~116MB | [vda_gpu_vits_720x1280_input518_infer8_init.tflite](https://github.com/Hardikagrwl03/On-Device-Video-Depth-Anything/releases/download/models-v1/vda_gpu_vits_720x1280_input518_infer8_init.tflite) |
+| gpu | step | ~119MB | [vda_gpu_vits_720x1280_input518_infer8_step.tflite](https://github.com/Hardikagrwl03/On-Device-Video-Depth-Anything/releases/download/models-v1/vda_gpu_vits_720x1280_input518_infer8_step.tflite) |
+| original | init | ~112MB | [vda_original_vits_720x1280_input518_infer8_init.tflite](https://github.com/Hardikagrwl03/On-Device-Video-Depth-Anything/releases/download/models-v1/vda_original_vits_720x1280_input518_infer8_init.tflite) |
+| original | step | ~112MB | [vda_original_vits_720x1280_input518_infer8_step.tflite](https://github.com/Hardikagrwl03/On-Device-Video-Depth-Anything/releases/download/models-v1/vda_original_vits_720x1280_input518_infer8_step.tflite) |
+
+All 4 are `vits` at `720x1280`, `input_size=518`, `infer_len=8`. These URLs
+need no authentication (the repo is public) and redirect once (`302` →
+`objects.githubusercontent.com`) before serving the file, so a plain HTTP
+client with redirect-following is enough — no GitHub API call needed.
+
+**If deploying the `gpu`-source models to a real device, read [Delegation
+coverage is not correctness](#delegation-coverage-is-not-correctness)
+first** — the GPU delegate must be built with
+`setPrecisionLossAllowed(false)` (FP16 otherwise produces NaN in the
+motion modules), something no `.tflite` file can enforce on its own. A
+future variant (`vitb`/`vitl`) would slot into the same
+`vda_<source>_<variant>_...` filename pattern, either uploaded onto this
+same release or under a new tag.
 
 ### 5. A local browser (optional, for `visualize.py` only)
 
