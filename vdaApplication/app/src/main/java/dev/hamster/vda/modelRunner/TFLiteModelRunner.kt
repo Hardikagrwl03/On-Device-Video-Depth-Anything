@@ -6,6 +6,7 @@ import dev.hamster.vda.depth.DepthModule
 import dev.hamster.vda.utils.SharedBuffer
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.gpu.GpuDelegate
+import org.tensorflow.lite.gpu.GpuDelegateFactory
 import org.tensorflow.lite.nnapi.NnApiDelegate
 import java.io.FileInputStream
 import java.io.FileNotFoundException
@@ -61,7 +62,7 @@ class TFLiteModelRunner(
                 Log.d(TAG,"loadModel: Using CPU")
             }
             RuntimeConfig.ComputeDevice.GPU ->{
-                gpuDelegate = GpuDelegate()
+                gpuDelegate = newGpuDelegate()
                 options.addDelegate(gpuDelegate)
                 Log.d(TAG,"loadModel: Using GPU")
             }
@@ -79,7 +80,7 @@ class TFLiteModelRunner(
                     Log.d(TAG,"loadModel: AUTO -> NNAPI")
                 }catch(e:Exception){
                     try{
-                        gpuDelegate = GpuDelegate()
+                        gpuDelegate = newGpuDelegate()
                         options.addDelegate(gpuDelegate)
                         Log.d(TAG,"loadModel: AUTO -> GPU")
                     }catch(e2:Exception){
@@ -166,6 +167,18 @@ class TFLiteModelRunner(
         releaseDelegates()
         Log.d(TAG, "close: TFLite Model Runner closed along with delegates")
     }
+
+    /**
+     * The GPU delegate's default [GpuDelegateFactory.Options] allows FP16
+     * (`setPrecisionLossAllowed(true)`), which on real hardware produces
+     * NaN in the model's motion-module outputs (on-device CPU-vs-GPU
+     * diagnostics traced this to the motion modules' attention/norm math
+     * overflowing or losing precision at FP16, not to any specific op's
+     * lowering -- forcing FP32 on the delegate eliminated the NaN
+     * end-to-end while leaving CPU inference untouched).
+     */
+    private fun newGpuDelegate(): GpuDelegate =
+        GpuDelegate(GpuDelegateFactory.Options().setPrecisionLossAllowed(false))
 
     /** Closes whichever delegate is held, without touching the interpreter. */
     private fun releaseDelegates(){

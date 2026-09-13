@@ -25,7 +25,26 @@ import kotlin.math.roundToInt
 data class DepthConfig(
     override var height: Int = 720,
     override var width: Int = 1280,
-    override var runtimeConfig: RuntimeConfig = RuntimeConfig(""),
+    /**
+     * Defaults to **CPU**, unlike RVM, which defaults to the GPU delegate.
+     *
+     * On a Galaxy S23 FE (Adreno, OpenCL backend) the GPU delegate accepts this graph, reports no
+     * error, runs ~4x faster than XNNPack - and returns a *constant* depth map (every pixel
+     * 0.18040268, on every frame, for any input), which renders as a pure black video.
+     *
+     * The cause is the delegate's `BATCH_MATMUL`, which is the ViT's attention core (24 of them in
+     * this graph). A 7-node model - two FCs, reshape/transpose to [1,6,1024,64], one batched
+     * matmul - returns values within [-3.6, 3.5] on CPU and NaNs plus magnitudes up to 1e33 on
+     * this delegate. It is not an op-support fallback (all 1150 nodes are delegated in one
+     * partition) and not fp16 (disabling precision loss shifts the constant by 1.7e-5 and changes
+     * nothing else); the same failure reproduces outside this app with the stock
+     * `benchmark_model` binary.
+     *
+     * A silently wrong result is worse than a slow one, so the default is the device that is known
+     * to be correct. GPU is still selectable in the config sheet - other drivers may well be fine
+     * - but verify the output is not flat before trusting it.
+     */
+    override var runtimeConfig: RuntimeConfig = RuntimeConfig("", RuntimeConfig.ComputeDevice.CPU),
     var dtype: Dtype = Dtype.FLOAT32,
     var variant: Variant = Variant.VITS,
     /** The converter's `--input-size`: the short side VDA resizes frames to before the ViT. */
