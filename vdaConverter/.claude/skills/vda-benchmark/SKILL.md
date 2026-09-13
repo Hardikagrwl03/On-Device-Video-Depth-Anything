@@ -67,13 +67,28 @@ sed -n '/not supported by GPU delegate/,/operations will run/p' <log>
 
 ## Reference numbers
 
-`vits`, 720x1280, `--infer-len 8`, `--source gpu`, on a Samsung SM-S711B:
-**init ~1.375 s, step ~1.515 s**, fully delegated, `std` of 1-6 ms. An
-`--source original` build of the same model is *not* GPU-friendly and will
-show a long unsupported-op list -- that's expected, not a regression.
+`vits`, 720x1280, `--infer-len 8`, `--source gpu`, on a Samsung SM-S711B,
+`benchmark_gpu.sh`'s own default (`--gpu_precision_loss_allowed` unset,
+i.e. FP16 allowed): **init ~1.375 s, step ~1.515 s**, fully delegated,
+`std` of 1-6 ms. An `--source original` build of the same model is *not*
+GPU-friendly and will show a long unsupported-op list -- that's expected,
+not a regression.
+
+**These FP16-default numbers are not what a correct app ships.** FP16 GPU
+delegate compute produces NaN in this model's motion modules on real
+hardware (see `vda-gpu-delegate-correctness`) -- an app must build its GPU
+delegate with `setPrecisionLossAllowed(false)`. For numbers that reflect
+that: `benchmark_gpu.sh` doesn't expose this flag, so pass it by hand --
+`adb shell <remote>/benchmark_model --graph=<remote>/model.tflite --use_gpu=true --gpu_precision_loss_allowed=false ...`
+-- **init ~1.89 s, step ~2.14 s** on the same device, still fully
+delegated. That's the real, correct-output cost: roughly +35-40% over the
+FP16-default numbers above.
 
 If a `gpu`-source build reports unsupported ops or fails delegate init, see
-the `vda-gpu-delegate-fix` skill for the diagnosis recipe.
+the `vda-gpu-delegate-fix` skill for the diagnosis recipe. If it's fully
+delegated and errorless but the actual output is NaN or numerically wrong
+on-device, that's a different failure mode entirely -- see
+`vda-gpu-delegate-correctness`.
 
 `./run.sh` runs this (plus convert/compare/verify/visualize) for one
 variant/source in a single command -- see `vda-convert`.

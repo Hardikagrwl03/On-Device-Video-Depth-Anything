@@ -18,6 +18,7 @@ import torch.utils.checkpoint
 from torch.nn.init import trunc_normal_
 
 from .dinov2_layers import Mlp, PatchEmbed, SwiGLUFFNFused, MemEffAttention, NestedTensorBlock as Block
+from .dinov2_layers.gpu_compat import layer_norm
 
 
 logger = logging.getLogger("dinov2")
@@ -268,7 +269,7 @@ class DinoVisionTransformer(nn.Module):
         all_x = x
         output = []
         for x, masks in zip(all_x, masks_list):
-            x_norm = self.norm(x)
+            x_norm = layer_norm(x, self.norm)
             output.append(
                 {
                     "x_norm_clstoken": x_norm[:, 0],
@@ -289,7 +290,7 @@ class DinoVisionTransformer(nn.Module):
         for blk in self.blocks:
             x = blk(x)
 
-        x_norm = self.norm(x)
+        x_norm = layer_norm(x, self.norm)
         return {
             "x_norm_clstoken": x_norm[:, 0],
             "x_norm_regtokens": x_norm[:, 1 : self.num_register_tokens + 1],
@@ -337,7 +338,12 @@ class DinoVisionTransformer(nn.Module):
         else:
             outputs = self._get_intermediate_layers_not_chunked(x, n)
         if norm:
-            outputs = [self.norm(out) for out in outputs]
+            # See dinov2_layers/gpu_compat.py's layer_norm() docstring: this
+            # is the confirmed root cause of the GPU-delegate-only NaN --
+            # nn.LayerNorm's default export decomposition hits a GPU
+            # delegate MEAN-kernel correctness bug that self.norm(out)
+            # (the stock module call) would otherwise trigger here too.
+            outputs = [layer_norm(out, self.norm) for out in outputs]
         class_tokens = [out[:, 0] for out in outputs]
         outputs = [out[:, 1 + self.num_register_tokens:] for out in outputs]
         if reshape:

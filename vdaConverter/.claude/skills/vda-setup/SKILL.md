@@ -5,6 +5,13 @@ description: First-time setup of this Video Depth Anything TFLite converter -- c
 
 # Setting up the VDA converter
 
+If the actual goal is just getting a ready-to-use `.tflite` file (not
+developing/modifying the conversion toolkit itself), none of this setup is
+needed at all -- see the README's "Pre-converted models" section for direct
+downloads (a Google Drive folder and a GitHub Release, `models-v1`, with
+stable per-file URLs). Only continue below if you need to convert, verify,
+compare, or benchmark something yourself.
+
 ## 1. Conda environment
 
 ```bash
@@ -62,10 +69,14 @@ benchmarking, and rendering an op-graph image) in one shot, defaulting to
 
 ## Skipping conversion: pre-converted models
 
-Already-exported `.tflite` models are available on Google Drive (see the
-README's Setup section) -- download a pair into `tflite_models/<source>/`,
-keeping `convert.py`'s filename convention, to use `vda-verify`/
-`vda-benchmark`/`vda-visualize` without a local checkpoint or PyTorch trace.
+Already-exported `.tflite` models are available two ways (see the README's
+Setup section): a Google Drive folder, or the GitHub Release `models-v1`
+(flat per-file download URLs, `vda_<source>_<variant>_..._<init|step>.tflite`,
+useful for fetching from app code directly). From Drive, download a pair
+into `tflite_models/<source>/`, keeping `convert.py`'s filename convention,
+to use `vda-verify`/`vda-benchmark`/`vda-visualize` without a local
+checkpoint or PyTorch trace. Currently covers `vits` only, both
+`original`/`gpu` sources.
 
 ## One more dependency, for `vda-visualize` only
 

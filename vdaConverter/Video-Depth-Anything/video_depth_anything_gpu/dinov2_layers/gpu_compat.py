@@ -1,6 +1,7 @@
 # Helpers specific to this GPU-delegate-compatible fork of dinov2_layers.
 # Not part of the upstream DINOv2 source.
 
+import torch
 from torch import Tensor
 import torch.nn.functional as F
 from torch import nn
@@ -31,3 +32,32 @@ def linear_as_conv1x1(linear: nn.Linear, x: Tensor) -> Tensor:
     x4 = x.reshape(1, b * n, 1, c_in).permute(0, 3, 1, 2)  # [1, c_in, b*n, 1]
     y4 = F.conv2d(x4, linear.weight.view(c_out, c_in, 1, 1), linear.bias)  # [1, c_out, b*n, 1]
     return y4.permute(0, 2, 3, 1).reshape(b, n, c_out)
+
+
+def layer_norm(x: Tensor, norm: nn.LayerNorm) -> Tensor:
+    """Apply an nn.LayerNorm via an explicit single-axis (dim=-1) mean/var
+    reduction, instead of letting torch.export decompose the module's own
+    call into whatever MEAN axis list it picks.
+
+    Confirmed by direct flatbuffer inspection: nn.LayerNorm's default
+    decomposition lowers to two MEAN ops with `axis=[0, 2]` on a
+    [1, N, C]-shaped input -- reducing the batch axis (0, size 1, harmless)
+    together with the channel axis (2) in one call, rather than a plain
+    dim=-1 reduction. That axis pattern is where the actual GPU-delegate
+    bug lives: XNNPACK (CPU) computes it correctly, but the GPU delegate's
+    MEAN kernel silently returns a wrong (too large) variance for this
+    non-trailing multi-axis combination -- a correctness bug, not a
+    rejected/unsupported op, so it produces no error and no CPU fallback.
+    Measured effect: DINOv2 block 0's norm1 output alone already diverges
+    from the CPU reference by up to ~14 (its own range is roughly ±3-4),
+    and it compounds through all 12 residual blocks (~19 by block 11),
+    eventually saturating parts of the motion module to NaN.
+
+    Forcing dim=-1 here produces a single-axis MEAN in the exported graph,
+    avoiding that axis combination entirely. Mathematically identical to
+    nn.LayerNorm's own formula -- `norm` stays a real nn.LayerNorm (state
+    dict keys unchanged), only the forward computation route differs.
+    """
+    mean = x.mean(dim=-1, keepdim=True)
+    var = (x - mean).pow(2).mean(dim=-1, keepdim=True)
+    return (x - mean) * torch.rsqrt(var + norm.eps) * norm.weight + norm.bias

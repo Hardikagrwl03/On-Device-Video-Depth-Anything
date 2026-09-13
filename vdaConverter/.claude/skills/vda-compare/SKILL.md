@@ -71,5 +71,15 @@ edit is behaviour-preserving, but says nothing about whether it achieved
 anything for the GPU delegate. Confirm that separately by reading the
 exported flatbuffer and benchmarking on device -- see `vda-gpu-delegate-fix`.
 
+**Pure PyTorch means this cannot catch a real GPU delegate numeric bug.**
+`compare.py` passed cleanly the entire time a GPU-delegate `MEAN`-kernel
+correctness bug was live (`nn.LayerNorm`'s `axis=[0, 2]` reduction --
+computed correctly in eager PyTorch and via CPU/XNNPACK, silently wrong
+only on the actual GPU delegate on real hardware). Neither `compare.py` nor
+`verify.py` exercises that code path. A clean `compare.py` plus a clean
+`benchmark_gpu.sh` delegation log still isn't proof the model is correct
+on-device -- see `vda-gpu-delegate-correctness` for the on-device bisection
+that actually is.
+
 `./run.sh` runs this (plus convert/verify/benchmark/visualize) for one
 variant/source in a single command -- see `vda-convert`.

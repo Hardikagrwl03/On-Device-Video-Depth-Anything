@@ -16,6 +16,7 @@ from torch import nn, Tensor
 
 from .attention import Attention, MemEffAttention
 from .drop_path import DropPath
+from .gpu_compat import layer_norm
 from .layer_scale import LayerScale
 from .mlp import Mlp
 
@@ -81,10 +82,10 @@ class Block(nn.Module):
 
     def forward(self, x: Tensor) -> Tensor:
         def attn_residual_func(x: Tensor) -> Tensor:
-            return self.ls1(self.attn(self.norm1(x)))
+            return self.ls1(self.attn(layer_norm(x, self.norm1)))
 
         def ffn_residual_func(x: Tensor) -> Tensor:
-            return self.ls2(self.mlp(self.norm2(x)))
+            return self.ls2(self.mlp(layer_norm(x, self.norm2)))
 
         if self.training and self.sample_drop_ratio > 0.1:
             # the overhead is compensated only for a drop path rate larger than 0.1
