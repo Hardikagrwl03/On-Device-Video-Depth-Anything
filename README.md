@@ -1,1 +1,1 @@
-# On-Device-Video-Depth-Anything
+# On-Device Video Depth Anything
