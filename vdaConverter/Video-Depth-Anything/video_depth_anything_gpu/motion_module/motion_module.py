@@ -7,6 +7,7 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 
+from ..dinov2_layers.gpu_compat import layer_norm
 from .attention import CrossAttention, FeedForward, apply_rotary_emb, precompute_freqs_cis
 
 from einops import rearrange, repeat
@@ -227,7 +228,10 @@ class TemporalTransformerBlock(nn.Module):
     def forward(self, hidden_states, encoder_hidden_states=None, attention_mask=None, video_length=None, cached_hidden_state_list=None):
         output_hidden_state_list = []
         for i, (attention_block, norm) in enumerate(zip(self.attention_blocks, self.norms)):
-            norm_hidden_states = norm(hidden_states)
+            # See dinov2_layers/gpu_compat.py's layer_norm() docstring: same
+            # GPU-delegate MEAN-axis correctness bug applies to any
+            # nn.LayerNorm on a [N, T, C]-shaped input, not just DINOv2's.
+            norm_hidden_states = layer_norm(hidden_states, norm)
             residual_hidden_states, output_hidden_states = attention_block(
                 norm_hidden_states,
                 encoder_hidden_states=encoder_hidden_states,
@@ -238,7 +242,7 @@ class TemporalTransformerBlock(nn.Module):
             hidden_states = self._residual_add(residual_hidden_states, hidden_states)
             output_hidden_state_list.append(output_hidden_states)
 
-        hidden_states = self._residual_add(self.ff(self.ff_norm(hidden_states)), hidden_states)
+        hidden_states = self._residual_add(self.ff(layer_norm(hidden_states, self.ff_norm)), hidden_states)
 
         output = hidden_states
         return output, output_hidden_state_list
