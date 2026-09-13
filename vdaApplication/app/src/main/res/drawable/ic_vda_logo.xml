@@ -1,0 +1,29 @@
+<!--
+  The VDA mark, in the same visual language as the app's chrome: the rounded-square frame, with
+  three receding planes inside it drawn at falling opacity - near, mid, far - which is what a
+  depth map encodes. Single-colour and tint-driven, so it reads on the primary container in
+  either theme and inside the near-black video plate.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <path
+        android:pathData="M22,10 L74,10 A12,12 0 0 1 86,22 L86,74 A12,12 0 0 1 74,86 L22,86 A12,12 0 0 1 10,74 L10,22 A12,12 0 0 1 22,10 Z"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="5"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillAlpha="0.3"
+        android:pathData="M54,22 L72,22 A4,4 0 0 1 76,26 L76,48 A4,4 0 0 1 72,52 L54,52 A4,4 0 0 1 50,48 L50,26 A4,4 0 0 1 54,22 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillAlpha="0.6"
+        android:pathData="M40,34 L58,34 A4,4 0 0 1 62,38 L62,60 A4,4 0 0 1 58,64 L40,64 A4,4 0 0 1 36,60 L36,38 A4,4 0 0 1 40,34 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M26,46 L44,46 A4,4 0 0 1 48,50 L48,72 A4,4 0 0 1 44,76 L26,76 A4,4 0 0 1 22,72 L22,50 A4,4 0 0 1 26,46 Z" />
+</vector>
