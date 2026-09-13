@@ -426,6 +426,52 @@ For contrast, the first build that merely *initialized* the delegate ran at
 6.6 s with ~8% of nodes on GPU and ~175 ms of variance. The near-zero
 variance is itself the signature of an uninterrupted GPU pipeline.
 
+### Delegation coverage is not correctness
+
+**"Fully delegated" and "correct" are independent claims — a graph can be
+100% GPU-delegated and still produce NaN.** That happened here: a real
+device running a fully-delegated `--source gpu` build reported perfect CPU
+output but NaN on GPU, specifically in the motion modules. On-device
+CPU-vs-GPU bisection (tapping intermediate tensors via monkeypatched
+`forward()` methods, comparing against the same model run through
+`ai_edge_litert`) traced it to **two independent bugs**, neither of which
+the benchmark's delegation-coverage numbers above would ever surface:
+
+1. **A GPU delegate `MEAN`-kernel correctness bug** for `nn.LayerNorm`'s
+   `axis=[0, 2]` reduction pattern (see the `layer_norm()` row in
+   [The fixes](#the-fixes) below) — fixed in this repo's model source.
+   Confirmed independently necessary: reverting it and forcing FP32 (fix
+   #2 below) still produced wildly wrong finite output (e.g. a cache
+   tensor with `min=-461,585,440` where CPU gives `~-3`), not NaN — proof
+   this is a real, precision-independent correctness bug, not merely an
+   FP16 artifact.
+2. **FP16 precision loss** in the GPU delegate's own compute, independent
+   of the above. The delegate's default `GpuDelegateFactory.Options()`
+   allows FP16 (`setPrecisionLossAllowed(true)`); on real hardware this
+   overflowed/lost precision in the motion modules' attention math and
+   produced NaN regardless of fix #1. This is a **delegate configuration
+   the consuming app controls, not something this converter's output can
+   fix on its own** — it must be forced off wherever the app builds its
+   `Interpreter.Options()`/`GpuDelegate`:
+   ```kotlin
+   GpuDelegate(GpuDelegateFactory.Options().setPrecisionLossAllowed(false))
+   ```
+   `benchmark_gpu.sh` doesn't pass this flag either (it benchmarks the
+   `benchmark_model` tool's own default, FP16-allowed); pass
+   `--gpu_precision_loss_allowed=false` by hand to `benchmark_model` for
+   numbers that reflect what a correctly-configured app actually ships —
+   roughly **+35-40% latency** over the FP16-default numbers above (e.g.
+   `vits` step: 1.50 s → 2.14 s on the SM-S711B), the real cost of
+   correct output.
+
+**Both fixes are necessary; neither alone is sufficient.** Any app
+consuming `--source gpu` output must also disable GPU delegate FP16 —
+otherwise expect NaN in the cache outputs regardless of how clean this
+repo's own `compare.py`/`verify.py` results look, since neither of those
+exercises the real GPU delegate. See the `vda-gpu-delegate-correctness`
+skill for the on-device diagnostic recipe that actually catches this bug
+class.
+
 ### The fixes
 
 Every entry is an exact rewrite verified with `compare.py` against the
@@ -442,6 +488,7 @@ shapes — see [Gotchas](#gotchas) for why that distinction matters.
 | `motion_module/attention.py` | `DIV: No support of few identical inputs` — softmax over a length-1 sequence lowers to `y/y` | short-circuit the degenerate case: softmax of one logit is exactly 1.0, so `probs @ value == value`. Also removed ~124 nodes |
 | `motion_module/motion_module.py`, `attention.py` | `ADD: Doesn't support broadcasting - input0: [2442,192], input1: [1,2442,192]` — residual adds | apply `to_out[0]` and `FeedForward`'s final projection as 1×1 convs |
 | `motion_module/motion_module.py` | `GATHER_ND` from `nn.GroupNorm` — the last unsupported op | the gather was an **identity gather**: affine params indexed by a constant `arange([C])` purely to reshape `[C]`→`[1,C]`. Normalize without affine params, then apply scale/shift with an explicit reshape |
+| `dinov2_layers/gpu_compat.py`, `dinov2.py`, `dinov2_layers/block.py`, `motion_module/motion_module.py` | **Silent correctness bug, not a missing op — full delegation was not proof of correctness.** `nn.LayerNorm`'s default export decomposition lowers to `MEAN` with `axis=[0, 2]` on a `[1, N, C]` input (batch axis + channel axis reduced together, skipping the token axis). XNNPACK (CPU) computes this correctly; the GPU delegate's `MEAN` kernel silently returns the wrong (too large) variance for that non-trailing multi-axis pattern — no error, no CPU fallback, just wrong numbers. Confirmed on-device: DINOv2 block 0's `norm1` output alone diverges from CPU by up to ~14 (own range ~±3-4), compounding block-to-block (~19 by block 11) until parts of the motion modules saturate to NaN | added `layer_norm()` to `gpu_compat.py`: an explicit single-axis (`dim=-1`) mean/var reduction, replacing every `nn.LayerNorm(x)` call in the backbone and motion modules. Mathematically identical to `nn.LayerNorm`'s own formula — only the reduction's axis shape changes, verified exact via `compare.py` |
 
 Two converter-level changes live outside the model tree, in `wrapper.py`:
 
@@ -527,6 +574,12 @@ operational detail than this README:
 - `vda-gpu-delegate-fix` — the recipe for diagnosing and fixing a
   GPU-delegate-unsupported op, with every fix from the port as a worked
   example and the pitfalls that cost the most time
+- `vda-gpu-delegate-correctness` — the recipe for the *other* failure mode:
+  a model that's fully delegated with zero errors yet produces wrong/NaN
+  output on a real device's GPU (see [Delegation coverage is not
+  correctness](#delegation-coverage-is-not-correctness)) — on-device
+  CPU-vs-GPU tensor bisection, since no host-side tool here can catch this
+  bug class
 
 ## Gotchas
 
@@ -584,6 +637,22 @@ operational detail than this README:
   behind it (this happened twice: `DIV` and `Batch size mismatch` both
   surfaced only after the `ADD` fix grew the partition). Always re-run the
   device benchmark, not just the flatbuffer check.
+- **"Fully delegated" is not "correct."** `benchmark_gpu.sh`'s delegation
+  coverage, `compare.py`, and `verify.py` all passed cleanly while a real
+  device silently produced NaN on GPU — none of those tools exercise the
+  real GPU delegate's numerics on real hardware. A correctness bug can hide
+  behind 100% delegation with zero errors (see [Delegation coverage is not
+  correctness](#delegation-coverage-is-not-correctness)). If a `--source
+  gpu` build looks perfect on host but wrong on-device, suspect the GPU
+  delegate's own kernels, not the conversion.
+- **The GPU delegate's default FP16 (`setPrecisionLossAllowed(true)`)
+  produces NaN in this model's motion modules on real hardware, and this
+  converter has no way to fix that in the `.tflite` file itself** — it's a
+  delegate option the *consuming app* sets when building its
+  `GpuDelegate`/`Interpreter.Options()`. Anything deploying `--source gpu`
+  output must build the delegate with `setPrecisionLossAllowed(false)`, or
+  benchmark with `benchmark_model --gpu_precision_loss_allowed=false`, to
+  get numbers/behavior that match what should actually ship.
 - `benchmark/binary/` holds one prebuilt `benchmark_model` per ABI
   (`arm64-v8a`, `armeabi-v7a`/`armeabi`) — see [Setup step
   3](#3-android-device-optional-for-benchmarking-only) for how they were

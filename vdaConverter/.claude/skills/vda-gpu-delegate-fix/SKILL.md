@@ -1,6 +1,6 @@
 ---
 name: vda-gpu-delegate-fix
-description: Diagnose and fix a TFLite GPU-delegate-unsupported op in Video-Depth-Anything/video_depth_anything_gpu/. Use when a benchmark_gpu.sh log reports unsupported operations, a "TfLiteGpuDelegate Init" failure, ops falling back to CPU, or when asked to make more of the VDA model run on the GPU delegate.
+description: Diagnose and fix a TFLite GPU-delegate-unsupported op in Video-Depth-Anything/video_depth_anything_gpu/. Use when a benchmark_gpu.sh log reports unsupported operations, a "TfLiteGpuDelegate Init" failure, ops falling back to CPU, or when asked to make more of the VDA model run on the GPU delegate. NOT for a model that is already fully delegated with zero errors but produces wrong/NaN output on a real device -- that's vda-gpu-delegate-correctness.
 ---
 
 # Fixing a GPU-delegate-unsupported op
@@ -13,6 +13,18 @@ As of the last port, a `--source gpu` export is **fully delegated** (no
 unsupported ops, no CPU fallback). This skill is the recipe used to get
 there, for when a future change regresses it or a new variant/resolution
 surfaces something new.
+
+**This skill's scope is unsupported/rejected ops** -- something the
+delegate refuses to run, reported as an `ERROR:`, a CPU-fallback op, or a
+hard `TfLiteGpuDelegate Init` failure. It does **not** cover the other
+failure mode: a graph that is 100% delegated, logs zero errors, and still
+computes the *wrong* numbers (or NaN) on real hardware, because a specific
+GPU delegate kernel is itself buggy rather than missing. That happened
+here -- see `vda-gpu-delegate-correctness` for the diagnosis recipe and
+worked example (`nn.LayerNorm`'s `MEAN`-axis bug, plus a separate FP16
+precision-loss issue). Skim the symptom below to tell which skill you
+need: an `ERROR:` or a non-100% delegation ratio means this skill; a clean
+benchmark log with wrong/NaN output means the other one.
 
 ## The loop
 

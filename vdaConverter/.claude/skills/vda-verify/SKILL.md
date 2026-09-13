@@ -39,6 +39,16 @@ Outputs are read through the model's named signature runner
 layout, not `forward()`'s return-value order, so index-sorting can silently
 pair the wrong tensors against each other.
 
+**This runs the `.tflite` on CPU (XNNPACK), not the real on-device GPU
+delegate** -- `ai_edge_litert.interpreter.Interpreter` has no GPU delegate
+path here. A model can pass `verify.py` perfectly and still be wrong on a
+real device's GPU: the GPU delegate's `MEAN` kernel silently computed the
+wrong variance for `nn.LayerNorm`'s `axis=[0, 2]` reduction while XNNPACK
+computed it correctly, so this exact bug produced 100% healthy `verify.py`
+output the whole time it was live. Use `vda-gpu-delegate-correctness` for
+the on-device CPU-vs-GPU comparison that actually catches this class of
+bug.
+
 ## Key options
 
 | Flag | Default | Meaning |
