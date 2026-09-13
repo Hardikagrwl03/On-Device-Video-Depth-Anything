@@ -31,9 +31,10 @@ its own.
 
 ## Installing
 
-You'll receive the app as a file named `vda-<version>.apk`. Open it on your phone. Android will
-ask you to allow installing apps from your browser or file manager — this is normal for apps not
-distributed through the Play Store.
+Download `vda-<version>.apk` from the
+[Releases page](https://github.com/Hardikagrwl03/On-Device-Video-Depth-Anything/releases) and open
+it on your phone. Android will ask you to allow installing apps from your browser or file manager —
+this is normal for apps not distributed through the Play Store.
 
 **You need:**
 

@@ -2,6 +2,19 @@
 
 An Android application that runs [Video Depth Anything (VDA)](https://github.com/DepthAnything/Video-Depth-Anything) fully on-device via TensorFlow Lite / LiteRT to produce a temporally consistent depth map for a user-selected video — rendered both as grayscale and on the inferno colormap — with GPU/NNAPI acceleration where available.
 
+## Download
+
+**[Download vda-1.0.apk](https://github.com/Hardikagrwl03/On-Device-Video-Depth-Anything/releases/download/app-v1.0/vda-1.0.apk)** — from release
+[`app-v1.0`](https://github.com/Hardikagrwl03/On-Device-Video-Depth-Anything/releases/tag/app-v1.0)
+([all releases](https://github.com/Hardikagrwl03/On-Device-Video-Depth-Anything/releases))
+
+| | |
+| --- | --- |
+| Version | 1.0 (`versionCode` 1) |
+| Requires | Android 15+ (`minSdk 35`), 64-bit ARM (`arm64-v8a`) |
+| Size | 210 MB |
+| SHA-256 | `d50de2321f9391984c654fa1bc9d554f6463b7cb903a707a6f35215b038ede79` |
+
 The APK contains no model weights. On first launch the app downloads the default model pair (~246 MB) over the network, so **use Wi-Fi the first time**; it becomes usable as soon as that pair lands.
 
 > **Just want to use the app?** See **[USER_GUIDE.md](USER_GUIDE.md)** — installing, first run,
